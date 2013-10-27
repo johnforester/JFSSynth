@@ -43,37 +43,48 @@
         
         __weak JFSAudioManager *weakSelf = self;
         
+        __block SInt16 framePosition = 0;
+        
         _oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
             for (int i = 0; i < frames; i++) {
-                int16_t sample;
+                SInt16 sample;
                 
                 switch (weakSelf.waveType)
                 {
                     case JFSSquareWave:
-                        if (i < weakSelf.waveLengthInSamples) {
-                            sample = INT16_MAX;
+                        if (framePosition < weakSelf.waveLengthInSamples / 2) {
+                            sample = SHRT_MAX;
                         } else {
-                            sample = INT16_MIN;
+                            sample = SHRT_MIN;
                         }
+                        
                         
                         break;
                     case JFSSineWave:
-                        sample = (SInt16)SHRT_MAX * sin(2 * M_PI * (i / weakSelf.waveLengthInSamples));
+                        sample = (SInt16)SHRT_MAX * sin(2 * M_PI * (framePosition / weakSelf.waveLengthInSamples));
                         break;
                     default:
                         break;
                 }
                 
-                ((SInt16*)audio->mBuffers[0].mData)[i] = sample;
-                ((SInt16*)audio->mBuffers[1].mData)[i] = sample;
+                ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
+                ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
+                
+                framePosition++;
+                
+                if (framePosition > weakSelf.waveLengthInSamples) {
+                    framePosition -= weakSelf.waveLengthInSamples;
+                }
             }
         }];
     }
-    
     _oscillatorChannel.audioDescription = [AEAudioController nonInterleaved16BitStereoAudioDescription];
     
-    [_audioController addChannels:@[_oscillatorChannel]];
+    AEChannelGroupRef channelGroup = [_audioController createChannelGroup];
     
+    [_audioController addChannels:@[_oscillatorChannel] toChannelGroup:channelGroup];
+    
+    [_audioController setAudioSessionCategory:kAudioSessionCategory_SoloAmbientSound];
     NSError *error = nil;
     
     if (![_audioController start:&error]) {
