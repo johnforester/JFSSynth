@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05754887C6F84FCD876A31B1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB310698CEA446691085808 /* libPods.a */; };
 		7A6C6873181D833E009F4A83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6872181D833E009F4A83 /* Foundation.framework */; };
 		7A6C6875181D833E009F4A83 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6874181D833E009F4A83 /* CoreGraphics.framework */; };
 		7A6C6877181D833E009F4A83 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6876181D833E009F4A83 /* UIKit.framework */; };
@@ -22,6 +23,7 @@
 		7A6C6897181D833F009F4A83 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6876181D833E009F4A83 /* UIKit.framework */; };
 		7A6C689F181D833F009F4A83 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7A6C689D181D833F009F4A83 /* InfoPlist.strings */; };
 		7A6C68A1181D833F009F4A83 /* JFSynthTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A6C68A0181D833F009F4A83 /* JFSynthTests.m */; };
+		7A6C68AD181D84DA009F4A83 /* JFSAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A6C68AC181D84DA009F4A83 /* JFSAudioManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		084B57BE5FC7457AB7CAA9D7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		7A6C686F181D833E009F4A83 /* JFSynth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JFSynth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A6C6872181D833E009F4A83 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7A6C6874181D833E009F4A83 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -55,6 +58,9 @@
 		7A6C689C181D833F009F4A83 /* JFSynthTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JFSynthTests-Info.plist"; sourceTree = "<group>"; };
 		7A6C689E181D833F009F4A83 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7A6C68A0181D833F009F4A83 /* JFSynthTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JFSynthTests.m; sourceTree = "<group>"; };
+		7A6C68AB181D84DA009F4A83 /* JFSAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSAudioManager.h; sourceTree = "<group>"; };
+		7A6C68AC181D84DA009F4A83 /* JFSAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSAudioManager.m; sourceTree = "<group>"; };
+		DEB310698CEA446691085808 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +71,7 @@
 				7A6C6875181D833E009F4A83 /* CoreGraphics.framework in Frameworks */,
 				7A6C6877181D833E009F4A83 /* UIKit.framework in Frameworks */,
 				7A6C6873181D833E009F4A83 /* Foundation.framework in Frameworks */,
+				05754887C6F84FCD876A31B1 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +95,7 @@
 				7A6C689A181D833F009F4A83 /* JFSynthTests */,
 				7A6C6871181D833E009F4A83 /* Frameworks */,
 				7A6C6870181D833E009F4A83 /* Products */,
+				084B57BE5FC7457AB7CAA9D7 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,6 +115,7 @@
 				7A6C6874181D833E009F4A83 /* CoreGraphics.framework */,
 				7A6C6876181D833E009F4A83 /* UIKit.framework */,
 				7A6C6894181D833F009F4A83 /* XCTest.framework */,
+				DEB310698CEA446691085808 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -122,6 +131,8 @@
 				7A6C688B181D833E009F4A83 /* JFSViewController.m */,
 				7A6C688D181D833E009F4A83 /* Images.xcassets */,
 				7A6C6879181D833E009F4A83 /* Supporting Files */,
+				7A6C68AB181D84DA009F4A83 /* JFSAudioManager.h */,
+				7A6C68AC181D84DA009F4A83 /* JFSAudioManager.m */,
 			);
 			path = JFSynth;
 			sourceTree = "<group>";
@@ -162,9 +173,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7A6C68A4181D833F009F4A83 /* Build configuration list for PBXNativeTarget "JFSynth" */;
 			buildPhases = (
+				857E87B2F39F41D4B420946D /* Check Pods Manifest.lock */,
 				7A6C686B181D833E009F4A83 /* Sources */,
 				7A6C686C181D833E009F4A83 /* Frameworks */,
 				7A6C686D181D833E009F4A83 /* Resources */,
+				D1DC0F596420452FA90BA076 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -249,11 +262,43 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		857E87B2F39F41D4B420946D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sanbox is not in sync with the Podfile.lock. Run 'pod install'.\nEOM\n    exit 1\nfi\n";
+		};
+		D1DC0F596420452FA90BA076 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7A6C686B181D833E009F4A83 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A6C68AD181D84DA009F4A83 /* JFSAudioManager.m in Sources */,
 				7A6C688C181D833E009F4A83 /* JFSViewController.m in Sources */,
 				7A6C6883181D833E009F4A83 /* JFSAppDelegate.m in Sources */,
 				7A6C687F181D833E009F4A83 /* main.m in Sources */,
@@ -390,6 +435,7 @@
 		};
 		7A6C68A5181D833F009F4A83 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084B57BE5FC7457AB7CAA9D7 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -403,6 +449,7 @@
 		};
 		7A6C68A6181D833F009F4A83 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084B57BE5FC7457AB7CAA9D7 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -475,6 +522,7 @@
 				7A6C68A6181D833F009F4A83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7A6C68A7181D833F009F4A83 /* Build configuration list for PBXNativeTarget "JFSynthTests" */ = {
 			isa = XCConfigurationList;
@@ -483,6 +531,7 @@
 				7A6C68A9181D833F009F4A83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

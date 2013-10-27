@@ -7,6 +7,7 @@
 //
 
 #import "JFSViewController.h"
+#import "JFSAudioManager.h"
 
 @interface JFSViewController ()
 
@@ -17,13 +18,30 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - IBAction
+
+- (IBAction)playA:(id)sender
+{
+    [[JFSAudioManager sharedManager] playFrequency:440.0];
+}
+
+- (IBAction)playD:(id)sender
+{
+    [[JFSAudioManager sharedManager] playFrequency:587.33];
+}
+
+- (IBAction)waveTypeControlChanged:(UISegmentedControl *)segmentedControl
+{
+    [[JFSAudioManager sharedManager] setWaveType:segmentedControl.selectedSegmentIndex];
 }
 
 @end
