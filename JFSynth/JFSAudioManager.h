@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 
 + (JFSAudioManager *) sharedManager;
 - (void)playFrequency:(double)frequency;
+- (void)stopPlaying;
 
 @property (nonatomic, assign) JFSWaveType waveType;
 

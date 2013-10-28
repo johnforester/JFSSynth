@@ -39,9 +39,19 @@
     [[JFSAudioManager sharedManager] playFrequency:587.33];
 }
 
+- (IBAction)stop:(id)sender
+{
+    [[JFSAudioManager sharedManager] stopPlaying];
+}
+
 - (IBAction)waveTypeControlChanged:(UISegmentedControl *)segmentedControl
 {
     [[JFSAudioManager sharedManager] setWaveType:segmentedControl.selectedSegmentIndex];
+}
+
+- (IBAction)attackSliderChanged:(id)sender
+{
+    
 }
 
 @end
