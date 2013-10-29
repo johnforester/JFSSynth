@@ -26,8 +26,16 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 
 @property (nonatomic, assign) Float32 amp;
 @property (nonatomic, assign) Float32 maxAmp;
-@property (nonatomic, assign) Float32 upSlope;
-@property (nonatomic, assign) Float32 downSlope;
+
+@property (nonatomic, assign) Float32 attackSlope;
+@property (nonatomic, assign) Float32 decaySlope;
+@property (nonatomic, assign) Float32 releaseSlope;
+
+@property (nonatomic, assign) Float32 attackAmount;
+@property (nonatomic, assign) Float32 sustainAmount;
+@property (nonatomic, assign) Float32 decayAmount;
+@property (nonatomic, assign) Float32 releaseAmount;
+
 @property (nonatomic, assign) Float32 velocity;
 
 @property (nonatomic, assign) JFSEnvelopeState envelopeState;
@@ -37,6 +45,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 @implementation JFSAudioManager
 
 #define SAMPLE_RATE 44100.0
+#define VOLUME 0.3
 
 + (JFSAudioManager *) sharedManager
 {
@@ -57,89 +66,102 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
                             initWithAudioDescription:[AEAudioController nonInterleaved16BitStereoAudioDescription]
                             inputEnabled:NO];
         
-        __weak JFSAudioManager *weakSelf = self;
         
-        __block SInt16 framePosition = 0;
+        [self setUpAmpEnvelope];
+        [self setUpOscillatorChannel];
         
-        self.amp = 0;
-        self.velocity = 50;
+        AEChannelGroupRef channelGroup = [_audioController createChannelGroup];
+        [_audioController addChannels:@[_oscillatorChannel] toChannelGroup:channelGroup];
         
-        self.maxAmp = 0.4 * pow(self.velocity/127., 3.);
+        [_audioController setAudioSessionCategory:kAudioSessionCategory_SoloAmbientSound];
         
-        self.upSlope = self.maxAmp / (0.9 * SAMPLE_RATE);
-        self.downSlope = -self.maxAmp / (0.9 * SAMPLE_RATE);
+        NSError *error = nil;
         
-        __block AudioTimeStamp *startTime;
-        
-        _oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
-            for (int i = 0; i < frames; i++) {
-                
-                if (i == 0) {
-                    startTime = (AudioTimeStamp *)time;
-                }
-                
-                switch (self.envelopeState) {
-                    case JFSEnvelopeStateAttack:
-                        if (weakSelf.amp < weakSelf.maxAmp) {
-                            weakSelf.amp += weakSelf.upSlope;
-                        }
-                        break;
-                    case JFSEnvelopeStateRelease:
-                        if (weakSelf.amp > 0.0) {
-                            weakSelf.amp += self.downSlope;
-                        }
-                    default:
-                        break;
-                }
-                
-                
-                SInt16 sample;
-                
-                switch (weakSelf.waveType)
-                {
-                    case JFSSquareWave:
-                        if (framePosition < weakSelf.waveLengthInSamples / 2) {
-                            sample = SHRT_MAX;
-                        } else {
-                            sample = SHRT_MIN;
-                        }
-                        break;
-                    case JFSSineWave:
-                        sample = (SInt16)SHRT_MAX * sin(2 * M_PI * (framePosition / weakSelf.waveLengthInSamples));
-                        break;
-                    default:
-                        break;
-                }
-                
-                if (self.envelopeState != JFSEnvelopeStateNone) {
-                    sample *= weakSelf.amp;
-                    
-                    ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
-                    ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
-                    
-                    framePosition++;
-                    
-                    if (framePosition > weakSelf.waveLengthInSamples) {
-                        framePosition -= weakSelf.waveLengthInSamples;
-                    }
-                }
-            }
-        }];
-    }
-    _oscillatorChannel.audioDescription = [AEAudioController nonInterleaved16BitStereoAudioDescription];
-    
-    AEChannelGroupRef channelGroup = [_audioController createChannelGroup];
-    
-    [_audioController addChannels:@[_oscillatorChannel] toChannelGroup:channelGroup];
-    
-    [_audioController setAudioSessionCategory:kAudioSessionCategory_SoloAmbientSound];
-    NSError *error = nil;
-    
-    if (![_audioController start:&error]) {
-        NSLog(@"AudioController start error: %@", [error localizedDescription]);
+        if (![_audioController start:&error]) {
+            NSLog(@"AudioController start error: %@", [error localizedDescription]);
+        }
     }
     
     return self;
+}
+
+- (void)setUpAmpEnvelope
+{
+    self.amp = 0;
+    self.velocity = 50;
+    
+    self.maxAmp = 0.4 * pow(self.velocity/127., 3.);
+    
+    [self updateAttackAmount:0.0001];
+    [self updateDecayAmount:10];
+    [self updateReleaseAmount:0.9];
+}
+
+- (void)setUpOscillatorChannel
+{
+    __weak JFSAudioManager *weakSelf = self;
+    
+    __block SInt16 framePosition = 0;
+    
+    _oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
+        for (int i = 0; i < frames; i++) {
+            switch (self.envelopeState) {
+                case JFSEnvelopeStateAttack:
+                    if (weakSelf.amp < weakSelf.maxAmp) {
+                        weakSelf.amp += weakSelf.attackSlope;
+                    } else {
+                        weakSelf.envelopeState = JFSEnvelopeStateDecay;
+                    }
+                    break;
+                case JFSEnvelopeStateDecay:
+                    if (weakSelf.amp > 0.0) {
+                        weakSelf.amp += weakSelf.decaySlope;
+                    }
+                    break;
+                case JFSEnvelopeStateRelease:
+                    if (weakSelf.amp > 0.0) {
+                        weakSelf.amp += weakSelf.releaseSlope;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+            SInt16 sample;
+            
+            switch (weakSelf.waveType)
+            {
+                case JFSSquareWave:
+                    if (framePosition < weakSelf.waveLengthInSamples / 2) {
+                        sample = SHRT_MAX;
+                    } else {
+                        sample = SHRT_MIN;
+                    }
+                    break;
+                case JFSSineWave:
+                    sample = (SInt16)SHRT_MAX * sin(2 * M_PI * (framePosition / weakSelf.waveLengthInSamples));
+                    break;
+                default:
+                    break;
+            }
+            
+            if (self.envelopeState != JFSEnvelopeStateNone) {
+                sample *= weakSelf.amp * VOLUME;
+                
+                ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
+                ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
+                
+                framePosition++;
+                
+                if (framePosition > weakSelf.waveLengthInSamples) {
+                    framePosition -= weakSelf.waveLengthInSamples;
+                }
+            }
+        }
+    }];
+    
+    _oscillatorChannel.audioDescription = [AEAudioController nonInterleaved16BitStereoAudioDescription];
+    
 }
 
 - (void)playFrequency:(double)frequency
@@ -153,6 +175,26 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 - (void)stopPlaying
 {
     self.envelopeState = JFSEnvelopeStateRelease;
+}
+
+#pragma mark - envelope updates
+
+- (void)updateAttackAmount:(CGFloat)attackAmount
+{
+    self.attackAmount = attackAmount;
+    self.attackSlope = self.maxAmp / (self.attackAmount * SAMPLE_RATE);
+}
+
+- (void)updateDecayAmount:(CGFloat)decayAmount
+{
+    self.decayAmount = decayAmount;
+    self.decaySlope = -self.maxAmp / (self.decayAmount * SAMPLE_RATE);
+}
+
+- (void)updateReleaseAmount:(CGFloat)releaseAmount
+{
+    self.releaseAmount = releaseAmount;
+    self.releaseSlope = -self.maxAmp / (self.releaseAmount * SAMPLE_RATE);
 }
 
 @end

@@ -18,7 +18,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,9 +49,24 @@
     [[JFSAudioManager sharedManager] setWaveType:segmentedControl.selectedSegmentIndex];
 }
 
-- (IBAction)attackSliderChanged:(id)sender
+- (IBAction)attackSliderChanged:(UISlider *)slider
 {
-    
+    [[JFSAudioManager sharedManager] updateAttackAmount:slider.value];
+}
+
+- (IBAction)decaySliderChanged:(UISlider *)slider
+{
+    [[JFSAudioManager sharedManager] updateDecayAmount:slider.value];
+}
+
+- (IBAction)sustainSliderChanged:(UISlider *)slider
+{
+   // [[JFSAudioManager sharedManager] updateSustainAmount:slider.value];
+}
+
+- (IBAction)releaseSliderChanged:(UISlider *)slider
+{
+    [[JFSAudioManager sharedManager] updateReleaseAmount:slider.value];
 }
 
 @end
