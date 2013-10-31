@@ -19,6 +19,8 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 
 @property (nonatomic, readonly) Float32 maxAmp;
 
+@property (nonatomic, readonly) Float32 maxVelocity;
+
 @property (nonatomic, readonly) Float32 attackTime;
 @property (nonatomic, readonly) Float32 decayTime;
 @property (nonatomic, readonly) Float32 sustainAmount;

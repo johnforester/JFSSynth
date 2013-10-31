@@ -37,7 +37,7 @@
     self.decaySlider.value = audioManager.decayTime;
     
     self.sustainSlider.minimumValue = 0;
-    self.sustainSlider.maximumValue = audioManager.maxAmp;
+    self.sustainSlider.maximumValue = audioManager.maxVelocity;
     self.sustainSlider.value = audioManager.sustainAmount;
     
     self.releaseSlider.minimumValue = 0;

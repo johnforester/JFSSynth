@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 @property (nonatomic, assign) Float32 sustainAmount;
 @property (nonatomic, assign) Float32 releaseTime;
 
-@property (nonatomic, assign) Float32 velocity;
+@property (nonatomic, assign) Float32 maxVelocity;
 
 @property (nonatomic, assign) JFSEnvelopeState envelopeState;
 
@@ -88,10 +88,10 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 - (void)setUpAmpEnvelope
 {
     self.amp = 0;
-    self.velocity = 70;
+    self.maxVelocity = 70;
     
-    self.maxAmp = 0.4 * pow(self.velocity/127., 3.);
-    self.sustainAmount = 0.4 * pow(self.velocity/127., 3.);
+    self.maxAmp = 0.4 * pow(self.maxVelocity/127., 3.);
+    self.sustainAmount = 0.4 * pow(self.maxVelocity/127., 3.);
     
     [self updateAttackTime:0.0001];
     [self updateDecayTime:10];
@@ -119,6 +119,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
                         weakSelf.amp += weakSelf.decaySlope;
                     } else {
                         weakSelf.envelopeState = JFSEnvelopeStateSustain;
+                        weakSelf.amp = weakSelf.sustainAmount;
                     }
                     break;
                 case JFSEnvelopeStateRelease:
@@ -191,7 +192,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 - (void)updateDecayTime:(Float32)decayAmount
 {
     self.decayTime = decayAmount;
-    self.decaySlope = -self.sustainAmount / (self.decayTime * SAMPLE_RATE);
+    self.decaySlope = -(self.maxAmp - self.sustainAmount) / (self.decayTime * SAMPLE_RATE);
 }
 
 - (void)updateSustainAmount:(Float32)sustainAmount
