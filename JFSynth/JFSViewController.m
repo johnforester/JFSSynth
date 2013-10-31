@@ -23,6 +23,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     JFSAudioManager *audioManager = [JFSAudioManager sharedManager];
     
@@ -38,7 +43,7 @@
     
     self.sustainSlider.minimumValue = 0;
     self.sustainSlider.maximumValue = audioManager.maxVelocity;
-    self.sustainSlider.value = audioManager.sustainAmount;
+    self.sustainSlider.value = audioManager.maxVelocity;
     
     self.releaseSlider.minimumValue = 0;
     self.releaseSlider.maximumValue = 2;

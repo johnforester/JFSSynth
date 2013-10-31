@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 
 @property (nonatomic, assign) Float32 attackTime;
 @property (nonatomic, assign) Float32 decayTime;
-@property (nonatomic, assign) Float32 sustainAmount;
+@property (nonatomic, assign) Float32 sustainAmp;
 @property (nonatomic, assign) Float32 releaseTime;
 
 @property (nonatomic, assign) Float32 maxVelocity;
@@ -91,10 +91,10 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
     self.maxVelocity = 70;
     
     self.maxAmp = 0.4 * pow(self.maxVelocity/127., 3.);
-    self.sustainAmount = 0.4 * pow(self.maxVelocity/127., 3.);
     
     [self updateAttackTime:0.0001];
     [self updateDecayTime:10];
+    [self updateSustainAmount:self.maxVelocity];
     [self updateReleaseTime:0.9];
 }
 
@@ -115,11 +115,10 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
                     }
                     break;
                 case JFSEnvelopeStateDecay:
-                    if (weakSelf.amp > weakSelf.sustainAmount) {
+                    if (weakSelf.amp > weakSelf.sustainAmp) {
                         weakSelf.amp += weakSelf.decaySlope;
                     } else {
                         weakSelf.envelopeState = JFSEnvelopeStateSustain;
-                        weakSelf.amp = weakSelf.sustainAmount;
                     }
                     break;
                 case JFSEnvelopeStateRelease:
@@ -192,18 +191,21 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 - (void)updateDecayTime:(Float32)decayAmount
 {
     self.decayTime = decayAmount;
-    self.decaySlope = -(self.maxAmp - self.sustainAmount) / (self.decayTime * SAMPLE_RATE);
+    self.decaySlope = -(self.maxAmp - self.sustainAmp) / (self.decayTime * SAMPLE_RATE);
 }
 
 - (void)updateSustainAmount:(Float32)sustainAmount
 {
-    self.sustainAmount = 0.4 * pow(sustainAmount/127., 3.);
+    self.sustainAmp = 0.4 * pow(sustainAmount/127., 3.);
+    self.decaySlope = -(self.maxAmp - self.sustainAmp) / (self.decayTime * SAMPLE_RATE);
+    self.releaseSlope = -self.maxAmp / (self.releaseTime * SAMPLE_RATE);
 }
 
 - (void)updateReleaseTime:(Float32)releaseAmount
 {
     self.releaseTime = releaseAmount;
-    self.releaseSlope = -self.sustainAmount / (self.releaseTime * SAMPLE_RATE);
+    self.releaseSlope = -self.maxAmp / (self.releaseTime * SAMPLE_RATE);
 }
+
 
 @end
