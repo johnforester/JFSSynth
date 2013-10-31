@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *decaySlider;
 @property (weak, nonatomic) IBOutlet UISlider *sustainSlider;
 @property (weak, nonatomic) IBOutlet UISlider *releaseSlider;
+@property (weak, nonatomic) IBOutlet UISlider *peakSlider;
 
 @end
 
@@ -40,6 +41,10 @@
     self.attackSlider.minimumValue = 0.0001;
     self.attackSlider.maximumValue = 2;
     self.attackSlider.value = audioManager.attackTime;
+    
+    self.peakSlider.minimumValue = 0.0;
+    self.peakSlider.maximumValue = 127.0;
+    self.peakSlider.value = audioManager.attackPeak;
     
     self.decaySlider.minimumValue = 0;
     self.decaySlider.maximumValue = 2;
@@ -87,6 +92,11 @@
 - (IBAction)attackSliderChanged:(UISlider *)slider
 {
     [JFSSynthManager sharedManager].attackTime = slider.value;
+}
+
+- (IBAction)peakSliderChanged:(UISlider *)slider
+{
+    [JFSSynthManager sharedManager].attackPeak = slider.value;
 }
 
 - (IBAction)decaySliderChanged:(UISlider *)slider

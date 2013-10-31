@@ -126,7 +126,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 
 - (void)setReleaseTime:(Float32)releaseTime
 {
-    self.releaseTime = releaseTime;
+    _releaseTime = releaseTime;
     
     [self updateReleaseSlope];
 }
