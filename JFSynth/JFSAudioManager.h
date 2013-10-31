@@ -30,9 +30,9 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 - (void)playFrequency:(double)frequency;
 - (void)stopPlaying;
 
-- (void)updateAttackTime:(Float32)attackAmount;
-- (void)updateDecayTime:(Float32)decayAmount;
+- (void)updateAttackTime:(Float32)attackTime;
+- (void)updateDecayTime:(Float32)decayTime;
 - (void)updateSustainAmount:(Float32)sustainAmount;
-- (void)updateReleaseTime:(Float32)releaseAmount;
+- (void)updateReleaseTime:(Float32)releaseTime;
 
 @end

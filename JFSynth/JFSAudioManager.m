@@ -88,8 +88,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 - (void)setUpAmpEnvelope
 {
     self.amp = 0;
-    self.maxVelocity = 70;
-    
+    self.maxVelocity = 127;
     self.maxAmp = 0.4 * pow(self.maxVelocity/127., 3.);
     
     [self updateAttackTime:0.0001];
@@ -182,30 +181,49 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 
 #pragma mark - envelope updates
 
-- (void)updateAttackTime:(Float32)attackAmount
+- (void)updateAttackTime:(Float32)attackTime
 {
-    self.attackTime = attackAmount;
-    self.attackSlope = self.maxAmp / (self.attackTime * SAMPLE_RATE);
+    self.attackTime = attackTime;
+    
+    [self updateAttackSlope];
 }
 
-- (void)updateDecayTime:(Float32)decayAmount
+- (void)updateDecayTime:(Float32)decayTime
 {
-    self.decayTime = decayAmount;
-    self.decaySlope = -(self.maxAmp - self.sustainAmp) / (self.decayTime * SAMPLE_RATE);
+    self.decayTime = decayTime;
+
+    [self updateDecaySlope];
 }
 
 - (void)updateSustainAmount:(Float32)sustainAmount
 {
     self.sustainAmp = 0.4 * pow(sustainAmount/127., 3.);
-    self.decaySlope = -(self.maxAmp - self.sustainAmp) / (self.decayTime * SAMPLE_RATE);
-    self.releaseSlope = -self.maxAmp / (self.releaseTime * SAMPLE_RATE);
+    
+    [self updateDecaySlope];
+    [self updateReleaseSlope];
 }
 
-- (void)updateReleaseTime:(Float32)releaseAmount
+- (void)updateReleaseTime:(Float32)releaseTime
 {
-    self.releaseTime = releaseAmount;
-    self.releaseSlope = -self.maxAmp / (self.releaseTime * SAMPLE_RATE);
+    self.releaseTime = releaseTime;
+    
+    [self updateReleaseSlope];
 }
 
+- (void)updateAttackSlope
+{
+    self.attackSlope = self.maxAmp / (self.attackTime * SAMPLE_RATE);
+}
+
+- (void)updateDecaySlope
+{
+    self.decaySlope = -(self.maxAmp - self.sustainAmp) / (self.decayTime * SAMPLE_RATE);
+}
+
+- (void)updateReleaseSlope
+{
+    self.releaseSlope = -self.maxAmp / (self.releaseTime * SAMPLE_RATE);
+
+}
 
 @end
