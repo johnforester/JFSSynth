@@ -31,10 +31,10 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 @property (nonatomic, assign) Float32 decaySlope;
 @property (nonatomic, assign) Float32 releaseSlope;
 
-@property (nonatomic, assign) Float32 attackAmount;
+@property (nonatomic, assign) Float32 attackTime;
+@property (nonatomic, assign) Float32 decayTime;
 @property (nonatomic, assign) Float32 sustainAmount;
-@property (nonatomic, assign) Float32 decayAmount;
-@property (nonatomic, assign) Float32 releaseAmount;
+@property (nonatomic, assign) Float32 releaseTime;
 
 @property (nonatomic, assign) Float32 velocity;
 
@@ -88,13 +88,14 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 - (void)setUpAmpEnvelope
 {
     self.amp = 0;
-    self.velocity = 50;
+    self.velocity = 70;
     
     self.maxAmp = 0.4 * pow(self.velocity/127., 3.);
+    self.sustainAmount = 0.4 * pow(self.velocity/127., 3.);
     
-    [self updateAttackAmount:0.0001];
-    [self updateDecayAmount:10];
-    [self updateReleaseAmount:0.9];
+    [self updateAttackTime:0.0001];
+    [self updateDecayTime:10];
+    [self updateReleaseTime:0.9];
 }
 
 - (void)setUpOscillatorChannel
@@ -114,8 +115,10 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
                     }
                     break;
                 case JFSEnvelopeStateDecay:
-                    if (weakSelf.amp > 0.0) {
+                    if (weakSelf.amp > weakSelf.sustainAmount) {
                         weakSelf.amp += weakSelf.decaySlope;
+                    } else {
+                        weakSelf.envelopeState = JFSEnvelopeStateSustain;
                     }
                     break;
                 case JFSEnvelopeStateRelease:
@@ -179,22 +182,27 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 
 #pragma mark - envelope updates
 
-- (void)updateAttackAmount:(CGFloat)attackAmount
+- (void)updateAttackTime:(Float32)attackAmount
 {
-    self.attackAmount = attackAmount;
-    self.attackSlope = self.maxAmp / (self.attackAmount * SAMPLE_RATE);
+    self.attackTime = attackAmount;
+    self.attackSlope = self.maxAmp / (self.attackTime * SAMPLE_RATE);
 }
 
-- (void)updateDecayAmount:(CGFloat)decayAmount
+- (void)updateDecayTime:(Float32)decayAmount
 {
-    self.decayAmount = decayAmount;
-    self.decaySlope = -self.maxAmp / (self.decayAmount * SAMPLE_RATE);
+    self.decayTime = decayAmount;
+    self.decaySlope = -self.sustainAmount / (self.decayTime * SAMPLE_RATE);
 }
 
-- (void)updateReleaseAmount:(CGFloat)releaseAmount
+- (void)updateSustainAmount:(Float32)sustainAmount
 {
-    self.releaseAmount = releaseAmount;
-    self.releaseSlope = -self.maxAmp / (self.releaseAmount * SAMPLE_RATE);
+    self.sustainAmount = 0.4 * pow(sustainAmount/127., 3.);
+}
+
+- (void)updateReleaseTime:(Float32)releaseAmount
+{
+    self.releaseTime = releaseAmount;
+    self.releaseSlope = -self.sustainAmount / (self.releaseTime * SAMPLE_RATE);
 }
 
 @end

@@ -17,12 +17,20 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 
 @property (nonatomic, assign) JFSWaveType waveType;
 
+@property (nonatomic, readonly) Float32 maxAmp;
+
+@property (nonatomic, readonly) Float32 attackTime;
+@property (nonatomic, readonly) Float32 decayTime;
+@property (nonatomic, readonly) Float32 sustainAmount;
+@property (nonatomic, readonly) Float32 releaseTime;
+
 + (JFSAudioManager *) sharedManager;
 - (void)playFrequency:(double)frequency;
 - (void)stopPlaying;
 
-- (void)updateAttackAmount:(CGFloat)attackAmount;
-- (void)updateDecayAmount:(CGFloat)decayAmount;
-- (void)updateReleaseAmount:(CGFloat)releaseAmount;
+- (void)updateAttackTime:(Float32)attackAmount;
+- (void)updateDecayTime:(Float32)decayAmount;
+- (void)updateSustainAmount:(Float32)sustainAmount;
+- (void)updateReleaseTime:(Float32)releaseAmount;
 
 @end
