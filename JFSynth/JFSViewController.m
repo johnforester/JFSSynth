@@ -119,14 +119,14 @@
     [JFSSynthManager sharedManager].releaseTime = slider.value;
 }
 
-- (IBAction)cutoffSliderChanged:(UISlider *)sender
+- (IBAction)cutoffSliderChanged:(UISlider *)slider
 {
-    
+    [JFSSynthManager sharedManager].cutoffLevel = slider.value;
 }
 
-- (IBAction)resonanceSliderChanged:(id)sender
+- (IBAction)resonanceSliderChanged:(UISlider *)slider
 {
-    
+    [JFSSynthManager sharedManager].resonanceLevel = slider.value;
 }
 
 @end
