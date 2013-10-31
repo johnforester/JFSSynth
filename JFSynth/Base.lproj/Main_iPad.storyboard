@@ -173,6 +173,7 @@
                                 </constraints>
                                 <color key="thumbTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
+                                    <action selector="cutoffSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Inw-i8-17X"/>
                                     <action selector="peakSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="iiO-LO-TVx"/>
                                 </connections>
                             </slider>
@@ -193,6 +194,9 @@
                                 <rect key="frame" x="501" y="151" width="201" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="resonanceSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Zkv-fm-Q6F"/>
+                                </connections>
                             </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -248,9 +252,11 @@
                     </view>
                     <connections>
                         <outlet property="attackSlider" destination="etZ-Nb-qvW" id="hc5-fL-sqn"/>
+                        <outlet property="cutoffSlider" destination="yUh-Bv-tiW" id="eId-yE-0e9"/>
                         <outlet property="decaySlider" destination="tZc-S1-Puy" id="lBH-cP-xod"/>
                         <outlet property="peakSlider" destination="wE0-an-tkJ" id="Qf2-zz-IrY"/>
                         <outlet property="releaseSlider" destination="txQ-Ot-Fci" id="6F0-HP-GPa"/>
+                        <outlet property="resonanceSlider" destination="t0f-E1-Ivr" id="VE7-J6-iGQ"/>
                         <outlet property="sustainSlider" destination="9P8-D5-PVM" id="LZl-gE-r8c"/>
                     </connections>
                 </viewController>

@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 
 @property (nonatomic, strong) AEAudioController *audioController;
 @property (nonatomic, strong) AEBlockChannel *oscillatorChannel;
+@property (nonatomic, strong) AEAudioUnitFilter *lpFilter;
 
 @property (nonatomic, assign) double waveLengthInSamples;
 
@@ -36,6 +37,8 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 
 @implementation JFSSynthManager
 
+#define ENABLE_SYNTH 0
+
 #define SAMPLE_RATE 44100.0
 #define VOLUME 0.3
 
@@ -43,9 +46,13 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 {
     static dispatch_once_t pred = 0;
     __strong static id _sharedObject = nil;
+    
+#ifdef ENABLE_SYNTH
     dispatch_once(&pred, ^{
         _sharedObject = [[self alloc] init];
     });
+#endif
+    
     return _sharedObject;
 }
 
@@ -69,18 +76,19 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
         
         NSError *error = nil;
         
-        AEAudioUnitFilter *lpFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:lpFilterComponent
+        self.lpFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:lpFilterComponent
                                                                               audioController:_audioController
                                                                                         error:&error];
-        if (!lpFilter) {
+        if (!self.lpFilter) {
             NSLog(@"filter initialization error %@", [error localizedDescription]);
         }
         
-        //AudioUnitSetParameter(lpFilter.audioUnit, kLowPassParam_CutoffFrequency, kAudioUnitScope_Global, 0, 10.0f, 0);
+        self.cutoffLevel = 80;
+        self.resonanceLevel = 0.0;
         
         AEChannelGroupRef channelGroup = [_audioController createChannelGroup];
         [_audioController addChannels:@[_oscillatorChannel] toChannelGroup:channelGroup];
-        [_audioController addFilter:lpFilter toChannel:_oscillatorChannel];
+        [_audioController addFilter:self.lpFilter toChannel:_oscillatorChannel];
         
         [_audioController setAudioSessionCategory:kAudioSessionCategory_SoloAmbientSound];
         
@@ -129,6 +137,36 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
     _releaseTime = releaseTime;
     
     [self updateReleaseSlope];
+}
+
+- (void)setCutoffLevel:(Float32)cutoffLevel
+{
+    _cutoffLevel = cutoffLevel;
+    
+    Float32 minCuttoff = 10;
+    Float32 maxCutoff = (SAMPLE_RATE/2);
+    
+    AudioUnitSetParameter(self.lpFilter.audioUnit,
+                          kLowPassParam_CutoffFrequency,
+                          kAudioUnitScope_Global,
+                          0,
+                          ((cutoffLevel/127) * maxCutoff - minCuttoff) + minCuttoff,
+                          0);
+}
+
+- (void)setResonanceLevel:(Float32)resonanceLevel
+{
+    _resonanceLevel = resonanceLevel;
+    
+    Float32 minResonance = -20.0;
+    Float32 maxResonance = 40.0;
+    
+    AudioUnitSetParameter(self.lpFilter.audioUnit,
+                          kLowPassParam_Resonance,
+                          kAudioUnitScope_Global,
+                          0,
+                          ((resonanceLevel/127) * maxResonance - minResonance) + minResonance,
+                          0);
 }
 
 #pragma setup methods

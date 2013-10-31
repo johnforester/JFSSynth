@@ -26,6 +26,9 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 @property (nonatomic, assign) Float32 sustainLevel;
 @property (nonatomic, assign) Float32 releaseTime;
 
+@property (nonatomic, assign) Float32 cutoffLevel;
+@property (nonatomic, assign) Float32 resonanceLevel;
+
 + (JFSSynthManager *) sharedManager;
 - (void)playFrequency:(double)frequency;
 - (void)stopPlaying;

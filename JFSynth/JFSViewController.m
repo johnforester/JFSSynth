@@ -9,8 +9,6 @@
 #import "JFSViewController.h"
 #import "JFSSynthManager.h"
 
-#define ENABLE_SYNTH 0
-
 @interface JFSViewController ()
 
 @property (weak, nonatomic) IBOutlet UISlider *attackSlider;
@@ -18,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet UISlider *sustainSlider;
 @property (weak, nonatomic) IBOutlet UISlider *releaseSlider;
 @property (weak, nonatomic) IBOutlet UISlider *peakSlider;
+
+@property (weak, nonatomic) IBOutlet UISlider *cutoffSlider;
+@property (weak, nonatomic) IBOutlet UISlider *resonanceSlider;
 
 @end
 
@@ -31,8 +32,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-#ifdef ENABLE_SYNTH
     
     JFSSynthManager *audioManager = [JFSSynthManager sharedManager];
     
@@ -58,7 +57,13 @@
     self.releaseSlider.maximumValue = 2;
     self.releaseSlider.value = audioManager.releaseTime;
     
-#endif
+    self.cutoffSlider.minimumValue = 0;
+    self.cutoffSlider.maximumValue = 127;
+    self.cutoffSlider.value = audioManager.cutoffLevel;
+    
+    self.resonanceSlider.minimumValue = 0;
+    self.resonanceSlider.maximumValue = 127;
+    self.resonanceSlider.value = audioManager.resonanceLevel;
 }
 
 - (void)didReceiveMemoryWarning
@@ -112,6 +117,16 @@
 - (IBAction)releaseSliderChanged:(UISlider *)slider
 {
     [JFSSynthManager sharedManager].releaseTime = slider.value;
+}
+
+- (IBAction)cutoffSliderChanged:(UISlider *)sender
+{
+    
+}
+
+- (IBAction)resonanceSliderChanged:(id)sender
+{
+    
 }
 
 @end
