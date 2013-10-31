@@ -23,7 +23,7 @@
 		7A6C6897181D833F009F4A83 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6876181D833E009F4A83 /* UIKit.framework */; };
 		7A6C689F181D833F009F4A83 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7A6C689D181D833F009F4A83 /* InfoPlist.strings */; };
 		7A6C68A1181D833F009F4A83 /* JFSynthTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A6C68A0181D833F009F4A83 /* JFSynthTests.m */; };
-		7A6C68AD181D84DA009F4A83 /* JFSAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A6C68AC181D84DA009F4A83 /* JFSAudioManager.m */; };
+		7A6C68AD181D84DA009F4A83 /* JFSSynthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A6C68AC181D84DA009F4A83 /* JFSSynthManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,8 +58,8 @@
 		7A6C689C181D833F009F4A83 /* JFSynthTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JFSynthTests-Info.plist"; sourceTree = "<group>"; };
 		7A6C689E181D833F009F4A83 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7A6C68A0181D833F009F4A83 /* JFSynthTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JFSynthTests.m; sourceTree = "<group>"; };
-		7A6C68AB181D84DA009F4A83 /* JFSAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSAudioManager.h; sourceTree = "<group>"; };
-		7A6C68AC181D84DA009F4A83 /* JFSAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSAudioManager.m; sourceTree = "<group>"; };
+		7A6C68AB181D84DA009F4A83 /* JFSSynthManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSSynthManager.h; sourceTree = "<group>"; };
+		7A6C68AC181D84DA009F4A83 /* JFSSynthManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSSynthManager.m; sourceTree = "<group>"; };
 		DEB310698CEA446691085808 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -131,8 +131,8 @@
 				7A6C688B181D833E009F4A83 /* JFSViewController.m */,
 				7A6C688D181D833E009F4A83 /* Images.xcassets */,
 				7A6C6879181D833E009F4A83 /* Supporting Files */,
-				7A6C68AB181D84DA009F4A83 /* JFSAudioManager.h */,
-				7A6C68AC181D84DA009F4A83 /* JFSAudioManager.m */,
+				7A6C68AB181D84DA009F4A83 /* JFSSynthManager.h */,
+				7A6C68AC181D84DA009F4A83 /* JFSSynthManager.m */,
 			);
 			path = JFSynth;
 			sourceTree = "<group>";
@@ -298,7 +298,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A6C68AD181D84DA009F4A83 /* JFSAudioManager.m in Sources */,
+				7A6C68AD181D84DA009F4A83 /* JFSSynthManager.m in Sources */,
 				7A6C688C181D833E009F4A83 /* JFSViewController.m in Sources */,
 				7A6C6883181D833E009F4A83 /* JFSAppDelegate.m in Sources */,
 				7A6C687F181D833E009F4A83 /* main.m in Sources */,

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 John Forester. All rights reserved.
 //
 
-#import "JFSAudioManager.h"
+#import "JFSSynthManager.h"
 #import "TheAmazingAudioEngine.h"
 
 typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
     JFSEnvelopeStateRelease,
 };
 
-@interface JFSAudioManager ()
+@interface JFSSynthManager ()
 
 @property (nonatomic, strong) AEAudioController *audioController;
 @property (nonatomic, strong) AEBlockChannel *oscillatorChannel;
@@ -25,29 +25,21 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 @property (nonatomic, assign) double waveLengthInSamples;
 
 @property (nonatomic, assign) Float32 amp;
-@property (nonatomic, assign) Float32 maxAmp;
 
 @property (nonatomic, assign) Float32 attackSlope;
 @property (nonatomic, assign) Float32 decaySlope;
 @property (nonatomic, assign) Float32 releaseSlope;
 
-@property (nonatomic, assign) Float32 attackTime;
-@property (nonatomic, assign) Float32 decayTime;
-@property (nonatomic, assign) Float32 sustainAmp;
-@property (nonatomic, assign) Float32 releaseTime;
-
-@property (nonatomic, assign) Float32 maxVelocity;
-
 @property (nonatomic, assign) JFSEnvelopeState envelopeState;
 
 @end
 
-@implementation JFSAudioManager
+@implementation JFSSynthManager
 
 #define SAMPLE_RATE 44100.0
 #define VOLUME 0.3
 
-+ (JFSAudioManager *) sharedManager
++ (JFSSynthManager *) sharedManager
 {
     static dispatch_once_t pred = 0;
     __strong static id _sharedObject = nil;
@@ -63,19 +55,36 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
     
     if (self) {
         _audioController = [[AEAudioController alloc]
-                            initWithAudioDescription:[AEAudioController nonInterleaved16BitStereoAudioDescription]
+                            initWithAudioDescription:[AEAudioController nonInterleavedFloatStereoAudioDescription]
                             inputEnabled:NO];
         
         
         [self setUpAmpEnvelope];
         [self setUpOscillatorChannel];
         
+        
+        AudioComponentDescription lpFilterComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
+                                                                                      kAudioUnitType_Effect,
+                                                                                      kAudioUnitSubType_LowPassFilter);
+        
+        NSError *error = nil;
+        
+        AEAudioUnitFilter *lpFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:lpFilterComponent
+                                                                              audioController:_audioController
+                                                                                        error:&error];
+        if (!lpFilter) {
+            NSLog(@"filter initialization error %@", [error localizedDescription]);
+        }
+        
+        //AudioUnitSetParameter(lpFilter.audioUnit, kLowPassParam_CutoffFrequency, kAudioUnitScope_Global, 0, 10.0f, 0);
+        
         AEChannelGroupRef channelGroup = [_audioController createChannelGroup];
         [_audioController addChannels:@[_oscillatorChannel] toChannelGroup:channelGroup];
+        [_audioController addFilter:lpFilter toChannel:_oscillatorChannel];
         
         [_audioController setAudioSessionCategory:kAudioSessionCategory_SoloAmbientSound];
         
-        NSError *error = nil;
+        error = nil;
         
         if (![_audioController start:&error]) {
             NSLog(@"AudioController start error: %@", [error localizedDescription]);
@@ -85,36 +94,74 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
     return self;
 }
 
+#pragma accessor methods
+
+//TODO set limits
+
+- (void)setMaxMidiVelocity:(Float32)maxMidiVelocity
+{
+    _maxMidiVelocity = maxMidiVelocity;
+    self.attackPeak = 0.4 * pow(maxMidiVelocity/127., 3.);
+}
+
+- (void)setAttackTime:(Float32)attackTime
+{
+    _attackTime = attackTime;
+    [self updateAttackSlope];
+}
+
+- (void)setDecayTime:(Float32)decayTime
+{
+    _decayTime = decayTime;
+    [self updateDecaySlope];
+}
+
+- (void)setSustainLevel:(Float32)sustainLevel
+{
+    _sustainLevel = 0.4 * pow(sustainLevel/127., 3.);
+    
+    [self updateDecaySlope];
+    [self updateReleaseSlope];
+}
+
+- (void)setReleaseTime:(Float32)releaseTime
+{
+    self.releaseTime = releaseTime;
+    
+    [self updateReleaseSlope];
+}
+
+#pragma setup methods
+
 - (void)setUpAmpEnvelope
 {
     self.amp = 0;
-    self.maxVelocity = 127;
-    self.maxAmp = 0.4 * pow(self.maxVelocity/127., 3.);
+    self.maxMidiVelocity = 127;
     
-    [self updateAttackTime:0.0001];
-    [self updateDecayTime:10];
-    [self updateSustainAmount:self.maxVelocity];
-    [self updateReleaseTime:0.9];
+    self.attackTime = 0.0001;
+    self.decayTime = 2;
+    self.sustainLevel = self.maxMidiVelocity;
+    self.releaseTime = 0.9;
 }
 
 - (void)setUpOscillatorChannel
 {
-    __weak JFSAudioManager *weakSelf = self;
+    __weak JFSSynthManager *weakSelf = self;
     
-    __block SInt16 framePosition = 0;
+    __block UInt32 framePosition = 0;
     
     _oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
-        for (int i = 0; i < frames; i++) {
+        for (UInt32 i = 0; i < frames; i++) {
             switch (self.envelopeState) {
                 case JFSEnvelopeStateAttack:
-                    if (weakSelf.amp < weakSelf.maxAmp) {
+                    if (weakSelf.amp < weakSelf.attackPeak) {
                         weakSelf.amp += weakSelf.attackSlope;
                     } else {
                         weakSelf.envelopeState = JFSEnvelopeStateDecay;
                     }
                     break;
                 case JFSEnvelopeStateDecay:
-                    if (weakSelf.amp > weakSelf.sustainAmp) {
+                    if (weakSelf.amp > weakSelf.sustainLevel) {
                         weakSelf.amp += weakSelf.decaySlope;
                     } else {
                         weakSelf.envelopeState = JFSEnvelopeStateSustain;
@@ -129,19 +176,19 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
                     break;
             }
             
-            SInt16 sample;
+            Float32 sample;
             
             switch (weakSelf.waveType)
             {
                 case JFSSquareWave:
                     if (framePosition < weakSelf.waveLengthInSamples / 2) {
-                        sample = SHRT_MAX;
+                        sample = FLT_MAX;
                     } else {
-                        sample = SHRT_MIN;
+                        sample = FLT_MIN;
                     }
                     break;
                 case JFSSineWave:
-                    sample = (SInt16)SHRT_MAX * sin(2 * M_PI * (framePosition / weakSelf.waveLengthInSamples));
+                    sample = (Float32)FLT_MAX * sin(2 * M_PI * (framePosition / weakSelf.waveLengthInSamples));
                     break;
                 default:
                     break;
@@ -150,8 +197,8 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
             if (self.envelopeState != JFSEnvelopeStateNone) {
                 sample *= weakSelf.amp * VOLUME;
                 
-                ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
-                ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
+                ((Float32 *)audio->mBuffers[0].mData)[i] = sample;
+                ((Float32 *)audio->mBuffers[1].mData)[i] = sample;
                 
                 framePosition++;
                 
@@ -162,8 +209,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
         }
     }];
     
-    _oscillatorChannel.audioDescription = [AEAudioController nonInterleaved16BitStereoAudioDescription];
-    
+    _oscillatorChannel.audioDescription = [AEAudioController nonInterleavedFloatStereoAudioDescription];
 }
 
 - (void)playFrequency:(double)frequency
@@ -181,49 +227,20 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 
 #pragma mark - envelope updates
 
-- (void)updateAttackTime:(Float32)attackTime
-{
-    self.attackTime = attackTime;
-    
-    [self updateAttackSlope];
-}
-
-- (void)updateDecayTime:(Float32)decayTime
-{
-    self.decayTime = decayTime;
-
-    [self updateDecaySlope];
-}
-
-- (void)updateSustainAmount:(Float32)sustainAmount
-{
-    self.sustainAmp = 0.4 * pow(sustainAmount/127., 3.);
-    
-    [self updateDecaySlope];
-    [self updateReleaseSlope];
-}
-
-- (void)updateReleaseTime:(Float32)releaseTime
-{
-    self.releaseTime = releaseTime;
-    
-    [self updateReleaseSlope];
-}
-
 - (void)updateAttackSlope
 {
-    self.attackSlope = self.maxAmp / (self.attackTime * SAMPLE_RATE);
+    self.attackSlope = self.attackPeak / (self.attackTime * SAMPLE_RATE);
 }
 
 - (void)updateDecaySlope
 {
-    self.decaySlope = -(self.maxAmp - self.sustainAmp) / (self.decayTime * SAMPLE_RATE);
+    self.decaySlope = -(self.attackPeak - self.sustainLevel) / (self.decayTime * SAMPLE_RATE);
 }
 
 - (void)updateReleaseSlope
 {
-    self.releaseSlope = -self.maxAmp / (self.releaseTime * SAMPLE_RATE);
-
+    self.releaseSlope = -self.attackPeak / (self.releaseTime * SAMPLE_RATE);
+    
 }
 
 @end
