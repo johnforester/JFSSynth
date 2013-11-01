@@ -92,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				7A6C6878181D833E009F4A83 /* JFSynth */,
-				7A6C689A181D833F009F4A83 /* JFSynthTests */,
 				7A6C6871181D833E009F4A83 /* Frameworks */,
 				7A6C6870181D833E009F4A83 /* Products */,
 				084B57BE5FC7457AB7CAA9D7 /* Pods.xcconfig */,
@@ -133,6 +132,7 @@
 				7A6C6879181D833E009F4A83 /* Supporting Files */,
 				7A6C68AB181D84DA009F4A83 /* JFSSynthManager.h */,
 				7A6C68AC181D84DA009F4A83 /* JFSSynthManager.m */,
+				7A6C689A181D833F009F4A83 /* JFSynthTests */,
 			);
 			path = JFSynth;
 			sourceTree = "<group>";
@@ -155,7 +155,7 @@
 				7A6C689B181D833F009F4A83 /* Supporting Files */,
 			);
 			path = JFSynthTests;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		7A6C689B181D833F009F4A83 /* Supporting Files */ = {
 			isa = PBXGroup;

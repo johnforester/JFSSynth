@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 #define ENABLE_SYNTH 0
 
 #define SAMPLE_RATE 44100.0
-#define VOLUME 0.3
+#define VOLUME 0.1
 
 + (JFSSynthManager *) sharedManager
 {
@@ -65,10 +65,8 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
                             initWithAudioDescription:[AEAudioController nonInterleavedFloatStereoAudioDescription]
                             inputEnabled:NO];
         
-        
         [self setUpAmpEnvelope];
         [self setUpOscillatorChannel];
-        
         
         AudioComponentDescription lpFilterComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
                                                                                       kAudioUnitType_Effect,
@@ -79,6 +77,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
         self.lpFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:lpFilterComponent
                                                                               audioController:_audioController
                                                                                         error:&error];
+
         if (!self.lpFilter) {
             NSLog(@"filter initialization error %@", [error localizedDescription]);
         }
@@ -86,11 +85,8 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
         self.cutoffLevel = 80;
         self.resonanceLevel = 0.0;
         
-        AEChannelGroupRef channelGroup = [_audioController createChannelGroup];
-        [_audioController addChannels:@[_oscillatorChannel] toChannelGroup:channelGroup];
-        [_audioController addFilter:self.lpFilter toChannel:_oscillatorChannel];
-        
-        [_audioController setAudioSessionCategory:kAudioSessionCategory_SoloAmbientSound];
+        [_audioController addChannels:@[_oscillatorChannel]];
+        [_audioController addFilter:self.lpFilter];
         
         error = nil;
         
@@ -214,29 +210,29 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
                     break;
             }
             
-            Float32 sample;
+            SInt16 sample;
             
             switch (weakSelf.waveType)
             {
                 case JFSSquareWave:
                     if (framePosition < weakSelf.waveLengthInSamples / 2) {
-                        sample = FLT_MAX;
+                        sample = INT16_MAX;
                     } else {
-                        sample = FLT_MIN;
+                        sample = INT16_MIN;
                     }
                     break;
                 case JFSSineWave:
-                    sample = (Float32)FLT_MAX * sin(2 * M_PI * (framePosition / weakSelf.waveLengthInSamples));
+                    sample = INT16_MAX * sin(2 * M_PI * (framePosition / weakSelf.waveLengthInSamples));
                     break;
                 default:
                     break;
             }
             
             if (self.envelopeState != JFSEnvelopeStateNone) {
-                sample *= weakSelf.amp * VOLUME;
+               sample *= weakSelf.amp;
                 
-                ((Float32 *)audio->mBuffers[0].mData)[i] = sample;
-                ((Float32 *)audio->mBuffers[1].mData)[i] = sample;
+                ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
+                ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
                 
                 framePosition++;
                 
@@ -247,7 +243,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
         }
     }];
     
-    _oscillatorChannel.audioDescription = [AEAudioController nonInterleavedFloatStereoAudioDescription];
+    _oscillatorChannel.audioDescription = [AEAudioController nonInterleaved16BitStereoAudioDescription];
 }
 
 - (void)playFrequency:(double)frequency

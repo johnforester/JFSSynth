@@ -41,9 +41,9 @@
     self.attackSlider.maximumValue = 2;
     self.attackSlider.value = audioManager.attackTime;
     
-    self.peakSlider.minimumValue = 0.0;
+    self.peakSlider.minimumValue = 0.0001;
     self.peakSlider.maximumValue = 127.0;
-    self.peakSlider.value = audioManager.attackPeak;
+    self.peakSlider.value = audioManager.maxMidiVelocity;
     
     self.decaySlider.minimumValue = 0;
     self.decaySlider.maximumValue = 2;
@@ -101,7 +101,7 @@
 
 - (IBAction)peakSliderChanged:(UISlider *)slider
 {
-    [JFSSynthManager sharedManager].attackPeak = slider.value;
+    [JFSSynthManager sharedManager].maxMidiVelocity = slider.value;
 }
 
 - (IBAction)decaySliderChanged:(UISlider *)slider
