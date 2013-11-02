@@ -182,7 +182,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 {
     __weak JFSSynthManager *weakSelf = self;
     
-    __block UInt32 framePosition = 0;
+    __block SInt16 phase = 0;
     
     _oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
         for (UInt32 i = 0; i < frames; i++) {
@@ -215,14 +215,14 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
             switch (weakSelf.waveType)
             {
                 case JFSSquareWave:
-                    if (framePosition < weakSelf.waveLengthInSamples / 2) {
+                    if (phase < weakSelf.waveLengthInSamples / 2) {
                         sample = INT16_MAX;
                     } else {
                         sample = INT16_MIN;
                     }
                     break;
                 case JFSSineWave:
-                    sample = INT16_MAX * sin(2 * M_PI * (framePosition / weakSelf.waveLengthInSamples));
+                    sample = INT16_MAX * sin(2 * M_PI * (phase / weakSelf.waveLengthInSamples));
                     break;
                 default:
                     break;
@@ -234,10 +234,10 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
                 ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
                 ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
                 
-                framePosition++;
+                phase++;
                 
-                if (framePosition > weakSelf.waveLengthInSamples) {
-                    framePosition -= weakSelf.waveLengthInSamples;
+                if (phase > weakSelf.waveLengthInSamples) {
+                    phase -= weakSelf.waveLengthInSamples;
                 }
             }
         }

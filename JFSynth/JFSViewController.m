@@ -37,24 +37,24 @@
     
     //TODO move min and max to audio manager
     
-    self.attackSlider.minimumValue = 0.0001;
-    self.attackSlider.maximumValue = 2;
+    self.attackSlider.minimumValue = 0.001;
+    self.attackSlider.maximumValue = 10;
     self.attackSlider.value = audioManager.attackTime;
     
-    self.peakSlider.minimumValue = 0.0001;
+    self.peakSlider.minimumValue = 0.001;
     self.peakSlider.maximumValue = 127.0;
     self.peakSlider.value = audioManager.maxMidiVelocity;
     
-    self.decaySlider.minimumValue = 0;
-    self.decaySlider.maximumValue = 2;
+    self.decaySlider.minimumValue = 0.001;
+    self.decaySlider.maximumValue = 10;
     self.decaySlider.value = audioManager.decayTime;
     
     self.sustainSlider.minimumValue = 0;
-    self.sustainSlider.maximumValue = audioManager.maxMidiVelocity;
+    self.sustainSlider.maximumValue = 127;
     self.sustainSlider.value = audioManager.maxMidiVelocity;
     
-    self.releaseSlider.minimumValue = 0;
-    self.releaseSlider.maximumValue = 2;
+    self.releaseSlider.minimumValue = 0.001;
+    self.releaseSlider.maximumValue = 10;
     self.releaseSlider.value = audioManager.releaseTime;
     
     self.cutoffSlider.minimumValue = 0;
