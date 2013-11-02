@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05754887C6F84FCD876A31B1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB310698CEA446691085808 /* libPods.a */; };
+		7A20C5D01824898500634B09 /* JFSEnvelopeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A20C5CF1824898500634B09 /* JFSEnvelopeView.m */; };
 		7A6C6873181D833E009F4A83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6872181D833E009F4A83 /* Foundation.framework */; };
 		7A6C6875181D833E009F4A83 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6874181D833E009F4A83 /* CoreGraphics.framework */; };
 		7A6C6877181D833E009F4A83 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6876181D833E009F4A83 /* UIKit.framework */; };
@@ -38,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		084B57BE5FC7457AB7CAA9D7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		7A20C5CE1824898500634B09 /* JFSEnvelopeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSEnvelopeView.h; sourceTree = "<group>"; };
+		7A20C5CF1824898500634B09 /* JFSEnvelopeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSEnvelopeView.m; sourceTree = "<group>"; };
 		7A6C686F181D833E009F4A83 /* JFSynth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JFSynth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A6C6872181D833E009F4A83 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7A6C6874181D833E009F4A83 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -133,6 +136,8 @@
 				7A6C68AB181D84DA009F4A83 /* JFSSynthManager.h */,
 				7A6C68AC181D84DA009F4A83 /* JFSSynthManager.m */,
 				7A6C689A181D833F009F4A83 /* JFSynthTests */,
+				7A20C5CE1824898500634B09 /* JFSEnvelopeView.h */,
+				7A20C5CF1824898500634B09 /* JFSEnvelopeView.m */,
 			);
 			path = JFSynth;
 			sourceTree = "<group>";
@@ -299,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A6C68AD181D84DA009F4A83 /* JFSSynthManager.m in Sources */,
+				7A20C5D01824898500634B09 /* JFSEnvelopeView.m in Sources */,
 				7A6C688C181D833E009F4A83 /* JFSViewController.m in Sources */,
 				7A6C6883181D833E009F4A83 /* JFSAppDelegate.m in Sources */,
 				7A6C687F181D833E009F4A83 /* main.m in Sources */,

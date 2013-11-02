@@ -8,6 +8,7 @@
 
 #import "JFSViewController.h"
 #import "JFSSynthManager.h"
+#import "JFSEnvelopeView.h"
 
 @interface JFSViewController ()
 
@@ -20,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *cutoffSlider;
 @property (weak, nonatomic) IBOutlet UISlider *resonanceSlider;
 
+@property (strong, nonatomic) JFSEnvelopeView *envelopeView;
+
 @end
 
 @implementation JFSViewController
@@ -27,6 +30,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (!self.envelopeView) {
+        self.envelopeView = [[JFSEnvelopeView alloc] initWithFrame:CGRectMake(60, 400, 300, 200)];
+        [self.view addSubview:self.envelopeView];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
