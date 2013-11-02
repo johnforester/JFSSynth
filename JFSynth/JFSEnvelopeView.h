@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JFSEnvelopeView : UIView
+@interface JFSEnvelopeView : UIControl
 
 @end
