@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *decaySlider;
 @property (weak, nonatomic) IBOutlet UISlider *sustainSlider;
 @property (weak, nonatomic) IBOutlet UISlider *releaseSlider;
-@property (weak, nonatomic) IBOutlet UISlider *peakSlider;
+@property (weak, nonatomic) IBOutlet UISlider *velocityPeakSlider;
 
 @property (weak, nonatomic) IBOutlet UISlider *cutoffSlider;
 @property (weak, nonatomic) IBOutlet UISlider *resonanceSlider;
@@ -45,32 +45,32 @@
     
     //TODO move min and max to audio manager
     
-    self.attackSlider.minimumValue = 0.001;
-    self.attackSlider.maximumValue = 10;
+    self.attackSlider.minimumValue = [audioManager minimumEnvelopeTime];
+    self.attackSlider.maximumValue = [audioManager maximumEnvelopeTime];
     self.attackSlider.value = audioManager.attackTime;
     
-    self.peakSlider.minimumValue = 0.001;
-    self.peakSlider.maximumValue = 127.0;
-    self.peakSlider.value = audioManager.maxMidiVelocity;
+    self.velocityPeakSlider.minimumValue = 0.001;
+    self.velocityPeakSlider.maximumValue = 127.0;
+    self.velocityPeakSlider.value = audioManager.maxMidiVelocity;
     
-    self.decaySlider.minimumValue = 0.001;
-    self.decaySlider.maximumValue = 10;
+    self.decaySlider.minimumValue = [audioManager minimumEnvelopeTime];
+    self.decaySlider.maximumValue = [audioManager maximumEnvelopeTime];
     self.decaySlider.value = audioManager.decayTime;
     
     self.sustainSlider.minimumValue = 0;
     self.sustainSlider.maximumValue = 127;
     self.sustainSlider.value = audioManager.maxMidiVelocity;
     
-    self.releaseSlider.minimumValue = 0.001;
-    self.releaseSlider.maximumValue = 10;
+    self.releaseSlider.minimumValue = [audioManager minimumEnvelopeTime];
+    self.releaseSlider.maximumValue = [audioManager maximumEnvelopeTime];
     self.releaseSlider.value = audioManager.releaseTime;
     
-    self.cutoffSlider.minimumValue = 0;
-    self.cutoffSlider.maximumValue = 127;
+    self.cutoffSlider.minimumValue = [audioManager minimumCutoff];
+    self.cutoffSlider.maximumValue = [audioManager maximumCutoff];
     self.cutoffSlider.value = audioManager.cutoffLevel;
     
-    self.resonanceSlider.minimumValue = 0;
-    self.resonanceSlider.maximumValue = 127;
+    self.resonanceSlider.minimumValue = [audioManager minimumResonance];
+    self.resonanceSlider.maximumValue = [audioManager maximumResonance];
     self.resonanceSlider.value = audioManager.resonanceLevel;
 }
 

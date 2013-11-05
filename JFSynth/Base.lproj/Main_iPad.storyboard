@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -177,7 +177,6 @@
                                 <color key="thumbTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <action selector="cutoffSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Inw-i8-17X"/>
-                                    <action selector="peakSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="iiO-LO-TVx"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="C" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bcF-o3-1ys">
@@ -256,10 +255,10 @@
                         <outlet property="attackSlider" destination="etZ-Nb-qvW" id="hc5-fL-sqn"/>
                         <outlet property="cutoffSlider" destination="yUh-Bv-tiW" id="eId-yE-0e9"/>
                         <outlet property="decaySlider" destination="tZc-S1-Puy" id="lBH-cP-xod"/>
-                        <outlet property="peakSlider" destination="wE0-an-tkJ" id="Qf2-zz-IrY"/>
                         <outlet property="releaseSlider" destination="txQ-Ot-Fci" id="6F0-HP-GPa"/>
                         <outlet property="resonanceSlider" destination="t0f-E1-Ivr" id="VE7-J6-iGQ"/>
                         <outlet property="sustainSlider" destination="9P8-D5-PVM" id="LZl-gE-r8c"/>
+                        <outlet property="velocityPeakSlider" destination="wE0-an-tkJ" id="aNE-Vi-mYY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

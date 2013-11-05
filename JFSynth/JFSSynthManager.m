@@ -82,7 +82,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
             NSLog(@"filter initialization error %@", [error localizedDescription]);
         }
         
-        self.cutoffLevel = 80;
+        self.cutoffLevel = 6200.0f;
         self.resonanceLevel = 0.0;
         
         [_audioController addChannels:@[_oscillatorChannel]];
@@ -105,7 +105,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 - (void)setMaxMidiVelocity:(Float32)maxMidiVelocity
 {
     _maxMidiVelocity = maxMidiVelocity;
-    self.attackPeak = 0.4 * pow(maxMidiVelocity/127., 3.);
+    self.velocityPeak = 0.4 * pow(maxMidiVelocity/127., 3.);
 }
 
 - (void)setAttackTime:(Float32)attackTime
@@ -138,15 +138,12 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 - (void)setCutoffLevel:(Float32)cutoffLevel
 {
     _cutoffLevel = cutoffLevel;
-    
-    Float32 minCuttoff = 10;
-    Float32 maxCutoff = (SAMPLE_RATE/2);
-    
+        
     AudioUnitSetParameter(self.lpFilter.audioUnit,
                           kLowPassParam_CutoffFrequency,
                           kAudioUnitScope_Global,
                           0,
-                          ((cutoffLevel/127) * maxCutoff - minCuttoff) + minCuttoff,
+                          cutoffLevel,
                           0);
 }
 
@@ -154,15 +151,42 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 {
     _resonanceLevel = resonanceLevel;
     
-    Float32 minResonance = -20.0;
-    Float32 maxResonance = 40.0;
-    
     AudioUnitSetParameter(self.lpFilter.audioUnit,
                           kLowPassParam_Resonance,
                           kAudioUnitScope_Global,
                           0,
-                          ((resonanceLevel/127) * maxResonance - minResonance) + minResonance,
+                          resonanceLevel,
                           0);
+}
+
+- (Float32)minimumCutoff
+{
+    return 10.0f;
+}
+
+- (Float32)maximumCutoff
+{
+    return SAMPLE_RATE/2.0f;
+}
+
+- (Float32)minimumResonance
+{
+    return -20.0f;
+}
+
+- (Float32)maximumResonance
+{
+    return 40.0f;
+}
+
+- (Float32)minimumEnvelopeTime
+{
+    return 0.0001f;
+}
+
+- (Float32)maximumEnvelopeTime
+{
+    return 10.0f;
 }
 
 #pragma setup methods
@@ -188,7 +212,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
         for (UInt32 i = 0; i < frames; i++) {
             switch (self.envelopeState) {
                 case JFSEnvelopeStateAttack:
-                    if (weakSelf.amp < weakSelf.attackPeak) {
+                    if (weakSelf.amp < weakSelf.velocityPeak) {
                         weakSelf.amp += weakSelf.attackSlope;
                     } else {
                         weakSelf.envelopeState = JFSEnvelopeStateDecay;
@@ -204,6 +228,8 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
                 case JFSEnvelopeStateRelease:
                     if (weakSelf.amp > 0.0) {
                         weakSelf.amp += weakSelf.releaseSlope;
+                    } else {
+                        weakSelf.envelopeState = JFSEnvelopeStateNone;
                     }
                     break;
                 default:
@@ -228,7 +254,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
                     break;
             }
             
-            if (self.envelopeState != JFSEnvelopeStateNone) {
+            if (weakSelf.envelopeState != JFSEnvelopeStateNone) {
                sample *= weakSelf.amp;
                 
                 ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
@@ -263,18 +289,17 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 
 - (void)updateAttackSlope
 {
-    self.attackSlope = self.attackPeak / (self.attackTime * SAMPLE_RATE);
+    self.attackSlope = self.velocityPeak / (self.attackTime * SAMPLE_RATE);
 }
 
 - (void)updateDecaySlope
 {
-    self.decaySlope = -(self.attackPeak - self.sustainLevel) / (self.decayTime * SAMPLE_RATE);
+    self.decaySlope = -(self.velocityPeak - self.sustainLevel) / (self.decayTime * SAMPLE_RATE);
 }
 
 - (void)updateReleaseSlope
 {
-    self.releaseSlope = -self.attackPeak / (self.releaseTime * SAMPLE_RATE);
-    
+    self.releaseSlope = -self.velocityPeak / (self.releaseTime * SAMPLE_RATE);
 }
 
 @end

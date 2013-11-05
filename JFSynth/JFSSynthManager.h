@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 
 @property (nonatomic, assign) JFSWaveType waveType;
 
-@property (nonatomic, assign) Float32 attackPeak;
+@property (nonatomic, assign) Float32 velocityPeak;
 
 @property (nonatomic, assign) Float32 maxMidiVelocity;
 
@@ -30,7 +30,16 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 @property (nonatomic, assign) Float32 resonanceLevel;
 
 + (JFSSynthManager *) sharedManager;
+
 - (void)playFrequency:(double)frequency;
 - (void)stopPlaying;
+
+- (Float32)minimumCutoff;
+- (Float32)maximumCutoff;
+- (Float32)minimumResonance;
+- (Float32)maximumResonance;
+
+- (Float32)minimumEnvelopeTime;
+- (Float32)maximumEnvelopeTime;
 
 @end
