@@ -8,19 +8,18 @@
 
 #import "JFSEnvelopeView.h"
 
-NS_ENUM(NSInteger, JFSEnvelopeViewSegment) {
-    JFSEnvelopeViewSegmentAttack,
-    JFSEnvelopeViewSegmentDecay,
-    JFSEnvelopeViewSegmentSustain,
-    JFSEnvelopeViewSegmentRelease,
-    JFSEnvelopeViewSegmentEnvelopeEnd,
+NS_ENUM(NSInteger, JFSEnvelopeViewSegmentPoint) {
+    JFSEnvelopeViewPointAttack,
+    JFSEnvelopeViewPointDecay,
+    JFSEnvelopeViewPointRelease,
+    JFSEnvelopeViewPointEnvelopeEnd,
     
-    JFSEnvelopeViewSegmentCount
+    JFSEnvelopeViewPointCount
 };
 
 @interface JFSEnvelopeView ()
 {
-    CGPoint _points[JFSEnvelopeViewSegmentCount];
+    CGPoint _points[JFSEnvelopeViewPointCount];
     int _currentPoint;
     BOOL _isMoving;
 }
@@ -36,42 +35,56 @@ NS_ENUM(NSInteger, JFSEnvelopeViewSegment) {
     self = [super initWithFrame:frame];
     if (self) {
         
-        UIBezierPath *path = [UIBezierPath bezierPath];
-        [path moveToPoint:CGPointMake(0, CGRectGetHeight(frame))];
-        
-        //TODO set these points via datasource
-        
-        _points[0] = CGPointMake((CGRectGetWidth(frame)/4), 0);
-        _points[1] = CGPointMake((CGRectGetWidth(frame)/4) * 2, 30);
-        _points[2] = CGPointMake((CGRectGetWidth(frame)/4) * 3, 40);
-        _points[3] = CGPointMake(((CGRectGetWidth(frame)/4) * 3) + 10, 40);
-        _points[4] = CGPointMake(CGRectGetWidth(frame), CGRectGetHeight(frame));
-        
-        [path addLineToPoint:_points[0]];
-        [path addLineToPoint:_points[1]];
-        [path addLineToPoint:_points[2]];
-        [path addLineToPoint:_points[3]];
-        [path addLineToPoint:_points[4]];
-        
-        _envelopeLayer = [CAShapeLayer layer];
-        _envelopeLayer.path = path.CGPath;
-        _envelopeLayer.fillColor = [UIColor redColor].CGColor;
-        
-        [self.layer addSublayer:_envelopeLayer];
-        
-        self.backgroundColor = [UIColor clearColor];
-        self.layer.borderColor = [UIColor blackColor].CGColor;
-        self.layer.borderWidth = 1.0f;
-        
-        self.userInteractionEnabled = YES;
     }
     
     return self;
 }
 
+- (void)setDataSource:(id<JFSEnvelopeViewDataSource>)dataSource
+{
+    _dataSource = dataSource;
+    
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(0, CGRectGetHeight(self.frame))];
+    
+    //TODO set these points via datasource
+    
+    CGFloat maxWidth = CGRectGetWidth(self.frame) / 3;
+    CGFloat maxTime = 10.0f;
+    
+    CGFloat attackWidth = ([_dataSource attackTime] / maxTime) * maxWidth;
+    CGFloat decayWidth = ([_dataSource decayTime] / maxTime) * maxWidth;
+    CGFloat releaseWidth = ([_dataSource releaseTime] / maxTime) * maxWidth;
+    CGFloat sustainWidth = CGRectGetWidth(self.frame) - attackWidth - decayWidth - releaseWidth;
+    
+    CGFloat sustainHeight = [_dataSource sustainPercentageOfPeak] * CGRectGetHeight(self.frame);
+    
+    _points[0] = CGPointMake(attackWidth, 0);
+    _points[1] = CGPointMake(_points[0].x + decayWidth, CGRectGetHeight(self.frame) - sustainHeight);
+    _points[2] = CGPointMake(_points[1].x + sustainWidth, CGRectGetHeight(self.frame) - sustainHeight);
+    _points[3] = CGPointMake(_points[2].x + releaseWidth, CGRectGetHeight(self.frame));
+    
+    [path addLineToPoint:_points[0]];
+    [path addLineToPoint:_points[1]];
+    [path addLineToPoint:_points[2]];
+    [path addLineToPoint:_points[3]];
+    
+    _envelopeLayer = [CAShapeLayer layer];
+    _envelopeLayer.path = path.CGPath;
+    _envelopeLayer.fillColor = [UIColor redColor].CGColor;
+    
+    [self.layer addSublayer:_envelopeLayer];
+    
+    self.backgroundColor = [UIColor clearColor];
+    self.layer.borderColor = [UIColor blackColor].CGColor;
+    self.layer.borderWidth = 1.0f;
+    
+    self.userInteractionEnabled = YES;
+}
+
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    for (int i = 0; i < JFSEnvelopeViewSegmentCount - 1; i++) {
+    for (int i = 0; i < JFSEnvelopeViewPointCount; i++) {
         
         CGPoint point = _points[i];
         
@@ -99,12 +112,12 @@ NS_ENUM(NSInteger, JFSEnvelopeViewSegment) {
         locationInView.y = MIN(locationInView.y, CGRectGetHeight(self.bounds));
         locationInView.y = MAX(locationInView.y, 0);
         
-        if (_currentPoint == JFSEnvelopeViewSegmentAttack) {
+        if (_currentPoint == JFSEnvelopeViewPointAttack) {
             locationInView.y = 0;
         }
         
         //check if moving before previous point
-        if (_currentPoint > JFSEnvelopeViewSegmentAttack) {
+        if (_currentPoint > JFSEnvelopeViewPointAttack) {
             CGPoint previousPoint = _points[_currentPoint - 1];
             
             if (previousPoint.x > locationInView.x) {
@@ -113,7 +126,7 @@ NS_ENUM(NSInteger, JFSEnvelopeViewSegment) {
         }
         
         //check if moving past next point
-        if (_currentPoint < JFSEnvelopeViewSegmentCount) {
+        if (_currentPoint < JFSEnvelopeViewPointEnvelopeEnd) {
             CGPoint nextPoint = _points[_currentPoint + 1];
             
             if (nextPoint.x < locationInView.x) {
@@ -124,14 +137,14 @@ NS_ENUM(NSInteger, JFSEnvelopeViewSegment) {
         _points[_currentPoint] = locationInView;
         
         //keep sustain and release y the same
-        if (_currentPoint == JFSEnvelopeViewSegmentSustain || _currentPoint == JFSEnvelopeViewSegmentRelease) {
-            _points[JFSEnvelopeViewSegmentRelease].y = _points[JFSEnvelopeViewSegmentSustain].y = locationInView.y;
+        if (_currentPoint == JFSEnvelopeViewPointDecay || _currentPoint == JFSEnvelopeViewPointRelease) {
+            _points[JFSEnvelopeViewPointRelease].y = _points[JFSEnvelopeViewPointDecay].y = locationInView.y;
         }
         
         UIBezierPath *path = [UIBezierPath bezierPath];
         [path moveToPoint:CGPointMake(0, CGRectGetHeight(self.bounds))];
         
-        for (int i = 0; i < JFSEnvelopeViewSegmentCount; i++) {
+        for (int i = 0; i < JFSEnvelopeViewPointCount; i++) {
             [path addLineToPoint:_points[i]];
         }
         

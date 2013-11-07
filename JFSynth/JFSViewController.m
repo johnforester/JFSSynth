@@ -8,7 +8,6 @@
 
 #import "JFSViewController.h"
 #import "JFSSynthManager.h"
-#import "JFSEnvelopeView.h"
 
 @interface JFSViewController ()
 
@@ -33,6 +32,8 @@
     
     if (!self.envelopeView) {
         self.envelopeView = [[JFSEnvelopeView alloc] initWithFrame:CGRectMake(60, 400, 300, 200)];
+        self.envelopeView.dataSource = self;
+        
         [self.view addSubview:self.envelopeView];
     }
 }
@@ -136,5 +137,28 @@
 {
     [JFSSynthManager sharedManager].resonanceLevel = slider.value;
 }
+
+#pragma mark - JFSEnvelopeViewDataSource
+
+- (Float32)attackTime;
+{
+    return [JFSSynthManager sharedManager].attackTime;
+}
+
+- (Float32)decayTime
+{
+    return [JFSSynthManager sharedManager].decayTime;
+}
+
+- (Float32)sustainPercentageOfPeak
+{
+    return [JFSSynthManager sharedManager].sustainLevel / [JFSSynthManager sharedManager].velocityPeak;
+}
+
+- (Float32)releaseTime
+{
+    return [JFSSynthManager sharedManager].releaseTime;
+}
+
 
 @end

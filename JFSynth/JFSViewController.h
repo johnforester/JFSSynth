@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JFSEnvelopeView.h"
 
-@interface JFSViewController : UIViewController
+@interface JFSViewController : UIViewController <JFSEnvelopeViewDataSource>
 
 @end

@@ -196,10 +196,10 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
     self.amp = 0;
     self.maxMidiVelocity = 127;
     
-    self.attackTime = 0.0001;
-    self.decayTime = 2;
+    self.attackTime = 1.0;
+    self.decayTime = 3.0;
     self.sustainLevel = self.maxMidiVelocity;
-    self.releaseTime = 0.9;
+    self.releaseTime = 5.0;
 }
 
 - (void)setUpOscillatorChannel
