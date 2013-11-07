@@ -8,11 +8,19 @@
 
 #import "JFSEnvelopeView.h"
 
-#define NUMBER_OF_ENVELOPE_POINTS 5
+NS_ENUM(NSInteger, JFSEnvelopeViewSegment) {
+    JFSEnvelopeViewSegmentAttack,
+    JFSEnvelopeViewSegmentDecay,
+    JFSEnvelopeViewSegmentSustain,
+    JFSEnvelopeViewSegmentRelease,
+    JFSEnvelopeViewSegmentEnvelopeEnd,
+    
+    JFSEnvelopeViewSegmentCount
+};
 
 @interface JFSEnvelopeView ()
 {
-    CGPoint _points[NUMBER_OF_ENVELOPE_POINTS];
+    CGPoint _points[JFSEnvelopeViewSegmentCount];
     int _currentPoint;
     BOOL _isMoving;
 }
@@ -31,7 +39,9 @@
         UIBezierPath *path = [UIBezierPath bezierPath];
         [path moveToPoint:CGPointMake(0, CGRectGetHeight(frame))];
         
-        _points[0] = CGPointMake((CGRectGetWidth(frame)/4), 20);
+        //TODO set these points via datasource
+        
+        _points[0] = CGPointMake((CGRectGetWidth(frame)/4), 0);
         _points[1] = CGPointMake((CGRectGetWidth(frame)/4) * 2, 30);
         _points[2] = CGPointMake((CGRectGetWidth(frame)/4) * 3, 40);
         _points[3] = CGPointMake(((CGRectGetWidth(frame)/4) * 3) + 10, 40);
@@ -61,7 +71,7 @@
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    for (int i = 0; i < NUMBER_OF_ENVELOPE_POINTS - 1; i++) {
+    for (int i = 0; i < JFSEnvelopeViewSegmentCount - 1; i++) {
         
         CGPoint point = _points[i];
         
@@ -89,8 +99,12 @@
         locationInView.y = MIN(locationInView.y, CGRectGetHeight(self.bounds));
         locationInView.y = MAX(locationInView.y, 0);
         
+        if (_currentPoint == JFSEnvelopeViewSegmentAttack) {
+            locationInView.y = 0;
+        }
+        
         //check if moving before previous point
-        if (_currentPoint > 0) {
+        if (_currentPoint > JFSEnvelopeViewSegmentAttack) {
             CGPoint previousPoint = _points[_currentPoint - 1];
             
             if (previousPoint.x > locationInView.x) {
@@ -99,7 +113,7 @@
         }
         
         //check if moving past next point
-        if (_currentPoint < NUMBER_OF_ENVELOPE_POINTS) {
+        if (_currentPoint < JFSEnvelopeViewSegmentCount) {
             CGPoint nextPoint = _points[_currentPoint + 1];
             
             if (nextPoint.x < locationInView.x) {
@@ -109,10 +123,15 @@
         
         _points[_currentPoint] = locationInView;
         
+        //keep sustain and release y the same
+        if (_currentPoint == JFSEnvelopeViewSegmentSustain || _currentPoint == JFSEnvelopeViewSegmentRelease) {
+            _points[JFSEnvelopeViewSegmentRelease].y = _points[JFSEnvelopeViewSegmentSustain].y = locationInView.y;
+        }
+        
         UIBezierPath *path = [UIBezierPath bezierPath];
         [path moveToPoint:CGPointMake(0, CGRectGetHeight(self.bounds))];
         
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < JFSEnvelopeViewSegmentCount; i++) {
             [path addLineToPoint:_points[i]];
         }
         
