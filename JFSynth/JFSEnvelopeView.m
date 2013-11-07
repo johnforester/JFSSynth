@@ -8,9 +8,11 @@
 
 #import "JFSEnvelopeView.h"
 
+#define NUMBER_OF_ENVELOPE_POINTS 5
+
 @interface JFSEnvelopeView ()
 {
-    CGPoint _points[5];
+    CGPoint _points[NUMBER_OF_ENVELOPE_POINTS];
     int _currentPoint;
     BOOL _isMoving;
 }
@@ -28,7 +30,6 @@
         
         UIBezierPath *path = [UIBezierPath bezierPath];
         [path moveToPoint:CGPointMake(0, CGRectGetHeight(frame))];
-        
         
         _points[0] = CGPointMake((CGRectGetWidth(frame)/4), 20);
         _points[1] = CGPointMake((CGRectGetWidth(frame)/4) * 2, 30);
@@ -60,7 +61,7 @@
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < NUMBER_OF_ENVELOPE_POINTS - 1; i++) {
         
         CGPoint point = _points[i];
         
@@ -73,7 +74,6 @@
             _isMoving = YES;
             return YES;
         }
-        
     }
     
     return NO;
@@ -88,6 +88,24 @@
         locationInView.x = MAX(locationInView.x, 0);
         locationInView.y = MIN(locationInView.y, CGRectGetHeight(self.bounds));
         locationInView.y = MAX(locationInView.y, 0);
+        
+        //check if moving before previous point
+        if (_currentPoint > 0) {
+            CGPoint previousPoint = _points[_currentPoint - 1];
+            
+            if (previousPoint.x > locationInView.x) {
+                locationInView.x = previousPoint.x;
+            }
+        }
+        
+        //check if moving past next point
+        if (_currentPoint < NUMBER_OF_ENVELOPE_POINTS) {
+            CGPoint nextPoint = _points[_currentPoint + 1];
+            
+            if (nextPoint.x < locationInView.x) {
+                locationInView.x = nextPoint.x;
+            }
+        }
         
         _points[_currentPoint] = locationInView;
         
