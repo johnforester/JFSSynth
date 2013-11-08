@@ -121,6 +121,10 @@
             if (locationInView.x > ATTACK_X_RIGHT_BOUND) {
                 locationInView.x = ATTACK_X_RIGHT_BOUND;
             }
+            
+            if (locationInView.x > _points[JFSEnvelopeViewPointDecay].x) {
+                _points[JFSEnvelopeViewPointDecay].x = locationInView.x;
+            }
         }
         
         if (_currentPoint == JFSEnvelopeViewPointRelease) {
