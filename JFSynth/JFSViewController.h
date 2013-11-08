@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "JFSEnvelopeView.h"
 
-@interface JFSViewController : UIViewController <JFSEnvelopeViewDataSource>
+@interface JFSViewController : UIViewController <JFSEnvelopeViewDataSource, JFSEnvelopeViewDelegate>
 
 @end

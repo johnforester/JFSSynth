@@ -8,6 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, JFSEnvelopeViewSegmentPoint) {
+    JFSEnvelopeViewPointAttack,
+    JFSEnvelopeViewPointDecay,
+    JFSEnvelopeViewPointSustainEnd,
+    JFSEnvelopeViewPointRelease,
+    
+    JFSEnvelopeViewPointCount
+};
+
+@protocol JFSEnvelopeViewDataSource;
+@protocol JFSEnvelopeViewDelegate;
+
+@interface JFSEnvelopeView : UIControl
+
+@property (nonatomic, assign) id<JFSEnvelopeViewDataSource> dataSource;
+@property (nonatomic, assign) id<JFSEnvelopeViewDelegate> delegate;
+
+@end
+
 @protocol JFSEnvelopeViewDataSource <NSObject>
 
 @required
@@ -15,11 +34,13 @@
 - (Float32)decayTime;
 - (Float32)sustainPercentageOfPeak;
 - (Float32)releaseTime;
+- (Float32)maxEnvelopeTime;
 
 @end
 
-@interface JFSEnvelopeView : UIControl
+@protocol JFSEnvelopeViewDelegate <NSObject>
 
-@property (nonatomic, assign) id<JFSEnvelopeViewDataSource> dataSource;
+@required
+- (void)envelopeView:(JFSEnvelopeView *)envelopView didUpdateEnvelopePoint:(JFSEnvelopeViewSegmentPoint)envelopePoint adjustedPoint:(CGPoint)point;
 
 @end

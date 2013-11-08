@@ -33,6 +33,7 @@
     if (!self.envelopeView) {
         self.envelopeView = [[JFSEnvelopeView alloc] initWithFrame:CGRectMake(60, 400, 300, 200)];
         self.envelopeView.dataSource = self;
+        self.envelopeView.delegate = self;
         
         [self.view addSubview:self.envelopeView];
     }
@@ -60,7 +61,7 @@
     
     self.sustainSlider.minimumValue = 0;
     self.sustainSlider.maximumValue = 127;
-    self.sustainSlider.value = audioManager.maxMidiVelocity;
+    self.sustainSlider.value = 60;
     
     self.releaseSlider.minimumValue = [audioManager minimumEnvelopeTime];
     self.releaseSlider.maximumValue = [audioManager maximumEnvelopeTime];
@@ -160,5 +161,43 @@
     return [JFSSynthManager sharedManager].releaseTime;
 }
 
+- (Float32)maxEnvelopeTime
+{
+    return [JFSSynthManager sharedManager].maximumEnvelopeTime;
+}
+
+#pragma mark - JFSEnvelopViewDelegate
+
+- (void)envelopeView:(JFSEnvelopeView *)envelopView didUpdateEnvelopePoint:(JFSEnvelopeViewSegmentPoint)envelopePoint adjustedPoint:(CGPoint)point
+{
+    CGFloat width = CGRectGetWidth(envelopView.frame);
+    CGFloat height = CGRectGetHeight(envelopView.frame);
+    
+    CGFloat timeValue = (point.x / (width/3)) * [self maxEnvelopeTime];
+    
+    switch (envelopePoint) {
+        case JFSEnvelopeViewPointAttack:
+            [JFSSynthManager sharedManager].attackTime = timeValue + 0.0001; // add small amount so we get audio no matter what
+            NSLog(@"attack %f", timeValue);
+            break;
+        case JFSEnvelopeViewPointDecay:
+            
+            [JFSSynthManager sharedManager].decayTime = timeValue;
+            [JFSSynthManager sharedManager].sustainLevel = ((height - point.y) / height) * 127.;
+            
+            NSLog(@"decay %f",timeValue);
+            NSLog(@"sustain %f", [JFSSynthManager sharedManager].sustainLevel);
+            break;
+        case JFSEnvelopeViewPointSustainEnd:
+            break;
+        case JFSEnvelopeViewPointRelease:
+            [JFSSynthManager sharedManager].releaseTime = timeValue;
+            
+            NSLog(@"release %f", timeValue);
+            break;
+        default:
+            break;
+    }
+}
 
 @end

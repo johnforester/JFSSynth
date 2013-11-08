@@ -13,6 +13,14 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
     JFSSineWave,
 };
 
+typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
+    JFSEnvelopeStateNone,
+    JFSEnvelopeStateAttack,
+    JFSEnvelopeStateSustain,
+    JFSEnvelopeStateDecay,
+    JFSEnvelopeStateRelease,
+};
+
 @interface JFSSynthManager : NSObject
 
 @property (nonatomic, assign) JFSWaveType waveType;

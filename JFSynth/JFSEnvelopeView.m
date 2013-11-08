@@ -8,14 +8,8 @@
 
 #import "JFSEnvelopeView.h"
 
-NS_ENUM(NSInteger, JFSEnvelopeViewSegmentPoint) {
-    JFSEnvelopeViewPointAttack,
-    JFSEnvelopeViewPointDecay,
-    JFSEnvelopeViewPointRelease,
-    JFSEnvelopeViewPointEnvelopeEnd,
-    
-    JFSEnvelopeViewPointCount
-};
+#define ATTACK_X_RIGHT_BOUND CGRectGetWidth(self.frame) / 3
+#define RELEASE_X_LEFT_BOUND (CGRectGetWidth(self.frame) / 3) * 2
 
 @interface JFSEnvelopeView ()
 {
@@ -47,27 +41,24 @@ NS_ENUM(NSInteger, JFSEnvelopeViewSegmentPoint) {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(0, CGRectGetHeight(self.frame))];
     
-    //TODO set these points via datasource
-    
-    CGFloat maxWidth = CGRectGetWidth(self.frame) / 3;
-    CGFloat maxTime = 10.0f;
+    CGFloat maxWidth = [self maxSegmentWidth];
+    CGFloat maxTime = [_dataSource maxEnvelopeTime];
     
     CGFloat attackWidth = ([_dataSource attackTime] / maxTime) * maxWidth;
     CGFloat decayWidth = ([_dataSource decayTime] / maxTime) * maxWidth;
     CGFloat releaseWidth = ([_dataSource releaseTime] / maxTime) * maxWidth;
-    CGFloat sustainWidth = CGRectGetWidth(self.frame) - attackWidth - decayWidth - releaseWidth;
     
     CGFloat sustainHeight = [_dataSource sustainPercentageOfPeak] * CGRectGetHeight(self.frame);
     
-    _points[0] = CGPointMake(attackWidth, 0);
-    _points[1] = CGPointMake(_points[0].x + decayWidth, CGRectGetHeight(self.frame) - sustainHeight);
-    _points[2] = CGPointMake(_points[1].x + sustainWidth, CGRectGetHeight(self.frame) - sustainHeight);
-    _points[3] = CGPointMake(_points[2].x + releaseWidth, CGRectGetHeight(self.frame));
+    _points[JFSEnvelopeViewPointAttack] = CGPointMake(attackWidth, 0);
+    _points[JFSEnvelopeViewPointDecay] = CGPointMake(_points[JFSEnvelopeViewPointAttack].x + decayWidth, CGRectGetHeight(self.frame) - sustainHeight);
+    _points[JFSEnvelopeViewPointSustainEnd] = CGPointMake(maxWidth * 2, CGRectGetHeight(self.frame) - sustainHeight);
+    _points[JFSEnvelopeViewPointRelease] = CGPointMake(_points[JFSEnvelopeViewPointSustainEnd].x + releaseWidth, CGRectGetHeight(self.frame));
     
-    [path addLineToPoint:_points[0]];
-    [path addLineToPoint:_points[1]];
-    [path addLineToPoint:_points[2]];
-    [path addLineToPoint:_points[3]];
+    [path addLineToPoint:_points[JFSEnvelopeViewPointAttack]];
+    [path addLineToPoint:_points[JFSEnvelopeViewPointDecay]];
+    [path addLineToPoint:_points[JFSEnvelopeViewPointSustainEnd]];
+    [path addLineToPoint:_points[JFSEnvelopeViewPointRelease]];
     
     _envelopeLayer = [CAShapeLayer layer];
     _envelopeLayer.path = path.CGPath;
@@ -82,9 +73,20 @@ NS_ENUM(NSInteger, JFSEnvelopeViewSegmentPoint) {
     self.userInteractionEnabled = YES;
 }
 
+- (CGFloat)maxSegmentWidth
+{
+    return CGRectGetWidth(self.frame) / 3;
+}
+
+#pragma mark - touch tracking
+
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    for (int i = 0; i < JFSEnvelopeViewPointCount; i++) {
+    for (int i = 0; i <= JFSEnvelopeViewPointRelease; i++) {
+        
+        if (i == JFSEnvelopeViewPointSustainEnd) {
+            continue;
+        }
         
         CGPoint point = _points[i];
         
@@ -106,39 +108,45 @@ NS_ENUM(NSInteger, JFSEnvelopeViewSegmentPoint) {
 {
     if (_isMoving) {
         CGPoint locationInView = [touch locationInView:self];
-
+        
         locationInView.x = MIN(locationInView.x, CGRectGetWidth(self.bounds));
         locationInView.x = MAX(locationInView.x, 0);
         locationInView.y = MIN(locationInView.y, CGRectGetHeight(self.bounds));
         locationInView.y = MAX(locationInView.y, 0);
         
+        
         if (_currentPoint == JFSEnvelopeViewPointAttack) {
             locationInView.y = 0;
-        }
-        
-        //check if moving before previous point
-        if (_currentPoint > JFSEnvelopeViewPointAttack) {
-            CGPoint previousPoint = _points[_currentPoint - 1];
             
-            if (previousPoint.x > locationInView.x) {
-                locationInView.x = previousPoint.x;
+            if (locationInView.x > ATTACK_X_RIGHT_BOUND) {
+                locationInView.x = ATTACK_X_RIGHT_BOUND;
             }
         }
         
-        //check if moving past next point
-        if (_currentPoint < JFSEnvelopeViewPointEnvelopeEnd) {
-            CGPoint nextPoint = _points[_currentPoint + 1];
+        if (_currentPoint == JFSEnvelopeViewPointRelease) {
+            locationInView.y = CGRectGetHeight(self.frame);
             
-            if (nextPoint.x < locationInView.x) {
-                locationInView.x = nextPoint.x;
+            if (locationInView.x < RELEASE_X_LEFT_BOUND) {
+                locationInView.x = RELEASE_X_LEFT_BOUND;
+            }
+        }
+        
+        if (_currentPoint == JFSEnvelopeViewPointDecay) {
+            
+            if (locationInView.x < _points[JFSEnvelopeViewPointAttack].x) {
+                locationInView.x = _points[JFSEnvelopeViewPointAttack].x;
+            }
+            
+            if (locationInView.x > _points[JFSEnvelopeViewPointAttack].x + [self maxSegmentWidth]) {
+                locationInView.x = _points[JFSEnvelopeViewPointAttack].x + [self maxSegmentWidth];
             }
         }
         
         _points[_currentPoint] = locationInView;
         
         //keep sustain and release y the same
-        if (_currentPoint == JFSEnvelopeViewPointDecay || _currentPoint == JFSEnvelopeViewPointRelease) {
-            _points[JFSEnvelopeViewPointRelease].y = _points[JFSEnvelopeViewPointDecay].y = locationInView.y;
+        if (_currentPoint == JFSEnvelopeViewPointDecay) {
+            _points[JFSEnvelopeViewPointSustainEnd].y = _points[JFSEnvelopeViewPointDecay].y = locationInView.y;
         }
         
         UIBezierPath *path = [UIBezierPath bezierPath];
@@ -149,6 +157,25 @@ NS_ENUM(NSInteger, JFSEnvelopeViewSegmentPoint) {
         }
         
         self.envelopeLayer.path = path.CGPath;
+        
+        CGPoint adjustedPoint = _points[_currentPoint];
+        
+        switch (_currentPoint) {
+            case JFSEnvelopeViewPointAttack:
+                break;
+            case JFSEnvelopeViewPointDecay:
+                adjustedPoint.x = adjustedPoint.x - _points[JFSEnvelopeViewPointAttack].x;
+                break;
+            case JFSEnvelopeViewPointRelease:
+                adjustedPoint.x = adjustedPoint.x - ([self maxSegmentWidth] * 2);
+                break;
+            default:
+                break;
+        }
+        
+        [self.delegate envelopeView:self
+             didUpdateEnvelopePoint:_currentPoint
+                      adjustedPoint:adjustedPoint];
     }
     
     return YES;

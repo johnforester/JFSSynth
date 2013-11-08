@@ -9,14 +9,6 @@
 #import "JFSSynthManager.h"
 #import "TheAmazingAudioEngine.h"
 
-typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
-    JFSEnvelopeStateNone,
-    JFSEnvelopeStateAttack,
-    JFSEnvelopeStateSustain,
-    JFSEnvelopeStateDecay,
-    JFSEnvelopeStateRelease,
-};
-
 @interface JFSSynthManager ()
 
 @property (nonatomic, strong) AEAudioController *audioController;
@@ -84,6 +76,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
         
         self.cutoffLevel = 6200.0f;
         self.resonanceLevel = 0.0;
+        self.sustainLevel = 60;
         
         [_audioController addChannels:@[_oscillatorChannel]];
         [_audioController addFilter:self.lpFilter];
@@ -122,6 +115,8 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 
 - (void)setSustainLevel:(Float32)sustainLevel
 {
+    //TODO clean this up, it is confusing
+    
     _sustainLevel = 0.4 * pow(sustainLevel/127., 3.);
     
     [self updateDecaySlope];
