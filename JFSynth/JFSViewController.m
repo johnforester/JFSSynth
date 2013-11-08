@@ -177,7 +177,7 @@
     
     switch (envelopePoint) {
         case JFSEnvelopeViewPointAttack:
-            [JFSSynthManager sharedManager].attackTime = timeValue + 0.0001; // add small amount so we get audio no matter what
+            [JFSSynthManager sharedManager].attackTime = timeValue;
             NSLog(@"attack %f", timeValue);
             break;
         case JFSEnvelopeViewPointDecay:

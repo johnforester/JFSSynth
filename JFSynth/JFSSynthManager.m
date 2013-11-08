@@ -67,9 +67,9 @@
         NSError *error = nil;
         
         self.lpFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:lpFilterComponent
-                                                                              audioController:_audioController
-                                                                                        error:&error];
-
+                                                                audioController:_audioController
+                                                                          error:&error];
+        
         if (!self.lpFilter) {
             NSLog(@"filter initialization error %@", [error localizedDescription]);
         }
@@ -103,13 +103,13 @@
 
 - (void)setAttackTime:(Float32)attackTime
 {
-    _attackTime = attackTime;
+    _attackTime = MAX(attackTime, 0.0001); // add small amount so we get audio no matter what
     [self updateAttackSlope];
 }
 
 - (void)setDecayTime:(Float32)decayTime
 {
-    _decayTime = decayTime;
+    _decayTime = MAX(decayTime, 0.0001);
     [self updateDecaySlope];
 }
 
@@ -117,7 +117,7 @@
 {
     //TODO clean this up, it is confusing
     
-    _sustainLevel = 0.4 * pow(sustainLevel/127., 3.);
+    _sustainLevel = 0.4 * (sustainLevel/127.);
     
     [self updateDecaySlope];
     [self updateReleaseSlope];
@@ -133,7 +133,7 @@
 - (void)setCutoffLevel:(Float32)cutoffLevel
 {
     _cutoffLevel = cutoffLevel;
-        
+    
     AudioUnitSetParameter(self.lpFilter.audioUnit,
                           kLowPassParam_CutoffFrequency,
                           kAudioUnitScope_Global,
@@ -250,7 +250,7 @@
             }
             
             if (weakSelf.envelopeState != JFSEnvelopeStateNone) {
-               sample *= weakSelf.amp;
+                sample *= weakSelf.amp;
                 
                 ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
                 ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
