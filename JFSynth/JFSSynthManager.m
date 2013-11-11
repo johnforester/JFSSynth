@@ -103,13 +103,13 @@
 
 - (void)setAttackTime:(Float32)attackTime
 {
-    _attackTime = MAX(attackTime, 0.0001); // add small amount so we get audio no matter what
+    _attackTime = attackTime;
     [self updateAttackSlope];
 }
 
 - (void)setDecayTime:(Float32)decayTime
 {
-    _decayTime = MAX(decayTime, 0.0001);
+    _decayTime = decayTime;
     [self updateDecaySlope];
 }
 
@@ -284,17 +284,25 @@
 
 - (void)updateAttackSlope
 {
-    self.attackSlope = self.velocityPeak / (self.attackTime * SAMPLE_RATE);
+    if (self.attackTime > 0.0f) {
+        self.attackSlope = self.velocityPeak / (self.attackTime * SAMPLE_RATE);
+    } else {
+        self.attackSlope = self.velocityPeak;
+    }
 }
 
 - (void)updateDecaySlope
 {
-    self.decaySlope = -(self.velocityPeak - self.sustainLevel) / (self.decayTime * SAMPLE_RATE);
+    if (self.decayTime > 0.0f) {
+        self.decaySlope = -(self.velocityPeak - self.sustainLevel) / (self.decayTime * SAMPLE_RATE);
+    } else {
+        self.decaySlope = -self.sustainLevel;
+    }
 }
 
 - (void)updateReleaseSlope
 {
-    self.releaseSlope = -self.velocityPeak / (self.releaseTime * SAMPLE_RATE);
+    self.releaseSlope = -self.sustainLevel / (self.releaseTime * SAMPLE_RATE);
 }
 
 @end
