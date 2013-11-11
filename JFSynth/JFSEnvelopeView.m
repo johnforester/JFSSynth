@@ -36,6 +36,17 @@
     
     return self;
 }
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    
+    if (self) {
+        _touchPointsTransform = CGAffineTransformMakeRotation(2 * M_PI);
+    }
+    
+    return self;
+}
+
 
 - (void)setDataSource:(id<JFSEnvelopeViewDataSource>)dataSource
 {

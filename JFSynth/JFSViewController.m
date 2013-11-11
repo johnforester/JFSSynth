@@ -20,28 +20,18 @@
 @property (weak, nonatomic) IBOutlet UISlider *cutoffSlider;
 @property (weak, nonatomic) IBOutlet UISlider *resonanceSlider;
 
-@property (strong, nonatomic) JFSEnvelopeView *envelopeView;
+@property (weak, nonatomic) IBOutlet JFSEnvelopeView *ampEnvelopeView;
 
 @end
 
 @implementation JFSViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    if (!self.envelopeView) {
-        self.envelopeView = [[JFSEnvelopeView alloc] initWithFrame:CGRectMake(60, 400, 400, 250)];
-        self.envelopeView.dataSource = self;
-        self.envelopeView.delegate = self;
-        
-        [self.view addSubview:self.envelopeView];
-    }
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    self.ampEnvelopeView.dataSource = self;
+    self.ampEnvelopeView.delegate = self;
     
     JFSSynthManager *audioManager = [JFSSynthManager sharedManager];
     
