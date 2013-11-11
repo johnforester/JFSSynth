@@ -31,7 +31,7 @@
     [super viewDidLoad];
     
     if (!self.envelopeView) {
-        self.envelopeView = [[JFSEnvelopeView alloc] initWithFrame:CGRectMake(60, 400, 300, 200)];
+        self.envelopeView = [[JFSEnvelopeView alloc] initWithFrame:CGRectMake(60, 400, 400, 250)];
         self.envelopeView.dataSource = self;
         self.envelopeView.delegate = self;
         

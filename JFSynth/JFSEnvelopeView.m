@@ -10,15 +10,18 @@
 
 #define ATTACK_X_RIGHT_BOUND CGRectGetWidth(self.frame) / 3
 #define RELEASE_X_LEFT_BOUND (CGRectGetWidth(self.frame) / 3) * 2
+#define TOUCH_POINTS_RADIUS 10
 
 @interface JFSEnvelopeView ()
 {
     CGPoint _points[JFSEnvelopeViewPointCount];
+    CGAffineTransform _touchPointsTransform;
     int _currentPoint;
     BOOL _isMoving;
 }
 
 @property (nonatomic, strong) CAShapeLayer *envelopeLayer;
+@property (nonatomic, strong) NSDictionary *touchPointLayers;
 
 @end
 
@@ -28,7 +31,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        _touchPointsTransform = CGAffineTransformMakeRotation(2 * M_PI);
     }
     
     return self;
@@ -63,8 +66,18 @@
     _envelopeLayer = [CAShapeLayer layer];
     _envelopeLayer.path = path.CGPath;
     _envelopeLayer.fillColor = [UIColor redColor].CGColor;
+    _envelopeLayer.zPosition = 1;
     
     [self.layer addSublayer:_envelopeLayer];
+    
+    self.touchPointLayers = @{@(JFSEnvelopeViewPointAttack) : [self dotLayerAtPoint:_points[JFSEnvelopeViewPointAttack]],
+                              @(JFSEnvelopeViewPointDecay) : [self dotLayerAtPoint:_points[JFSEnvelopeViewPointDecay]],
+                              @(JFSEnvelopeViewPointRelease) :[self dotLayerAtPoint:_points[JFSEnvelopeViewPointRelease]]
+                              };
+    
+    [self.touchPointLayers.allValues enumerateObjectsUsingBlock:^(CAShapeLayer *dotLayer, NSUInteger idx, BOOL *stop) {
+        [self.layer addSublayer:dotLayer];
+    }];
     
     self.backgroundColor = [UIColor clearColor];
     self.layer.borderColor = [UIColor blackColor].CGColor;
@@ -114,7 +127,6 @@
         locationInView.y = MIN(locationInView.y, CGRectGetHeight(self.bounds));
         locationInView.y = MAX(locationInView.y, 0);
         
-        
         if (_currentPoint == JFSEnvelopeViewPointAttack) {
             locationInView.y = 0;
             
@@ -148,7 +160,7 @@
         
         _points[_currentPoint] = locationInView;
         
-        //keep sustain and release y the same
+        //keep sustain and decay y the same
         if (_currentPoint == JFSEnvelopeViewPointDecay) {
             _points[JFSEnvelopeViewPointSustainEnd].y = _points[JFSEnvelopeViewPointDecay].y = locationInView.y;
         }
@@ -159,6 +171,12 @@
         for (int i = 0; i < JFSEnvelopeViewPointCount; i++) {
             [path addLineToPoint:_points[i]];
         }
+        
+        [self.touchPointLayers[@(_currentPoint)] setPath:CGPathCreateWithEllipseInRect(CGRectMake(_points[_currentPoint].x - TOUCH_POINTS_RADIUS,
+                                                                                                  _points[_currentPoint].y - TOUCH_POINTS_RADIUS,
+                                                                                                  TOUCH_POINTS_RADIUS * 2,
+                                                                                                  TOUCH_POINTS_RADIUS * 2),
+                                                                                       &_touchPointsTransform)];
         
         self.envelopeLayer.path = path.CGPath;
         
@@ -180,6 +198,7 @@
         [self.delegate envelopeView:self
              didUpdateEnvelopePoint:_currentPoint
                       adjustedPoint:adjustedPoint];
+        
     }
     
     return YES;
@@ -193,6 +212,21 @@
 - (void)cancelTrackingWithEvent:(UIEvent *)event
 {
     _isMoving = NO;
+}
+
+#pragma mark - UI Elements
+
+- (CAShapeLayer *)dotLayerAtPoint:(CGPoint)point
+{
+    CAShapeLayer *dotLayer = [CAShapeLayer layer];
+    
+    dotLayer.strokeColor = [UIColor blackColor].CGColor;
+    dotLayer.path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - TOUCH_POINTS_RADIUS, point.y - TOUCH_POINTS_RADIUS, TOUCH_POINTS_RADIUS * 2, TOUCH_POINTS_RADIUS * 2),
+                                                  &_touchPointsTransform);
+    dotLayer.fillColor = [UIColor colorWithRed:0.0 green:1.0 blue:0.5 alpha:0.8].CGColor;
+    dotLayer.zPosition = 2;
+    
+    return dotLayer;
 }
 
 @end

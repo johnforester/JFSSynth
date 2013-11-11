@@ -181,7 +181,7 @@
 
 - (Float32)maximumEnvelopeTime
 {
-    return 10.0f;
+    return 8.0f;
 }
 
 #pragma setup methods
