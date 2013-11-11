@@ -99,6 +99,9 @@
 {
     _maxMidiVelocity = maxMidiVelocity;
     self.velocityPeak = 0.4 * pow(maxMidiVelocity/127., 3.);
+    
+    //TODO clean this up
+    self.sustainLevel = _sustainLevel;
 }
 
 - (void)setAttackTime:(Float32)attackTime
@@ -117,7 +120,7 @@
 {
     //TODO clean this up, it is confusing
     
-    _sustainLevel = 0.4 * (sustainLevel/127.);
+    _sustainLevel = 0.4 * pow((sustainLevel/127. * self.maxMidiVelocity)/127., 3.);
     
     [self updateDecaySlope];
     [self updateReleaseSlope];

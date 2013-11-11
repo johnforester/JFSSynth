@@ -81,9 +81,9 @@
     
     [self.layer addSublayer:_envelopeLayer];
     
-    self.touchPointLayers = @{@(JFSEnvelopeViewPointAttack) : [self dotLayerAtPoint:_points[JFSEnvelopeViewPointAttack]],
-                              @(JFSEnvelopeViewPointDecay) : [self dotLayerAtPoint:_points[JFSEnvelopeViewPointDecay]],
-                              @(JFSEnvelopeViewPointRelease) :[self dotLayerAtPoint:_points[JFSEnvelopeViewPointRelease]]
+    self.touchPointLayers = @{@(JFSEnvelopeViewPointAttack)     :   [self dotLayerAtPoint:_points[JFSEnvelopeViewPointAttack]],
+                              @(JFSEnvelopeViewPointDecay)      :   [self dotLayerAtPoint:_points[JFSEnvelopeViewPointDecay]],
+                              @(JFSEnvelopeViewPointRelease)    :   [self dotLayerAtPoint:_points[JFSEnvelopeViewPointRelease]]
                               };
     
     [self.touchPointLayers.allValues enumerateObjectsUsingBlock:^(CAShapeLayer *dotLayer, NSUInteger idx, BOOL *stop) {
