@@ -32,7 +32,6 @@
 #define ENABLE_SYNTH 0
 
 #define SAMPLE_RATE 44100.0
-#define VOLUME 0.1
 
 + (JFSSynthManager *) sharedManager
 {
@@ -274,8 +273,13 @@
 {
     self.envelopeState = JFSEnvelopeStateAttack;
     
-    self.waveLengthInSamples = SAMPLE_RATE / frequency;
+    [self updateFrequency:frequency];
     self.amp = 0;
+}
+
+- (void)updateFrequency:(double)frequency
+{
+    self.waveLengthInSamples = SAMPLE_RATE / frequency;
 }
 
 - (void)stopPlaying

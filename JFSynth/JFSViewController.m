@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *cutoffSlider;
 @property (weak, nonatomic) IBOutlet UISlider *resonanceSlider;
 
+@property (weak, nonatomic) IBOutlet UISlider *noteSlider;
+
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *ampEnvelopeView;
 
 @end
@@ -74,14 +76,18 @@
 
 #pragma mark - IBAction
 
-- (IBAction)playA:(id)sender
+- (IBAction)play:(id)sender
 {
-    [[JFSSynthManager sharedManager] playFrequency:440.0];
+    double note = pow(2, ((int)self.noteSlider.value - 69) / 12) * 440;
+    
+    [[JFSSynthManager sharedManager] playFrequency:note];
 }
 
-- (IBAction)playD:(id)sender
+- (IBAction)noteSliderChanged:(id)sender
 {
-    [[JFSSynthManager sharedManager] playFrequency:587.33];
+    double note = pow(2, ((int)self.noteSlider.value - 69) / 12) * 440;
+        
+    [[JFSSynthManager sharedManager] updateFrequency:note];
 }
 
 - (IBAction)stop:(id)sender
@@ -94,29 +100,9 @@
     [[JFSSynthManager sharedManager] setWaveType:segmentedControl.selectedSegmentIndex];
 }
 
-- (IBAction)attackSliderChanged:(UISlider *)slider
-{
-    [JFSSynthManager sharedManager].attackTime = slider.value;
-}
-
 - (IBAction)peakSliderChanged:(UISlider *)slider
 {
     [JFSSynthManager sharedManager].maxMidiVelocity = slider.value;
-}
-
-- (IBAction)decaySliderChanged:(UISlider *)slider
-{
-    [JFSSynthManager sharedManager].decayTime = slider.value;
-}
-
-- (IBAction)sustainSliderChanged:(UISlider *)slider
-{
-    [JFSSynthManager sharedManager].sustainLevel = slider.value;
-}
-
-- (IBAction)releaseSliderChanged:(UISlider *)slider
-{
-    [JFSSynthManager sharedManager].releaseTime = slider.value;
 }
 
 - (IBAction)cutoffSliderChanged:(UISlider *)slider

@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DKw-Qv-0h4">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DKw-Qv-0h4">
                                 <rect key="frame" x="81" y="831" width="88" height="88"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.01085100634" alpha="1" colorSpace="calibratedRGB"/>
@@ -25,25 +25,12 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="88" id="bag-9R-9ny"/>
                                     <constraint firstAttribute="width" constant="88" id="zis-6V-fyX"/>
                                 </constraints>
-                                <state key="normal" title="A"/>
+                                <state key="normal" title="PLAY">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
-                                    <action selector="playA:" destination="BYZ-38-t0r" eventType="touchDown" id="o6l-Lb-m2P"/>
+                                    <action selector="play:" destination="BYZ-38-t0r" eventType="touchDown" id="qlA-oz-o3J"/>
                                     <action selector="stop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VHb-mu-FoE"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FI7-Sb-9ZQ">
-                                <rect key="frame" x="247" y="831" width="88" height="88"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.01085100634" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="88" id="QqY-vz-egq"/>
-                                    <constraint firstAttribute="height" constant="88" id="ujE-31-8Zb"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="D"/>
-                                <connections>
-                                    <action selector="playD:" destination="BYZ-38-t0r" eventType="touchDown" id="7KT-sW-1Ts"/>
-                                    <action selector="stop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bFJ-i2-vis"/>
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="R3N-ba-dvt">
@@ -124,24 +111,27 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="21" minValue="0.0" maxValue="127" translatesAutoresizingMaskIntoConstraints="NO" id="aSp-6B-4HJ">
+                                <rect key="frame" x="263" y="858" width="479" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="noteSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="LhL-1Z-qqZ"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="FI7-Sb-9ZQ" firstAttribute="leading" secondItem="DKw-Qv-0h4" secondAttribute="trailing" constant="78" id="41b-wf-6Hr"/>
                             <constraint firstItem="U2M-di-gqM" firstAttribute="top" secondItem="t0f-E1-Ivr" secondAttribute="top" constant="-128" id="A7v-Qw-Gm8"/>
                             <constraint firstItem="wE0-an-tkJ" firstAttribute="leading" secondItem="U2M-di-gqM" secondAttribute="trailing" constant="29" id="AfL-uS-TAQ"/>
                             <constraint firstItem="yUh-Bv-tiW" firstAttribute="leading" secondItem="t0f-E1-Ivr" secondAttribute="leading" id="CDM-sx-8hw"/>
                             <constraint firstAttribute="trailing" secondItem="t0f-E1-Ivr" secondAttribute="trailing" constant="20" id="EJj-4K-WB2"/>
                             <constraint firstItem="yUh-Bv-tiW" firstAttribute="leading" secondItem="bcF-o3-1ys" secondAttribute="trailing" constant="20" id="KSj-AQ-QZl"/>
-                            <constraint firstItem="DKw-Qv-0h4" firstAttribute="bottom" secondItem="FI7-Sb-9ZQ" secondAttribute="bottom" id="L9l-5b-zfG"/>
                             <constraint firstItem="wE0-an-tkJ" firstAttribute="bottom" secondItem="ADw-Xe-EkK" secondAttribute="bottom" constant="-128" id="Mwn-dp-RCI"/>
                             <constraint firstItem="bcF-o3-1ys" firstAttribute="leading" secondItem="ADw-Xe-EkK" secondAttribute="leading" id="RHS-HP-5mL"/>
-                            <constraint firstItem="OMe-Jd-vxg" firstAttribute="top" secondItem="FI7-Sb-9ZQ" secondAttribute="bottom" constant="105" id="Xze-dy-qWj"/>
                             <constraint firstAttribute="trailing" secondItem="yUh-Bv-tiW" secondAttribute="trailing" constant="20" id="aMe-1T-iUB"/>
                             <constraint firstItem="t0f-E1-Ivr" firstAttribute="top" secondItem="yUh-Bv-tiW" secondAttribute="bottom" constant="7" id="cal-Rp-Tx2"/>
                             <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="t0f-E1-Ivr" secondAttribute="trailing" constant="28" id="eHE-rr-cwZ"/>
-                            <constraint firstItem="DKw-Qv-0h4" firstAttribute="top" secondItem="FI7-Sb-9ZQ" secondAttribute="top" id="gLQ-TF-gpo"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="FI7-Sb-9ZQ" secondAttribute="trailing" constant="433" id="iqJ-O1-ORt"/>
                             <constraint firstItem="wE0-an-tkJ" firstAttribute="centerY" secondItem="U2M-di-gqM" secondAttribute="centerY" id="j0V-Vl-DIz"/>
                             <constraint firstItem="4pB-OF-ha8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="lBY-In-3nT"/>
                             <constraint firstItem="DKw-Qv-0h4" firstAttribute="trailing" secondItem="R3N-ba-dvt" secondAttribute="trailing" id="oFs-hZ-pwG"/>
@@ -151,6 +141,7 @@
                     <connections>
                         <outlet property="ampEnvelopeView" destination="4pB-OF-ha8" id="sAb-SN-cRM"/>
                         <outlet property="cutoffSlider" destination="yUh-Bv-tiW" id="eId-yE-0e9"/>
+                        <outlet property="noteSlider" destination="aSp-6B-4HJ" id="rqG-vD-k2k"/>
                         <outlet property="resonanceSlider" destination="t0f-E1-Ivr" id="VE7-J6-iGQ"/>
                         <outlet property="velocityPeakSlider" destination="wE0-an-tkJ" id="aNE-Vi-mYY"/>
                     </connections>

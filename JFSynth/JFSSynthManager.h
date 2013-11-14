@@ -40,6 +40,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 + (JFSSynthManager *) sharedManager;
 
 - (void)playFrequency:(double)frequency;
+- (void)updateFrequency:(double)frequency;
 - (void)stopPlaying;
 
 - (Float32)minimumCutoff;
