@@ -111,17 +111,16 @@
 
 - (void)updatePeakWithMidiVelocity:(short)midiVelocity
 {
-    Float32 sustainPercentageOfVelocity = _sustainLevel / _peak;
-    
     self.peak = 0.4 * pow(midiVelocity/127., 3.);
-    
-    self.sustainLevel = self.peak * sustainPercentageOfVelocity;
 }
 
 - (void)setPeak:(Float32)peak
 {
-    //TODO check if sustain is greater than peak
+    Float32 sustainPercentageOfVelocity = _sustainLevel / _peak;
+    
     _peak = peak;
+    
+    self.sustainLevel = _peak * sustainPercentageOfVelocity;
 }
 
 - (void)setReleaseTime:(Float32)releaseTime
