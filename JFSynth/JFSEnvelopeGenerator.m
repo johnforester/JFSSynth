@@ -25,11 +25,11 @@
     if (self) {
         
         _level = 0;
-        _peak = 0.4 * pow(60/127., 3.);;
+        _peak = 0.4 * pow(60/127., 3.);
         _attackTime = 0.1;
         _decayTime = 3.0;
         _sustainLevel = _peak/2;
-        _releaseTime = 5.0;
+        _releaseTime = 1.0;
         _sampleRate = sampleRate;
         
         [self updateAttackSlope];

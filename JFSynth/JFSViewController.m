@@ -13,10 +13,6 @@
 
 @interface JFSViewController ()
 
-@property (weak, nonatomic) IBOutlet UISlider *attackSlider;
-@property (weak, nonatomic) IBOutlet UISlider *decaySlider;
-@property (weak, nonatomic) IBOutlet UISlider *sustainSlider;
-@property (weak, nonatomic) IBOutlet UISlider *releaseSlider;
 @property (weak, nonatomic) IBOutlet UISlider *velocityPeakSlider;
 
 @property (weak, nonatomic) IBOutlet UISlider *cutoffSlider;
@@ -39,27 +35,9 @@
     
     JFSSynthController *audioManager = [JFSSynthController sharedManager];
     
-    //TODO move min and max to audio manager
-    
-    self.attackSlider.minimumValue = [audioManager minimumEnvelopeTime];
-    self.attackSlider.maximumValue = [audioManager maximumEnvelopeTime];
-    self.attackSlider.value = audioManager.ampEnvelopeGenerator.attackTime;
-    
     self.velocityPeakSlider.minimumValue = 0.001;
     self.velocityPeakSlider.maximumValue = 127.0;
-    self.velocityPeakSlider.value = audioManager.ampEnvelopeGenerator.peak;
-    
-    self.decaySlider.minimumValue = [audioManager minimumEnvelopeTime];
-    self.decaySlider.maximumValue = [audioManager maximumEnvelopeTime];
-    self.decaySlider.value = audioManager.ampEnvelopeGenerator.decayTime;
-    
-    self.sustainSlider.minimumValue = 0;
-    self.sustainSlider.maximumValue = 127;
-    self.sustainSlider.value = 60;
-    
-    self.releaseSlider.minimumValue = [audioManager minimumEnvelopeTime];
-    self.releaseSlider.maximumValue = [audioManager maximumEnvelopeTime];
-    self.releaseSlider.value = audioManager.ampEnvelopeGenerator.releaseTime;
+    self.velocityPeakSlider.value = 60;
     
     self.cutoffSlider.minimumValue = [audioManager minimumCutoff];
     self.cutoffSlider.maximumValue = [audioManager maximumCutoff];
@@ -99,7 +77,7 @@
 
 - (IBAction)waveTypeControlChanged:(UISegmentedControl *)segmentedControl
 {
-    [[JFSSynthManager sharedManager].oscillator setWaveType:segmentedControl.selectedSegmentIndex];
+    [[JFSSynthController sharedManager].oscillator setWaveType:segmentedControl.selectedSegmentIndex];
 }
 
 - (IBAction)peakSliderChanged:(UISlider *)slider
