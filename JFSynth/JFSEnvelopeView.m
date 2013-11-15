@@ -30,8 +30,9 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
+    
     if (self) {
-        _touchPointsTransform = CGAffineTransformMakeRotation(2 * M_PI);
+        [self setUpView];
     }
     
     return self;
@@ -42,16 +43,29 @@
     self = [super initWithCoder:aDecoder];
     
     if (self) {
-        _touchPointsTransform = CGAffineTransformMakeRotation(2 * M_PI);
+        [self setUpView];
     }
     
     return self;
+}
+
+- (void)setUpView
+{
+    _touchPointsTransform = CGAffineTransformMakeRotation(2 * M_PI);
+    self.backgroundColor = [UIColor clearColor];
+    self.layer.borderColor = [UIColor blackColor].CGColor;
+    self.layer.borderWidth = 1.0f;
 }
 
 - (void)setDataSource:(id<JFSEnvelopeViewDataSource>)dataSource
 {
     _dataSource = dataSource;
     
+    [self refreshView];
+}
+
+- (void)refreshView
+{
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(0, CGRectGetHeight(self.frame))];
     
@@ -74,27 +88,29 @@
     [path addLineToPoint:_points[JFSEnvelopeViewPointSustainEnd]];
     [path addLineToPoint:_points[JFSEnvelopeViewPointRelease]];
     
-    _envelopeLayer = [CAShapeLayer layer];
-    _envelopeLayer.path = path.CGPath;
-    _envelopeLayer.fillColor = [UIColor redColor].CGColor;
-    _envelopeLayer.zPosition = 1;
+    if (_envelopeLayer == nil) {
+        _envelopeLayer = [CAShapeLayer layer];
+        _envelopeLayer.path = path.CGPath;
+        _envelopeLayer.fillColor = [UIColor redColor].CGColor;
+        _envelopeLayer.zPosition = 1;
+        
+        [self.layer addSublayer:_envelopeLayer];
+    }
     
-    [self.layer addSublayer:_envelopeLayer];
+    if (self.touchPointLayers == nil) {
+        self.touchPointLayers = @{@(JFSEnvelopeViewPointAttack)   : [self dotLayer],
+                                  @(JFSEnvelopeViewPointDecay)    : [self dotLayer],
+                                  @(JFSEnvelopeViewPointRelease)  : [self dotLayer]
+                                  };
+        
+        [self.touchPointLayers.allValues enumerateObjectsUsingBlock:^(CAShapeLayer *dotLayer, NSUInteger idx, BOOL *stop) {
+            [self.layer addSublayer:dotLayer];
+        }];
+    }
     
-    self.touchPointLayers = @{@(JFSEnvelopeViewPointAttack)     :   [self dotLayerAtPoint:_points[JFSEnvelopeViewPointAttack]],
-                              @(JFSEnvelopeViewPointDecay)      :   [self dotLayerAtPoint:_points[JFSEnvelopeViewPointDecay]],
-                              @(JFSEnvelopeViewPointRelease)    :   [self dotLayerAtPoint:_points[JFSEnvelopeViewPointRelease]]
-                              };
-    
-    [self.touchPointLayers.allValues enumerateObjectsUsingBlock:^(CAShapeLayer *dotLayer, NSUInteger idx, BOOL *stop) {
-        [self.layer addSublayer:dotLayer];
+    [self.touchPointLayers enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, CAShapeLayer *touchPointLayer, BOOL *stop) {
+        [self moveTouchPointAtIndex:[key integerValue] toPoint:_points[[key integerValue]]];
     }];
-    
-    self.backgroundColor = [UIColor clearColor];
-    self.layer.borderColor = [UIColor blackColor].CGColor;
-    self.layer.borderWidth = 1.0f;
-    
-    self.userInteractionEnabled = YES;
 }
 
 - (CGFloat)maxSegmentWidth
@@ -237,13 +253,13 @@
 
 #pragma mark - UI Elements
 
-- (CAShapeLayer *)dotLayerAtPoint:(CGPoint)point
+- (CAShapeLayer *)dotLayer
 {
     CAShapeLayer *dotLayer = [CAShapeLayer layer];
     
     dotLayer.strokeColor = [UIColor blackColor].CGColor;
-    dotLayer.path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - TOUCH_POINTS_RADIUS,
-                                                             point.y - TOUCH_POINTS_RADIUS,
+    dotLayer.path = CGPathCreateWithEllipseInRect(CGRectMake(CGPointZero.x,
+                                                             CGPointZero.y,
                                                              TOUCH_POINTS_RADIUS * 2,
                                                              TOUCH_POINTS_RADIUS * 2),
                                                   &_touchPointsTransform);
