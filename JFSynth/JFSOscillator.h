@@ -17,8 +17,7 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 
 @property (nonatomic, assign) JFSWaveType waveType;
 @property (nonatomic, assign) double waveLengthInSamples;
-@property (nonatomic, assign) double phase;
 
-- (SInt16)updateOscillatorWithAmplitudeMultiplier:(Float32)multiplier;
+- (SInt16)updateOscillator;
 
 @end

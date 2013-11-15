@@ -145,11 +145,10 @@
         
         for (int i = 0; i < frames; i++) {
             
-            SInt16 sample = [weakSelf.oscillator updateOscillatorWithAmplitudeMultiplier:[weakSelf.ampEnvelopeGenerator updateState]];
+            SInt16 sample = [weakSelf.oscillator updateOscillator] * [weakSelf.ampEnvelopeGenerator updateState];
         
             ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
             ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
-         
         }
     }];
     

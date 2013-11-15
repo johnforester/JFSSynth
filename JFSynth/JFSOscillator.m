@@ -10,11 +10,13 @@
 
 @interface JFSOscillator ()
 
+@property (nonatomic, assign) double phase;
+
 @end
 
 @implementation JFSOscillator
 
-- (SInt16)updateOscillatorWithAmplitudeMultiplier:(Float32)multiplier
+- (SInt16)updateOscillator
 {
     SInt16 sample;
     
@@ -33,8 +35,6 @@
         default:
             break;
     }
-    
-    sample *= multiplier;
     
     self.phase++;
     
