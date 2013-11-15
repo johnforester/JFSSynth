@@ -49,19 +49,23 @@
     return self;
 }
 
-- (void)setUpView
-{
-    _touchPointsTransform = CGAffineTransformMakeRotation(2 * M_PI);
-    self.backgroundColor = [UIColor clearColor];
-    self.layer.borderColor = [UIColor blackColor].CGColor;
-    self.layer.borderWidth = 1.0f;
-}
+#pragma mark - accessors
 
 - (void)setDataSource:(id<JFSEnvelopeViewDataSource>)dataSource
 {
     _dataSource = dataSource;
     
     [self refreshView];
+}
+
+#pragma mark - view setup and refresh
+
+- (void)setUpView
+{
+    _touchPointsTransform = CGAffineTransformMakeRotation(2 * M_PI);
+    self.backgroundColor = [UIColor clearColor];
+    self.layer.borderColor = [UIColor blackColor].CGColor;
+    self.layer.borderWidth = 1.0f;
 }
 
 - (void)refreshView
@@ -113,11 +117,6 @@
     }];
 }
 
-- (CGFloat)maxSegmentWidth
-{
-    return CGRectGetWidth(self.frame) / 3;
-}
-
 #pragma mark - touch tracking
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
@@ -147,94 +146,18 @@
     return NO;
 }
 
-- (void)moveTouchPointAtIndex:(JFSEnvelopeViewSegmentPoint)touchPointIdx toPoint:(CGPoint)point
-{
-    [self.touchPointLayers[@(touchPointIdx)] setPath:CGPathCreateWithEllipseInRect(CGRectMake(point.x - TOUCH_POINTS_RADIUS,
-                                                                                              point.y - TOUCH_POINTS_RADIUS,
-                                                                                              TOUCH_POINTS_RADIUS * 2,
-                                                                                              TOUCH_POINTS_RADIUS * 2),
-                                                                                   &_touchPointsTransform)];
-}
-
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
     if (_isMoving) {
-        CGPoint locationInView = [touch locationInView:self];
-        
-        locationInView.x = MIN(locationInView.x, CGRectGetWidth(self.bounds));
-        locationInView.x = MAX(locationInView.x, 0);
-        locationInView.y = MIN(locationInView.y, CGRectGetHeight(self.bounds));
-        locationInView.y = MAX(locationInView.y, 0);
-        
-        if (_currentPoint == JFSEnvelopeViewPointAttack) {
-            locationInView.y = 0;
-            
-            if (locationInView.x > ATTACK_X_RIGHT_BOUND) {
-                locationInView.x = ATTACK_X_RIGHT_BOUND;
-            }
-            
-            if (locationInView.x > _points[JFSEnvelopeViewPointDecay].x) {
-                _points[JFSEnvelopeViewPointDecay].x = locationInView.x;
-                
-                [self moveTouchPointAtIndex:JFSEnvelopeViewPointDecay toPoint:_points[JFSEnvelopeViewPointDecay]];
-            }
-        }
-        
-        if (_currentPoint == JFSEnvelopeViewPointRelease) {
-            locationInView.y = CGRectGetHeight(self.frame);
-            
-            if (locationInView.x < RELEASE_X_LEFT_BOUND) {
-                locationInView.x = RELEASE_X_LEFT_BOUND;
-            }
-        }
-        
-        if (_currentPoint == JFSEnvelopeViewPointDecay) {
-            
-            if (locationInView.x < _points[JFSEnvelopeViewPointAttack].x) {
-                locationInView.x = _points[JFSEnvelopeViewPointAttack].x;
-            }
-            
-            if (locationInView.x > _points[JFSEnvelopeViewPointAttack].x + [self maxSegmentWidth]) {
-                locationInView.x = _points[JFSEnvelopeViewPointAttack].x + [self maxSegmentWidth];
-            }
-        }
-        
-        _points[_currentPoint] = locationInView;
-        
-        //keep sustain and decay y the same
-        if (_currentPoint == JFSEnvelopeViewPointDecay) {
-            _points[JFSEnvelopeViewPointSustainEnd].y = _points[JFSEnvelopeViewPointDecay].y = locationInView.y;
-        }
-        
-        UIBezierPath *path = [UIBezierPath bezierPath];
-        [path moveToPoint:CGPointMake(0, CGRectGetHeight(self.bounds))];
-        
-        for (int i = 0; i < JFSEnvelopeViewPointCount; i++) {
-            [path addLineToPoint:_points[i]];
-        }
+        _points[_currentPoint] = [self pointForTouch:touch];
         
         [self moveTouchPointAtIndex:_currentPoint toPoint:_points[_currentPoint]];
         
-        self.envelopeLayer.path = path.CGPath;
-        
-        CGPoint adjustedPoint = _points[_currentPoint];
-        
-        switch (_currentPoint) {
-            case JFSEnvelopeViewPointAttack:
-                break;
-            case JFSEnvelopeViewPointDecay:
-                adjustedPoint.x = adjustedPoint.x - _points[JFSEnvelopeViewPointAttack].x;
-                break;
-            case JFSEnvelopeViewPointRelease:
-                adjustedPoint.x = adjustedPoint.x - ([self maxSegmentWidth] * 2);
-                break;
-            default:
-                break;
-        }
+        self.envelopeLayer.path = [self pathForCurrentStagePoints].CGPath;
         
         [self.delegate envelopeView:self
              didUpdateEnvelopePoint:_currentPoint
-                      adjustedPoint:adjustedPoint];
+                      adjustedPoint:[self adjustedStagePointAtIndex:_currentPoint]];
         
     }
     
@@ -249,6 +172,103 @@
 - (void)cancelTrackingWithEvent:(UIEvent *)event
 {
     _isMoving = NO;
+}
+
+#pragma mark - touch tracking helpers
+
+- (UIBezierPath *)pathForCurrentStagePoints
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(0, CGRectGetHeight(self.bounds))];
+    
+    for (int i = 0; i < JFSEnvelopeViewPointCount; i++) {
+        [path addLineToPoint:_points[i]];
+    }
+    return path;
+}
+
+- (CGPoint)pointForTouch:(UITouch *)touch
+{
+    CGPoint locationInView = [touch locationInView:self];
+    
+    locationInView.x = MIN(locationInView.x, CGRectGetWidth(self.bounds));
+    locationInView.x = MAX(locationInView.x, 0);
+    locationInView.y = MIN(locationInView.y, CGRectGetHeight(self.bounds));
+    locationInView.y = MAX(locationInView.y, 0);
+    
+    switch (_currentPoint) {
+        case JFSEnvelopeViewPointAttack:
+        {
+            locationInView.y = 0;
+            
+            if (locationInView.x > ATTACK_X_RIGHT_BOUND) {
+                locationInView.x = ATTACK_X_RIGHT_BOUND;
+            }
+            
+            if (locationInView.x > _points[JFSEnvelopeViewPointDecay].x) {
+                _points[JFSEnvelopeViewPointDecay].x = locationInView.x;
+                
+                [self moveTouchPointAtIndex:JFSEnvelopeViewPointDecay toPoint:_points[JFSEnvelopeViewPointDecay]];
+            }
+        }
+            break;
+        case JFSEnvelopeViewPointDecay:
+        {
+            //keep sustain and decay the same y
+            _points[JFSEnvelopeViewPointSustainEnd].y = _points[JFSEnvelopeViewPointDecay].y = locationInView.y;
+            if (locationInView.x < _points[JFSEnvelopeViewPointAttack].x) {
+                locationInView.x = _points[JFSEnvelopeViewPointAttack].x;
+            }
+            
+            if (locationInView.x > _points[JFSEnvelopeViewPointAttack].x + [self maxSegmentWidth]) {
+                locationInView.x = _points[JFSEnvelopeViewPointAttack].x + [self maxSegmentWidth];
+            }
+        }
+            break;
+        case JFSEnvelopeViewPointRelease:
+        {
+            locationInView.y = CGRectGetHeight(self.frame);
+            
+            if (locationInView.x < RELEASE_X_LEFT_BOUND) {
+                locationInView.x = RELEASE_X_LEFT_BOUND;
+            }
+        }
+            break;
+        default:
+            break;
+    }
+    
+    return locationInView;
+}
+
+- (CGPoint)adjustedStagePointAtIndex:(JFSEnvelopeViewStagePoint)pointIdx
+{
+    //adjust x value so 0-10 values are reported back to delegate
+    
+    CGPoint adjustedPoint = _points[pointIdx];
+    
+    switch (pointIdx) {
+        case JFSEnvelopeViewPointAttack:
+            break;
+        case JFSEnvelopeViewPointDecay:
+            adjustedPoint.x = adjustedPoint.x - _points[JFSEnvelopeViewPointAttack].x;
+            break;
+        case JFSEnvelopeViewPointRelease:
+            adjustedPoint.x = adjustedPoint.x - ([self maxSegmentWidth] * 2);
+            break;
+        default:
+            break;
+    }
+    return adjustedPoint;
+}
+
+- (void)moveTouchPointAtIndex:(JFSEnvelopeViewStagePoint)touchPointIdx toPoint:(CGPoint)point
+{
+    [self.touchPointLayers[@(touchPointIdx)] setPath:CGPathCreateWithEllipseInRect(CGRectMake(point.x - TOUCH_POINTS_RADIUS,
+                                                                                              point.y - TOUCH_POINTS_RADIUS,
+                                                                                              TOUCH_POINTS_RADIUS * 2,
+                                                                                              TOUCH_POINTS_RADIUS * 2),
+                                                                                   &_touchPointsTransform)];
 }
 
 #pragma mark - UI Elements
@@ -267,6 +287,11 @@
     dotLayer.zPosition = 2;
     
     return dotLayer;
+}
+
+- (CGFloat)maxSegmentWidth
+{
+    return CGRectGetWidth(self.frame) / 3;
 }
 
 @end

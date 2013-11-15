@@ -124,7 +124,7 @@
 
 #pragma mark - JFSEnvelopViewDelegate
 
-- (void)envelopeView:(JFSEnvelopeView *)envelopView didUpdateEnvelopePoint:(JFSEnvelopeViewSegmentPoint)envelopePoint adjustedPoint:(CGPoint)point
+- (void)envelopeView:(JFSEnvelopeView *)envelopView didUpdateEnvelopePoint:(JFSEnvelopeViewStagePoint)envelopePoint adjustedPoint:(CGPoint)point
 {
     CGFloat width = CGRectGetWidth(envelopView.frame);
     CGFloat height = CGRectGetHeight(envelopView.frame);
