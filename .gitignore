@@ -1,8 +1,6 @@
-#Mac
+# Xcode
 .DS_Store
-
-#Xcode
-build/
+*/build/*
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -15,7 +13,9 @@ xcuserdata
 profile
 *.moved-aside
 DerivedData
-
-#AppCode
 .idea/
+*.hmap
+*.xccheckout
 
+#CocoaPods
+Pods
