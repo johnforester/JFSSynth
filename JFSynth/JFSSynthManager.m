@@ -8,6 +8,7 @@
 
 #import "JFSSynthManager.h"
 #import "TheAmazingAudioEngine.h"
+#import "JFSEnvelopeGenerator.h"
 
 @interface JFSSynthManager ()
 
@@ -16,14 +17,6 @@
 @property (nonatomic, strong) AEAudioUnitFilter *lpFilter;
 
 @property (nonatomic, assign) double waveLengthInSamples;
-
-@property (nonatomic, assign) Float32 amp;
-
-@property (nonatomic, assign) Float32 attackSlope;
-@property (nonatomic, assign) Float32 decaySlope;
-@property (nonatomic, assign) Float32 releaseSlope;
-
-@property (nonatomic, assign) JFSEnvelopeState envelopeState;
 
 @end
 
@@ -56,7 +49,8 @@
                             initWithAudioDescription:[AEAudioController nonInterleavedFloatStereoAudioDescription]
                             inputEnabled:NO];
         
-        [self setUpAmpEnvelope];
+        _ampEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
+        
         [self setUpOscillatorChannel];
         
         AudioComponentDescription lpFilterComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
@@ -75,7 +69,6 @@
         
         self.cutoffLevel = 6200.0f;
         self.resonanceLevel = 0.0;
-        self.sustainLevel = 60;
         
         [_audioController addChannels:@[_oscillatorChannel]];
         [_audioController addFilter:self.lpFilter];
@@ -93,44 +86,6 @@
 #pragma accessor methods
 
 //TODO set limits
-
-- (void)setMaxMidiVelocity:(Float32)maxMidiVelocity
-{
-    _maxMidiVelocity = maxMidiVelocity;
-    self.velocityPeak = 0.4 * pow(maxMidiVelocity/127., 3.);
-    
-    //TODO clean this up
-    self.sustainLevel = _sustainLevel;
-}
-
-- (void)setAttackTime:(Float32)attackTime
-{
-    _attackTime = attackTime;
-    [self updateAttackSlope];
-}
-
-- (void)setDecayTime:(Float32)decayTime
-{
-    _decayTime = decayTime;
-    [self updateDecaySlope];
-}
-
-- (void)setSustainLevel:(Float32)sustainLevel
-{
-    //TODO clean this up, it is confusing
-    
-    _sustainLevel = 0.4 * pow((sustainLevel/127. * self.maxMidiVelocity)/127., 3.);
-    
-    [self updateDecaySlope];
-    [self updateReleaseSlope];
-}
-
-- (void)setReleaseTime:(Float32)releaseTime
-{
-    _releaseTime = releaseTime;
-    
-    [self updateReleaseSlope];
-}
 
 - (void)setCutoffLevel:(Float32)cutoffLevel
 {
@@ -188,17 +143,6 @@
 
 #pragma setup methods
 
-- (void)setUpAmpEnvelope
-{
-    self.amp = 0;
-    self.maxMidiVelocity = 127;
-    
-    self.attackTime = 1.0;
-    self.decayTime = 3.0;
-    self.sustainLevel = self.maxMidiVelocity;
-    self.releaseTime = 5.0;
-}
-
 - (void)setUpOscillatorChannel
 {
     __weak JFSSynthManager *weakSelf = self;
@@ -206,32 +150,10 @@
     __block SInt16 phase = 0;
     
     _oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
-        for (UInt32 i = 0; i < frames; i++) {
-            switch (self.envelopeState) {
-                case JFSEnvelopeStateAttack:
-                    if (weakSelf.amp < weakSelf.velocityPeak) {
-                        weakSelf.amp += weakSelf.attackSlope;
-                    } else {
-                        weakSelf.envelopeState = JFSEnvelopeStateDecay;
-                    }
-                    break;
-                case JFSEnvelopeStateDecay:
-                    if (weakSelf.amp > weakSelf.sustainLevel) {
-                        weakSelf.amp += weakSelf.decaySlope;
-                    } else {
-                        weakSelf.envelopeState = JFSEnvelopeStateSustain;
-                    }
-                    break;
-                case JFSEnvelopeStateRelease:
-                    if (weakSelf.amp > 0.0) {
-                        weakSelf.amp += weakSelf.releaseSlope;
-                    } else {
-                        weakSelf.envelopeState = JFSEnvelopeStateNone;
-                    }
-                    break;
-                default:
-                    break;
-            }
+        
+        for (int i = 0; i < frames; i++) {
+            
+            Float32 amp = [weakSelf.ampEnvelopeGenerator updateState];
             
             SInt16 sample;
             
@@ -251,8 +173,8 @@
                     break;
             }
             
-            if (weakSelf.envelopeState != JFSEnvelopeStateNone) {
-                sample *= weakSelf.amp;
+            if (weakSelf.ampEnvelopeGenerator.envelopeState != JFSEnvelopeStateNone) {
+                sample *= amp;
                 
                 ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
                 ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
@@ -271,10 +193,10 @@
 
 - (void)playFrequency:(double)frequency
 {
-    self.envelopeState = JFSEnvelopeStateAttack;
+    self.ampEnvelopeGenerator.envelopeState = JFSEnvelopeStateAttack;
     
     [self updateFrequency:frequency];
-    self.amp = 0;
+    self.ampEnvelopeGenerator.level = 0;
 }
 
 - (void)updateFrequency:(double)frequency
@@ -284,32 +206,9 @@
 
 - (void)stopPlaying
 {
-    self.envelopeState = JFSEnvelopeStateRelease;
+    self.ampEnvelopeGenerator.envelopeState = JFSEnvelopeStateRelease;
 }
 
-#pragma mark - envelope updates
 
-- (void)updateAttackSlope
-{
-    if (self.attackTime > 0.0f) {
-        self.attackSlope = self.velocityPeak / (self.attackTime * SAMPLE_RATE);
-    } else {
-        self.attackSlope = self.velocityPeak;
-    }
-}
-
-- (void)updateDecaySlope
-{
-    if (self.decayTime > 0.0f) {
-        self.decaySlope = -(self.velocityPeak - self.sustainLevel) / (self.decayTime * SAMPLE_RATE);
-    } else {
-        self.decaySlope = -self.sustainLevel;
-    }
-}
-
-- (void)updateReleaseSlope
-{
-    self.releaseSlope = -self.sustainLevel / (self.releaseTime * SAMPLE_RATE);
-}
 
 @end

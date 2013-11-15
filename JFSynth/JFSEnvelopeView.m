@@ -106,6 +106,8 @@
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    CGPoint locationInView = [touch locationInView:self];
+    
     for (int i = 0; i <= JFSEnvelopeViewPointRelease; i++) {
         
         if (i == JFSEnvelopeViewPointSustainEnd) {
@@ -114,9 +116,10 @@
         
         CGPoint point = _points[i];
         
-        CGRect touchArea = CGRectMake(point.x - 10, point.y - 10, 30, 30);
-        
-        CGPoint locationInView = [touch locationInView:self];
+        CGRect touchArea = CGRectMake(point.x - TOUCH_POINTS_RADIUS,
+                                      point.y - TOUCH_POINTS_RADIUS,
+                                      TOUCH_POINTS_RADIUS * 2,
+                                      TOUCH_POINTS_RADIUS * 2);
         
         if (CGRectContainsPoint(touchArea, locationInView)) {
             _currentPoint = i;
@@ -126,6 +129,15 @@
     }
     
     return NO;
+}
+
+- (void)moveTouchPointAtIndex:(JFSEnvelopeViewSegmentPoint)touchPointIdx toPoint:(CGPoint)point
+{
+    [self.touchPointLayers[@(touchPointIdx)] setPath:CGPathCreateWithEllipseInRect(CGRectMake(point.x - TOUCH_POINTS_RADIUS,
+                                                                                              point.y - TOUCH_POINTS_RADIUS,
+                                                                                              TOUCH_POINTS_RADIUS * 2,
+                                                                                              TOUCH_POINTS_RADIUS * 2),
+                                                                                   &_touchPointsTransform)];
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
@@ -147,6 +159,8 @@
             
             if (locationInView.x > _points[JFSEnvelopeViewPointDecay].x) {
                 _points[JFSEnvelopeViewPointDecay].x = locationInView.x;
+                
+                [self moveTouchPointAtIndex:JFSEnvelopeViewPointDecay toPoint:_points[JFSEnvelopeViewPointDecay]];
             }
         }
         
@@ -183,11 +197,7 @@
             [path addLineToPoint:_points[i]];
         }
         
-        [self.touchPointLayers[@(_currentPoint)] setPath:CGPathCreateWithEllipseInRect(CGRectMake(_points[_currentPoint].x - TOUCH_POINTS_RADIUS,
-                                                                                                  _points[_currentPoint].y - TOUCH_POINTS_RADIUS,
-                                                                                                  TOUCH_POINTS_RADIUS * 2,
-                                                                                                  TOUCH_POINTS_RADIUS * 2),
-                                                                                       &_touchPointsTransform)];
+        [self moveTouchPointAtIndex:_currentPoint toPoint:_points[_currentPoint]];
         
         self.envelopeLayer.path = path.CGPath;
         

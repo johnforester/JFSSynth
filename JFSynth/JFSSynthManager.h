@@ -8,31 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+@class JFSEnvelopeGenerator;
+
 typedef NS_ENUM(NSInteger, JFSWaveType) {
     JFSSquareWave,
     JFSSineWave,
 };
 
-typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
-    JFSEnvelopeStateNone,
-    JFSEnvelopeStateAttack,
-    JFSEnvelopeStateSustain,
-    JFSEnvelopeStateDecay,
-    JFSEnvelopeStateRelease,
-};
 
 @interface JFSSynthManager : NSObject
 
 @property (nonatomic, assign) JFSWaveType waveType;
 
+@property (nonatomic, strong) JFSEnvelopeGenerator *ampEnvelopeGenerator;
+
 @property (nonatomic, assign) Float32 velocityPeak;
-
-@property (nonatomic, assign) Float32 maxMidiVelocity;
-
-@property (nonatomic, assign) Float32 attackTime;
-@property (nonatomic, assign) Float32 decayTime;
-@property (nonatomic, assign) Float32 sustainLevel;
-@property (nonatomic, assign) Float32 releaseTime;
 
 @property (nonatomic, assign) Float32 cutoffLevel;
 @property (nonatomic, assign) Float32 resonanceLevel;

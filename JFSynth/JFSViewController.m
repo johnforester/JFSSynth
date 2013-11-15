@@ -8,6 +8,7 @@
 
 #import "JFSViewController.h"
 #import "JFSSynthManager.h"
+#import "JFSEnvelopeGenerator.h"
 
 @interface JFSViewController ()
 
@@ -41,15 +42,15 @@
     
     self.attackSlider.minimumValue = [audioManager minimumEnvelopeTime];
     self.attackSlider.maximumValue = [audioManager maximumEnvelopeTime];
-    self.attackSlider.value = audioManager.attackTime;
+    self.attackSlider.value = audioManager.ampEnvelopeGenerator.attackTime;
     
     self.velocityPeakSlider.minimumValue = 0.001;
     self.velocityPeakSlider.maximumValue = 127.0;
-    self.velocityPeakSlider.value = audioManager.maxMidiVelocity;
+    self.velocityPeakSlider.value = audioManager.ampEnvelopeGenerator.peak;
     
     self.decaySlider.minimumValue = [audioManager minimumEnvelopeTime];
     self.decaySlider.maximumValue = [audioManager maximumEnvelopeTime];
-    self.decaySlider.value = audioManager.decayTime;
+    self.decaySlider.value = audioManager.ampEnvelopeGenerator.decayTime;
     
     self.sustainSlider.minimumValue = 0;
     self.sustainSlider.maximumValue = 127;
@@ -57,7 +58,7 @@
     
     self.releaseSlider.minimumValue = [audioManager minimumEnvelopeTime];
     self.releaseSlider.maximumValue = [audioManager maximumEnvelopeTime];
-    self.releaseSlider.value = audioManager.releaseTime;
+    self.releaseSlider.value = audioManager.ampEnvelopeGenerator.releaseTime;
     
     self.cutoffSlider.minimumValue = [audioManager minimumCutoff];
     self.cutoffSlider.maximumValue = [audioManager maximumCutoff];
@@ -86,7 +87,7 @@
 - (IBAction)noteSliderChanged:(id)sender
 {
     double note = pow(2, ((int)self.noteSlider.value - 69) / 12) * 440;
-        
+    
     [[JFSSynthManager sharedManager] updateFrequency:note];
 }
 
@@ -102,7 +103,7 @@
 
 - (IBAction)peakSliderChanged:(UISlider *)slider
 {
-    [JFSSynthManager sharedManager].maxMidiVelocity = slider.value;
+    [JFSSynthManager sharedManager].ampEnvelopeGenerator.peak = slider.value;
 }
 
 - (IBAction)cutoffSliderChanged:(UISlider *)slider
@@ -119,22 +120,22 @@
 
 - (Float32)attackTime;
 {
-    return [JFSSynthManager sharedManager].attackTime;
+    return [JFSSynthManager sharedManager].ampEnvelopeGenerator.attackTime;
 }
 
 - (Float32)decayTime
 {
-    return [JFSSynthManager sharedManager].decayTime;
+    return [JFSSynthManager sharedManager].ampEnvelopeGenerator.decayTime;
 }
 
 - (Float32)sustainPercentageOfPeak
 {
-    return [JFSSynthManager sharedManager].sustainLevel / [JFSSynthManager sharedManager].velocityPeak;
+    return [JFSSynthManager sharedManager].ampEnvelopeGenerator.sustainLevel / [JFSSynthManager sharedManager].ampEnvelopeGenerator.peak;
 }
 
 - (Float32)releaseTime
 {
-    return [JFSSynthManager sharedManager].releaseTime;
+    return [JFSSynthManager sharedManager].ampEnvelopeGenerator.releaseTime;
 }
 
 - (Float32)maxEnvelopeTime
@@ -153,21 +154,21 @@
     
     switch (envelopePoint) {
         case JFSEnvelopeViewPointAttack:
-            [JFSSynthManager sharedManager].attackTime = timeValue;
+            [JFSSynthManager sharedManager].ampEnvelopeGenerator.attackTime = timeValue;
             NSLog(@"attack %f", timeValue);
             break;
         case JFSEnvelopeViewPointDecay:
             
-            [JFSSynthManager sharedManager].decayTime = timeValue;
-            [JFSSynthManager sharedManager].sustainLevel = ((height - point.y) / height) * 127.;
+            [JFSSynthManager sharedManager].ampEnvelopeGenerator.decayTime = timeValue;
+            [JFSSynthManager sharedManager].ampEnvelopeGenerator.sustainLevel = ((height - point.y) / height) * 127.;
             
             NSLog(@"decay %f",timeValue);
-            NSLog(@"sustain %f", [JFSSynthManager sharedManager].sustainLevel);
+            NSLog(@"sustain %f", [JFSSynthManager sharedManager].ampEnvelopeGenerator.sustainLevel);
             break;
         case JFSEnvelopeViewPointSustainEnd:
             break;
         case JFSEnvelopeViewPointRelease:
-            [JFSSynthManager sharedManager].releaseTime = timeValue;
+            [JFSSynthManager sharedManager].ampEnvelopeGenerator.releaseTime = timeValue;
             
             NSLog(@"release %f", timeValue);
             break;

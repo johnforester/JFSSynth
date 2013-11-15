@@ -25,7 +25,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="88" id="bag-9R-9ny"/>
                                     <constraint firstAttribute="width" constant="88" id="zis-6V-fyX"/>
                                 </constraints>
-                                <state key="normal" title="PLAY">
+                                <state key="normal">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -111,7 +111,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="21" minValue="0.0" maxValue="127" translatesAutoresizingMaskIntoConstraints="NO" id="aSp-6B-4HJ">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="69" minValue="0.0" maxValue="127" translatesAutoresizingMaskIntoConstraints="NO" id="aSp-6B-4HJ">
                                 <rect key="frame" x="263" y="858" width="479" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
