@@ -53,35 +53,33 @@
 
 - (Float32)updateState
 {
-    __weak typeof(self) weakSelf = self;
-    
     switch (self.envelopeState) {
         case JFSEnvelopeStateAttack:
-            if (weakSelf.level < weakSelf.peak) {
-                weakSelf.level += weakSelf.attackSlope;
+            if (self.level < self.peak) {
+                self.level += self.attackSlope;
             } else {
-                weakSelf.envelopeState = JFSEnvelopeStateDecay;
+                self.envelopeState = JFSEnvelopeStateDecay;
             }
             break;
         case JFSEnvelopeStateDecay:
-            if (weakSelf.level > weakSelf.sustainLevel) {
-                weakSelf.level += weakSelf.decaySlope;
+            if (self.level > self.sustainLevel) {
+                self.level += self.decaySlope;
             } else {
-                weakSelf.envelopeState = JFSEnvelopeStateSustain;
+                self.envelopeState = JFSEnvelopeStateSustain;
             }
             break;
         case JFSEnvelopeStateRelease:
-            if (weakSelf.level > 0.0) {
-                weakSelf.level += weakSelf.releaseSlope;
+            if (self.level > 0.0) {
+                self.level += self.releaseSlope;
             } else {
-                weakSelf.envelopeState = JFSEnvelopeStateNone;
+                self.envelopeState = JFSEnvelopeStateNone;
             }
             break;
         default:
             break;
     }
     
-    return weakSelf.level;
+    return self.level;
 }
 
 - (void)setAttackTime:(Float32)attackTime

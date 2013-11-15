@@ -6,27 +6,26 @@
 //  Copyright (c) 2013 John Forester. All rights reserved.
 //
 
-#import "JFSSynthManager.h"
+#import "JFSSynthController.h"
 #import "TheAmazingAudioEngine.h"
 #import "JFSEnvelopeGenerator.h"
+#import "JFSOscillator.h"
 
-@interface JFSSynthManager ()
+@interface JFSSynthController ()
 
 @property (nonatomic, strong) AEAudioController *audioController;
 @property (nonatomic, strong) AEBlockChannel *oscillatorChannel;
 @property (nonatomic, strong) AEAudioUnitFilter *lpFilter;
 
-@property (nonatomic, assign) double waveLengthInSamples;
-
 @end
 
-@implementation JFSSynthManager
+@implementation JFSSynthController
 
 #define ENABLE_SYNTH 0
 
 #define SAMPLE_RATE 44100.0
 
-+ (JFSSynthManager *) sharedManager
++ (JFSSynthController *) sharedManager
 {
     static dispatch_once_t pred = 0;
     __strong static id _sharedObject = nil;
@@ -50,6 +49,7 @@
                             inputEnabled:NO];
         
         _ampEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
+        _oscillator = [[JFSOscillator alloc] init];
         
         [self setUpOscillatorChannel];
         
@@ -84,8 +84,6 @@
 }
 
 #pragma accessor methods
-
-//TODO set limits
 
 - (void)setCutoffLevel:(Float32)cutoffLevel
 {
@@ -145,46 +143,17 @@
 
 - (void)setUpOscillatorChannel
 {
-    __weak JFSSynthManager *weakSelf = self;
-    
-    __block SInt16 phase = 0;
-    
+    __weak JFSSynthController *weakSelf = self;
+
     _oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
         
         for (int i = 0; i < frames; i++) {
             
-            Float32 amp = [weakSelf.ampEnvelopeGenerator updateState];
-            
-            SInt16 sample;
-            
-            switch (weakSelf.waveType)
-            {
-                case JFSSquareWave:
-                    if (phase < weakSelf.waveLengthInSamples / 2) {
-                        sample = INT16_MAX;
-                    } else {
-                        sample = INT16_MIN;
-                    }
-                    break;
-                case JFSSineWave:
-                    sample = INT16_MAX * sin(2 * M_PI * (phase / weakSelf.waveLengthInSamples));
-                    break;
-                default:
-                    break;
-            }
-            
-            if (weakSelf.ampEnvelopeGenerator.envelopeState != JFSEnvelopeStateNone) {
-                sample *= amp;
-                
-                ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
-                ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
-                
-                phase++;
-                
-                if (phase > weakSelf.waveLengthInSamples) {
-                    phase -= weakSelf.waveLengthInSamples;
-                }
-            }
+            SInt16 sample = [weakSelf.oscillator updateOscillatorWithAmplitudeMultiplier:[weakSelf.ampEnvelopeGenerator updateState]];
+        
+            ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
+            ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
+         
         }
     }];
     
@@ -194,13 +163,13 @@
 - (void)playFrequency:(double)frequency
 {
     [self updateFrequency:frequency];
-
+    
     [self.ampEnvelopeGenerator start];
 }
 
 - (void)updateFrequency:(double)frequency
 {
-    self.waveLengthInSamples = SAMPLE_RATE / frequency;
+    self.oscillator.waveLengthInSamples = SAMPLE_RATE / frequency;
 }
 
 - (void)stopPlaying

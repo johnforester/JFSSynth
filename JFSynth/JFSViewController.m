@@ -7,8 +7,9 @@
 //
 
 #import "JFSViewController.h"
-#import "JFSSynthManager.h"
+#import "JFSSynthController.h"
 #import "JFSEnvelopeGenerator.h"
+#import "JFSOscillator.h"
 
 @interface JFSViewController ()
 
@@ -36,7 +37,7 @@
     self.ampEnvelopeView.dataSource = self;
     self.ampEnvelopeView.delegate = self;
     
-    JFSSynthManager *audioManager = [JFSSynthManager sharedManager];
+    JFSSynthController *audioManager = [JFSSynthController sharedManager];
     
     //TODO move min and max to audio manager
     
@@ -81,66 +82,66 @@
 {
     double note = pow(2, ((int)self.noteSlider.value - 69) / 12) * 440;
     
-    [[JFSSynthManager sharedManager] playFrequency:note];
+    [[JFSSynthController sharedManager] playFrequency:note];
 }
 
 - (IBAction)noteSliderChanged:(id)sender
 {
     double note = pow(2, ((int)self.noteSlider.value - 69) / 12) * 440;
     
-    [[JFSSynthManager sharedManager] updateFrequency:note];
+    [[JFSSynthController sharedManager] updateFrequency:note];
 }
 
 - (IBAction)stop:(id)sender
 {
-    [[JFSSynthManager sharedManager] stopPlaying];
+    [[JFSSynthController sharedManager] stopPlaying];
 }
 
 - (IBAction)waveTypeControlChanged:(UISegmentedControl *)segmentedControl
 {
-    [[JFSSynthManager sharedManager] setWaveType:segmentedControl.selectedSegmentIndex];
+    [[JFSSynthManager sharedManager].oscillator setWaveType:segmentedControl.selectedSegmentIndex];
 }
 
 - (IBAction)peakSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthManager sharedManager].ampEnvelopeGenerator updatePeakWithMidiVelocity:slider.value];
+    [[JFSSynthController sharedManager].ampEnvelopeGenerator updatePeakWithMidiVelocity:slider.value];
 }
 
 - (IBAction)cutoffSliderChanged:(UISlider *)slider
 {
-    [JFSSynthManager sharedManager].cutoffLevel = slider.value;
+    [JFSSynthController sharedManager].cutoffLevel = slider.value;
 }
 
 - (IBAction)resonanceSliderChanged:(UISlider *)slider
 {
-    [JFSSynthManager sharedManager].resonanceLevel = slider.value;
+    [JFSSynthController sharedManager].resonanceLevel = slider.value;
 }
 
 #pragma mark - JFSEnvelopeViewDataSource
 
 - (Float32)attackTime;
 {
-    return [JFSSynthManager sharedManager].ampEnvelopeGenerator.attackTime;
+    return [JFSSynthController sharedManager].ampEnvelopeGenerator.attackTime;
 }
 
 - (Float32)decayTime
 {
-    return [JFSSynthManager sharedManager].ampEnvelopeGenerator.decayTime;
+    return [JFSSynthController sharedManager].ampEnvelopeGenerator.decayTime;
 }
 
 - (Float32)sustainPercentageOfPeak
 {
-    return [JFSSynthManager sharedManager].ampEnvelopeGenerator.sustainLevel / [JFSSynthManager sharedManager].ampEnvelopeGenerator.peak;
+    return [JFSSynthController sharedManager].ampEnvelopeGenerator.sustainLevel / [JFSSynthController sharedManager].ampEnvelopeGenerator.peak;
 }
 
 - (Float32)releaseTime
 {
-    return [JFSSynthManager sharedManager].ampEnvelopeGenerator.releaseTime;
+    return [JFSSynthController sharedManager].ampEnvelopeGenerator.releaseTime;
 }
 
 - (Float32)maxEnvelopeTime
 {
-    return [JFSSynthManager sharedManager].maximumEnvelopeTime;
+    return [JFSSynthController sharedManager].maximumEnvelopeTime;
 }
 
 #pragma mark - JFSEnvelopViewDelegate
@@ -154,22 +155,22 @@
     
     switch (envelopePoint) {
         case JFSEnvelopeViewPointAttack:
-            [JFSSynthManager sharedManager].ampEnvelopeGenerator.attackTime = timeValue;
+            [JFSSynthController sharedManager].ampEnvelopeGenerator.attackTime = timeValue;
             NSLog(@"attack %f", timeValue);
             break;
         case JFSEnvelopeViewPointDecay:
             
-            [JFSSynthManager sharedManager].ampEnvelopeGenerator.decayTime = timeValue;
+            [JFSSynthController sharedManager].ampEnvelopeGenerator.decayTime = timeValue;
             
-            [[JFSSynthManager sharedManager].ampEnvelopeGenerator updateSustainWithMidiVelocity:((height - point.y) / height) * 127.];
+            [[JFSSynthController sharedManager].ampEnvelopeGenerator updateSustainWithMidiVelocity:((height - point.y) / height) * 127.];
             
             NSLog(@"decay %f",timeValue);
-            NSLog(@"sustain %f", [JFSSynthManager sharedManager].ampEnvelopeGenerator.sustainLevel);
+            NSLog(@"sustain %f", [JFSSynthController sharedManager].ampEnvelopeGenerator.sustainLevel);
             break;
         case JFSEnvelopeViewPointSustainEnd:
             break;
         case JFSEnvelopeViewPointRelease:
-            [JFSSynthManager sharedManager].ampEnvelopeGenerator.releaseTime = timeValue;
+            [JFSSynthController sharedManager].ampEnvelopeGenerator.releaseTime = timeValue;
             
             NSLog(@"release %f", timeValue);
             break;

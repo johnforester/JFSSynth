@@ -9,25 +9,19 @@
 #import <Foundation/Foundation.h>
 
 @class JFSEnvelopeGenerator;
+@class JFSOscillator;
 
-typedef NS_ENUM(NSInteger, JFSWaveType) {
-    JFSSquareWave,
-    JFSSineWave,
-};
-
-
-@interface JFSSynthManager : NSObject
-
-@property (nonatomic, assign) JFSWaveType waveType;
+@interface JFSSynthController : NSObject
 
 @property (nonatomic, strong) JFSEnvelopeGenerator *ampEnvelopeGenerator;
+@property (nonatomic, strong) JFSOscillator *oscillator;
 
 @property (nonatomic, assign) Float32 velocityPeak;
 
 @property (nonatomic, assign) Float32 cutoffLevel;
 @property (nonatomic, assign) Float32 resonanceLevel;
 
-+ (JFSSynthManager *) sharedManager;
++ (JFSSynthController *) sharedManager;
 
 - (void)playFrequency:(double)frequency;
 - (void)updateFrequency:(double)frequency;
@@ -40,5 +34,6 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 
 - (Float32)minimumEnvelopeTime;
 - (Float32)maximumEnvelopeTime;
+
 
 @end
