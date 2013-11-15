@@ -193,10 +193,9 @@
 
 - (void)playFrequency:(double)frequency
 {
-    self.ampEnvelopeGenerator.envelopeState = JFSEnvelopeStateAttack;
-    
     [self updateFrequency:frequency];
-    self.ampEnvelopeGenerator.level = 0;
+
+    [self.ampEnvelopeGenerator start];
 }
 
 - (void)updateFrequency:(double)frequency
@@ -206,9 +205,7 @@
 
 - (void)stopPlaying
 {
-    self.ampEnvelopeGenerator.envelopeState = JFSEnvelopeStateRelease;
+    [self.ampEnvelopeGenerator stop];
 }
-
-
 
 @end

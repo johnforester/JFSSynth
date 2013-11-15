@@ -10,7 +10,6 @@
 
 @interface JFSEnvelopeGenerator ()
 
-
 @property (nonatomic, assign) Float32 attackSlope;
 @property (nonatomic, assign) Float32 decaySlope;
 @property (nonatomic, assign) Float32 releaseSlope;
@@ -26,14 +25,11 @@
     if (self) {
         
         _level = 0;
-        
         _peak = 0.4 * pow(60/127., 3.);;
-        
-        _attackTime = 1.0;
+        _attackTime = 0.1;
         _decayTime = 3.0;
-        _sustainLevel = _peak;
+        _sustainLevel = _peak/2;
         _releaseTime = 5.0;
-        
         _sampleRate = sampleRate;
         
         [self updateAttackSlope];
@@ -42,6 +38,17 @@
     }
     
     return self;
+}
+
+- (void)start
+{
+    self.envelopeState = JFSEnvelopeStateAttack;
+    self.level = 0;
+}
+
+- (void)stop
+{
+    self.envelopeState = JFSEnvelopeStateRelease; 
 }
 
 - (Float32)updateState
@@ -89,23 +96,32 @@
     [self updateDecaySlope];
 }
 
+- (void)updateSustainWithMidiVelocity:(short)midiVelocity
+{
+    self.sustainLevel = (midiVelocity/127. * self.peak);
+}
+
 - (void)setSustainLevel:(Float32)sustainLevel
 {
-    //TODO clean this up, it is confusing
-    
-    _sustainLevel = (sustainLevel/127. * self.peak);
+    _sustainLevel = sustainLevel;
     
     [self updateDecaySlope];
     [self updateReleaseSlope];
 }
 
+- (void)updatePeakWithMidiVelocity:(short)midiVelocity
+{
+    Float32 sustainPercentageOfVelocity = _sustainLevel / _peak;
+    
+    self.peak = 0.4 * pow(midiVelocity/127., 3.);
+    
+    self.sustainLevel = self.peak * sustainPercentageOfVelocity;
+}
+
 - (void)setPeak:(Float32)peak
 {
-    //TODO clean this up
-
-    _peak = 0.4 * pow(peak/127., 3.);
-    
-    self.sustainLevel = _sustainLevel;
+    //TODO check if sustain is greater than peak
+    _peak = peak;
 }
 
 - (void)setReleaseTime:(Float32)releaseTime

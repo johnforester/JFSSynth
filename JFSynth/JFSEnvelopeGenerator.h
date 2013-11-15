@@ -30,7 +30,13 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 
 @property (nonatomic, assign) Float32 sampleRate;
 
-- (Float32)updateState;
 - (instancetype)initWithSampleRate:(Float32)sampleRate;
+
+- (void)start;
+- (void)stop;
+- (Float32)updateState;
+
+- (void)updateSustainWithMidiVelocity:(short)midiVelocity;
+- (void)updatePeakWithMidiVelocity:(short)midiVelocity;
 
 @end

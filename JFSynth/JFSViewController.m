@@ -103,7 +103,7 @@
 
 - (IBAction)peakSliderChanged:(UISlider *)slider
 {
-    [JFSSynthManager sharedManager].ampEnvelopeGenerator.peak = slider.value;
+    [[JFSSynthManager sharedManager].ampEnvelopeGenerator updatePeakWithMidiVelocity:slider.value];
 }
 
 - (IBAction)cutoffSliderChanged:(UISlider *)slider
@@ -160,7 +160,8 @@
         case JFSEnvelopeViewPointDecay:
             
             [JFSSynthManager sharedManager].ampEnvelopeGenerator.decayTime = timeValue;
-            [JFSSynthManager sharedManager].ampEnvelopeGenerator.sustainLevel = ((height - point.y) / height) * 127.;
+            
+            [[JFSSynthManager sharedManager].ampEnvelopeGenerator updateSustainWithMidiVelocity:((height - point.y) / height) * 127.];
             
             NSLog(@"decay %f",timeValue);
             NSLog(@"sustain %f", [JFSSynthManager sharedManager].ampEnvelopeGenerator.sustainLevel);
