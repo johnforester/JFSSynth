@@ -21,20 +21,16 @@
 
 @implementation JFSSynthController
 
-#define ENABLE_SYNTH 0
-
 #define SAMPLE_RATE 44100.0
 
-+ (JFSSynthController *) sharedManager
++ (JFSSynthController *)sharedManager
 {
     static dispatch_once_t pred = 0;
     __strong static id _sharedObject = nil;
     
-#ifdef ENABLE_SYNTH
     dispatch_once(&pred, ^{
         _sharedObject = [[self alloc] init];
     });
-#endif
     
     return _sharedObject;
 }

@@ -36,6 +36,7 @@
     
     return self;
 }
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -46,7 +47,6 @@
     
     return self;
 }
-
 
 - (void)setDataSource:(id<JFSEnvelopeViewDataSource>)dataSource
 {
@@ -242,7 +242,10 @@
     CAShapeLayer *dotLayer = [CAShapeLayer layer];
     
     dotLayer.strokeColor = [UIColor blackColor].CGColor;
-    dotLayer.path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - TOUCH_POINTS_RADIUS, point.y - TOUCH_POINTS_RADIUS, TOUCH_POINTS_RADIUS * 2, TOUCH_POINTS_RADIUS * 2),
+    dotLayer.path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - TOUCH_POINTS_RADIUS,
+                                                             point.y - TOUCH_POINTS_RADIUS,
+                                                             TOUCH_POINTS_RADIUS * 2,
+                                                             TOUCH_POINTS_RADIUS * 2),
                                                   &_touchPointsTransform);
     dotLayer.fillColor = [UIColor colorWithRed:0.0 green:1.0 blue:0.5 alpha:0.8].CGColor;
     dotLayer.zPosition = 2;
