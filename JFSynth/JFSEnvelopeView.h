@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, JFSEnvelopeViewSegmentPoint) {
+typedef NS_ENUM(NSInteger, JFSEnvelopeViewStagePoint) {
     JFSEnvelopeViewPointAttack,
     JFSEnvelopeViewPointDecay,
     JFSEnvelopeViewPointSustainEnd,
@@ -41,6 +41,6 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeViewSegmentPoint) {
 @protocol JFSEnvelopeViewDelegate <NSObject>
 
 @required
-- (void)envelopeView:(JFSEnvelopeView *)envelopView didUpdateEnvelopePoint:(JFSEnvelopeViewSegmentPoint)envelopePoint adjustedPoint:(CGPoint)point;
+- (void)envelopeView:(JFSEnvelopeView *)envelopView didUpdateEnvelopePoint:(JFSEnvelopeViewStagePoint)envelopePoint adjustedPoint:(CGPoint)point;
 
 @end
