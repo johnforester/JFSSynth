@@ -11,10 +11,23 @@
 @interface JFSOscillator ()
 
 @property (nonatomic, assign) double phase;
+@property (nonatomic, assign) double waveLengthInSamples;
+@property (nonatomic, assign) double sampleRate;
 
 @end
 
 @implementation JFSOscillator
+
+- (instancetype)initWithSampleRate:(Float32)sampleRate
+{
+    self = [super init];
+    
+    if (self) {
+        _sampleRate = sampleRate;
+    }
+    
+    return self;
+}
 
 - (SInt16)updateOscillator
 {
@@ -41,8 +54,13 @@
     if (self.phase > self.waveLengthInSamples) {
         self.phase -= self.waveLengthInSamples;
     }
-
+    
     return sample;
+}
+
+- (void)updateFrequency:(double)frequency
+{
+    self.waveLengthInSamples = self.sampleRate / frequency;
 }
 
 @end

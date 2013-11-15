@@ -45,7 +45,7 @@
                             inputEnabled:NO];
         
         _ampEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
-        _oscillator = [[JFSOscillator alloc] init];
+        _oscillator = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         
         [self setUpOscillatorChannel];
         
@@ -153,6 +153,8 @@
     }];
     
     _oscillatorChannel.audioDescription = [AEAudioController nonInterleaved16BitStereoAudioDescription];
+    
+    [self updateFrequency:440];
 }
 
 - (void)playFrequency:(double)frequency
@@ -164,7 +166,7 @@
 
 - (void)updateFrequency:(double)frequency
 {
-    self.oscillator.waveLengthInSamples = SAMPLE_RATE / frequency;
+    [self.oscillator updateFrequency:frequency];
 }
 
 - (void)stopPlaying
