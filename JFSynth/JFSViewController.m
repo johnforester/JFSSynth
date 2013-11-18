@@ -55,6 +55,8 @@
     self.resonanceSlider.minimumValue = [audioManager minimumResonance];
     self.resonanceSlider.maximumValue = [audioManager maximumResonance];
     self.resonanceSlider.value = audioManager.resonanceLevel;
+    
+    self.lfoAmountSlider.value = [audioManager lfoAmount];
 }
 
 - (void)didReceiveMemoryWarning
