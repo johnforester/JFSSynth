@@ -99,6 +99,8 @@
                           0,
                           cutoffLevel,
                           0);
+    
+    self.filterEnvelopeGenerator.peak = cutoffLevel;
 }
 
 - (void)adjustCutoffLevel:(Float32)adjustMultiplier
@@ -179,10 +181,21 @@
     _oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
         
         for (int i = 0; i < frames; i++) {
+            AudioUnitSetParameter(self.lpFilter.audioUnit,
+                                  kLowPassParam_CutoffFrequency,
+                                  kAudioUnitScope_Global,
+                                  0,
+                                  [weakSelf.filterEnvelopeGenerator updateState],
+                                  0);
+            
             if (weakSelf.cutoffLFO.frequency > 0) {
+                
                 [weakSelf adjustCutoffLevel:((((Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX) * ((SAMPLE_RATE/2) - [self minimumCutoff]) ) +
                                              [self minimumCutoff]) * weakSelf.lfoAmount];
+                
             }
+            
+            
             
             SInt16 sample = [weakSelf.oscillator updateOscillator] * [weakSelf.ampEnvelopeGenerator updateState];
             
@@ -217,7 +230,7 @@
 - (void)stopPlaying
 {
     [self.ampEnvelopeGenerator stop];
-    [self. filterEnvelopeGenerator stop];
+    [self.filterEnvelopeGenerator stop];
 }
 
 @end
