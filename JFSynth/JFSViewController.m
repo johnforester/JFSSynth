@@ -108,8 +108,9 @@
     [JFSSynthController sharedManager].cutoffLFOFrequency = slider.value;
 }
 
-- (IBAction)filterLFOAmountSliderChanged:(id)sender
+- (IBAction)filterLFOAmountSliderChanged:(UISlider *)slider
 {
+    [[JFSSynthController sharedManager] updateLFOAmount:slider.value];
 }
 
 #pragma mark - JFSEnvelopeViewDataSource

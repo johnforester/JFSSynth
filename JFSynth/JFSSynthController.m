@@ -16,6 +16,7 @@
 @property (nonatomic, strong) AEAudioController *audioController;
 @property (nonatomic, strong) AEBlockChannel *oscillatorChannel;
 @property (nonatomic, strong) AEAudioUnitFilter *lpFilter;
+@property (nonatomic, assign) Float32 lfoAmount;
 
 @end
 
@@ -52,6 +53,7 @@
         _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         [_cutoffLFO setWaveType:JFSSineWave];
         [_cutoffLFO updateFrequency:0.0f];
+        _lfoAmount = 0.1;
         
         [self setUpOscillatorChannel];
         
@@ -105,7 +107,7 @@
                           kLowPassParam_CutoffFrequency,
                           kAudioUnitScope_Global,
                           0,
-                          self.cutoffLevel * adjustMultiplier,
+                          self.cutoffLevel + adjustMultiplier,
                           0);
 }
 
@@ -178,7 +180,8 @@
         
         for (int i = 0; i < frames; i++) {
             if (weakSelf.cutoffLFO.frequency > 0) {
-                [weakSelf adjustCutoffLevel:(Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX];
+                [weakSelf adjustCutoffLevel:((((Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX) * ((SAMPLE_RATE/2) - [self minimumCutoff]) ) +
+                                             [self minimumCutoff]) * weakSelf.lfoAmount];
             }
             
             SInt16 sample = [weakSelf.oscillator updateOscillator] * [weakSelf.ampEnvelopeGenerator updateState];
@@ -204,6 +207,11 @@
 - (void)updateFrequency:(double)frequency
 {
     [self.oscillator updateFrequency:frequency];
+}
+
+- (void)updateLFOAmount:(Float32)lfoAmount
+{
+    _lfoAmount = lfoAmount;
 }
 
 - (void)stopPlaying

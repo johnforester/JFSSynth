@@ -29,6 +29,7 @@
 
 - (void)playFrequency:(double)frequency;
 - (void)updateFrequency:(double)frequency;
+- (void)updateLFOAmount:(Float32)lfoAmount;
 - (void)stopPlaying;
 
 - (Float32)minimumCutoff;
@@ -40,6 +41,5 @@
 
 - (Float32)minimumEnvelopeTime;
 - (Float32)maximumEnvelopeTime;
-
 
 @end
