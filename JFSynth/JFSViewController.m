@@ -18,10 +18,12 @@
 @property (weak, nonatomic) IBOutlet UISlider *cutoffSlider;
 @property (weak, nonatomic) IBOutlet UISlider *resonanceSlider;
 @property (weak, nonatomic) IBOutlet UISlider *cutoffLFOSlider;
+@property (weak, nonatomic) IBOutlet UISlider *lfoAmountSlider;
 
 @property (weak, nonatomic) IBOutlet UISlider *noteSlider;
 
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *ampEnvelopeView;
+@property (weak, nonatomic) IBOutlet JFSEnvelopeView *filterEnvelopeView;
 
 @end
 
@@ -33,6 +35,9 @@
     
     self.ampEnvelopeView.dataSource = self;
     self.ampEnvelopeView.delegate = self;
+    
+    self.filterEnvelopeView.dataSource = self;
+    self.filterEnvelopeView.delegate = self;
     
     JFSSynthController *audioManager = [JFSSynthController sharedManager];
     
@@ -98,67 +103,87 @@
 {
     [JFSSynthController sharedManager].resonanceLevel = slider.value;
 }
-- (IBAction)cutoffLFOSLiderChanged:(UISlider *)slider
+- (IBAction)cutoffLFOSliderChanged:(UISlider *)slider
 {
     [JFSSynthController sharedManager].cutoffLFOFrequency = slider.value;
 }
 
+- (IBAction)filterLFOAmountSliderChanged:(id)sender
+{
+}
+
 #pragma mark - JFSEnvelopeViewDataSource
 
-- (Float32)attackTime;
+- (Float32)attackTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView
 {
-    return [JFSSynthController sharedManager].ampEnvelopeGenerator.attackTime;
+    if (envelopeView == self.ampEnvelopeView) {
+        return [JFSSynthController sharedManager].ampEnvelopeGenerator.attackTime;
+    }
+    
+    return [JFSSynthController sharedManager].filterEnvelopeGenerator.attackTime;
 }
 
-- (Float32)decayTime
+- (Float32)decayTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView
 {
-    return [JFSSynthController sharedManager].ampEnvelopeGenerator.decayTime;
+    if (envelopeView == self.ampEnvelopeView) {
+        return [JFSSynthController sharedManager].ampEnvelopeGenerator.decayTime;
+    }
+    
+    return [JFSSynthController sharedManager].filterEnvelopeGenerator.decayTime;
 }
 
-- (Float32)sustainPercentageOfPeak
+- (Float32)sustainPercentageOfPeakForEnvelopeView:(JFSEnvelopeView *)envelopeView
 {
-    return [JFSSynthController sharedManager].ampEnvelopeGenerator.sustainLevel / [JFSSynthController sharedManager].ampEnvelopeGenerator.peak;
+    if (envelopeView == self.ampEnvelopeView) {
+        return [JFSSynthController sharedManager].ampEnvelopeGenerator.sustainLevel / [JFSSynthController sharedManager].ampEnvelopeGenerator.peak;
+    }
+    
+    return [JFSSynthController sharedManager].filterEnvelopeGenerator.sustainLevel / [JFSSynthController sharedManager].filterEnvelopeGenerator.peak;
 }
 
-- (Float32)releaseTime
+- (Float32)releaseTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView
 {
-    return [JFSSynthController sharedManager].ampEnvelopeGenerator.releaseTime;
+    if (envelopeView == self.ampEnvelopeView) {
+        return [JFSSynthController sharedManager].ampEnvelopeGenerator.releaseTime;
+    }
+    
+    return [JFSSynthController sharedManager].filterEnvelopeGenerator.releaseTime;
 }
 
-- (Float32)maxEnvelopeTime
+- (Float32)maxEnvelopeTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView
 {
     return [JFSSynthController sharedManager].maximumEnvelopeTime;
 }
 
 #pragma mark - JFSEnvelopViewDelegate
 
-- (void)envelopeView:(JFSEnvelopeView *)envelopView didUpdateEnvelopePoint:(JFSEnvelopeViewStagePoint)envelopePoint adjustedPoint:(CGPoint)point
+- (void)envelopeView:(JFSEnvelopeView *)envelopeView didUpdateEnvelopePoint:(JFSEnvelopeViewStagePoint)envelopePoint adjustedPoint:(CGPoint)point
 {
-    CGFloat width = CGRectGetWidth(envelopView.frame);
-    CGFloat height = CGRectGetHeight(envelopView.frame);
+    CGFloat width = CGRectGetWidth(envelopeView.frame);
+    CGFloat height = CGRectGetHeight(envelopeView.frame);
     
-    CGFloat timeValue = (point.x / (width/3)) * [self maxEnvelopeTime];
+    CGFloat timeValue = (point.x / (width/3)) * [self maxEnvelopeTimeForEnvelopeView:envelopeView];
+    
+    JFSEnvelopeGenerator *envelopeGenerator;
+    
+    if (envelopeView == self.ampEnvelopeView) {
+        envelopeGenerator = [JFSSynthController sharedManager].ampEnvelopeGenerator;
+    } else {
+        envelopeGenerator = [JFSSynthController sharedManager].filterEnvelopeGenerator;
+    }
     
     switch (envelopePoint) {
         case JFSEnvelopeViewPointAttack:
-            [JFSSynthController sharedManager].ampEnvelopeGenerator.attackTime = timeValue;
-            NSLog(@"attack %f", timeValue);
+            envelopeGenerator.attackTime = timeValue;
             break;
         case JFSEnvelopeViewPointDecay:
-            
-            [JFSSynthController sharedManager].ampEnvelopeGenerator.decayTime = timeValue;
-            
-            [[JFSSynthController sharedManager].ampEnvelopeGenerator updateSustainWithMidiVelocity:((height - point.y) / height) * 127.];
-            
-            NSLog(@"decay %f",timeValue);
-            NSLog(@"sustain %f", [JFSSynthController sharedManager].ampEnvelopeGenerator.sustainLevel);
+            envelopeGenerator.decayTime = timeValue;
+            [envelopeGenerator updateSustainWithMidiVelocity:((height - point.y) / height) * 127.];
             break;
         case JFSEnvelopeViewPointSustainEnd:
             break;
         case JFSEnvelopeViewPointRelease:
-            [JFSSynthController sharedManager].ampEnvelopeGenerator.releaseTime = timeValue;
-            
-            NSLog(@"release %f", timeValue);
+            envelopeGenerator.releaseTime = timeValue;
             break;
         default:
             break;

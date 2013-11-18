@@ -14,6 +14,8 @@
 @interface JFSSynthController : NSObject
 
 @property (nonatomic, strong) JFSEnvelopeGenerator *ampEnvelopeGenerator;
+@property (nonatomic, strong) JFSEnvelopeGenerator *filterEnvelopeGenerator;
+
 @property (nonatomic, strong) JFSOscillator *oscillator;
 @property (nonatomic, strong) JFSOscillator *cutoffLFO;
 

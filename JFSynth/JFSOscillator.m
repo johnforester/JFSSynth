@@ -13,6 +13,7 @@
 @property (nonatomic, assign) double phase;
 @property (nonatomic, assign) double waveLengthInSamples;
 @property (nonatomic, assign) double sampleRate;
+@property (nonatomic, assign) double frequency;
 
 @end
 
@@ -60,6 +61,7 @@
 
 - (void)updateFrequency:(double)frequency
 {
+    _frequency = frequency;
     self.waveLengthInSamples = self.sampleRate / frequency;
 }
 

@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 @interface JFSOscillator : NSObject
 
 @property (nonatomic, assign) JFSWaveType waveType;
+@property (nonatomic, readonly) double frequency;
 
 - (instancetype)initWithSampleRate:(Float32)sampleRate;
 

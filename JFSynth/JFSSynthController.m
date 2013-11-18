@@ -45,6 +45,8 @@
                             inputEnabled:NO];
         
         _ampEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
+        _filterEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
+        
         _oscillator = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         
         _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
@@ -175,7 +177,9 @@
     _oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
         
         for (int i = 0; i < frames; i++) {
-            [weakSelf adjustCutoffLevel:(Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX];
+            if (weakSelf.cutoffLFO.frequency > 0) {
+                [weakSelf adjustCutoffLevel:(Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX];
+            }
             
             SInt16 sample = [weakSelf.oscillator updateOscillator] * [weakSelf.ampEnvelopeGenerator updateState];
             
@@ -194,6 +198,7 @@
     [self updateFrequency:frequency];
     
     [self.ampEnvelopeGenerator start];
+    [self.filterEnvelopeGenerator start];
 }
 
 - (void)updateFrequency:(double)frequency
@@ -204,6 +209,7 @@
 - (void)stopPlaying
 {
     [self.ampEnvelopeGenerator stop];
+    [self. filterEnvelopeGenerator stop];
 }
 
 @end

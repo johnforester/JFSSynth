@@ -74,13 +74,13 @@
     [path moveToPoint:CGPointMake(0, CGRectGetHeight(self.frame))];
     
     CGFloat maxWidth = [self maxSegmentWidth];
-    CGFloat maxTime = [_dataSource maxEnvelopeTime];
+    CGFloat maxTime = [_dataSource maxEnvelopeTimeForEnvelopeView:self];
     
-    CGFloat attackWidth = ([_dataSource attackTime] / maxTime) * maxWidth;
-    CGFloat decayWidth = ([_dataSource decayTime] / maxTime) * maxWidth;
-    CGFloat releaseWidth = ([_dataSource releaseTime] / maxTime) * maxWidth;
+    CGFloat attackWidth = ([_dataSource attackTimeForEnvelopeView:self] / maxTime) * maxWidth;
+    CGFloat decayWidth = ([_dataSource decayTimeForEnvelopeView:self] / maxTime) * maxWidth;
+    CGFloat releaseWidth = ([_dataSource releaseTimeForEnvelopeView:self] / maxTime) * maxWidth;
     
-    CGFloat sustainHeight = [_dataSource sustainPercentageOfPeak] * CGRectGetHeight(self.frame);
+    CGFloat sustainHeight = [_dataSource sustainPercentageOfPeakForEnvelopeView:self] * CGRectGetHeight(self.frame);
     
     _points[JFSEnvelopeViewPointAttack] = CGPointMake(attackWidth, 0);
     _points[JFSEnvelopeViewPointDecay] = CGPointMake(_points[JFSEnvelopeViewPointAttack].x + decayWidth, CGRectGetHeight(self.frame) - sustainHeight);

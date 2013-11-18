@@ -30,17 +30,17 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeViewStagePoint) {
 @protocol JFSEnvelopeViewDataSource <NSObject>
 
 @required
-- (Float32)attackTime;
-- (Float32)decayTime;
-- (Float32)sustainPercentageOfPeak;
-- (Float32)releaseTime;
-- (Float32)maxEnvelopeTime;
+- (Float32)attackTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView;
+- (Float32)decayTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView;
+- (Float32)sustainPercentageOfPeakForEnvelopeView:(JFSEnvelopeView *)envelopeView;
+- (Float32)releaseTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView;
+- (Float32)maxEnvelopeTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView;
 
 @end
 
 @protocol JFSEnvelopeViewDelegate <NSObject>
 
 @required
-- (void)envelopeView:(JFSEnvelopeView *)envelopView didUpdateEnvelopePoint:(JFSEnvelopeViewStagePoint)envelopePoint adjustedPoint:(CGPoint)point;
+- (void)envelopeView:(JFSEnvelopeView *)envelopeView didUpdateEnvelopePoint:(JFSEnvelopeViewStagePoint)envelopePoint adjustedPoint:(CGPoint)point;
 
 @end
