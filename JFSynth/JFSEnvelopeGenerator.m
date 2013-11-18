@@ -26,7 +26,7 @@
         
         _level = 0;
         _peak = 0.4 * pow(60/127., 3.);
-        _attackTime = 0.1;
+        _attackTime = 0.0f;
         _decayTime = 3.0;
         _sustainLevel = _peak/2;
         _releaseTime = 1.0;
@@ -119,6 +119,10 @@
     _peak = peak;
     
     self.sustainLevel = _peak * sustainPercentageOfVelocity;
+    
+    [self updateAttackSlope];
+    [self updateDecaySlope];
+    [self updateReleaseSlope];
 }
 
 - (void)setReleaseTime:(Float32)releaseTime

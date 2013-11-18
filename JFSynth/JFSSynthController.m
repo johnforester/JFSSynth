@@ -53,7 +53,7 @@
         _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         [_cutoffLFO setWaveType:JFSSineWave];
         [_cutoffLFO updateFrequency:0.0f];
-        _lfoAmount = 0.1;
+        _lfoAmount = 0.0f;
         
         [self setUpOscillatorChannel];
         
