@@ -54,7 +54,7 @@
     if (self.phase > self.waveLengthInSamples) {
         self.phase -= self.waveLengthInSamples;
     }
-    
+        
     return sample;
 }
 

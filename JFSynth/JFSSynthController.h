@@ -15,11 +15,13 @@
 
 @property (nonatomic, strong) JFSEnvelopeGenerator *ampEnvelopeGenerator;
 @property (nonatomic, strong) JFSOscillator *oscillator;
+@property (nonatomic, strong) JFSOscillator *cutoffLFO;
 
 @property (nonatomic, assign) Float32 velocityPeak;
 
 @property (nonatomic, assign) Float32 cutoffLevel;
 @property (nonatomic, assign) Float32 resonanceLevel;
+@property (nonatomic, assign) Float32 cutoffLFOFrequency;
 
 + (JFSSynthController *) sharedManager;
 
@@ -31,6 +33,8 @@
 - (Float32)maximumCutoff;
 - (Float32)minimumResonance;
 - (Float32)maximumResonance;
+- (Float32)minimumCutoffLFO;
+- (Float32)maximumCutoffLFO;
 
 - (Float32)minimumEnvelopeTime;
 - (Float32)maximumEnvelopeTime;

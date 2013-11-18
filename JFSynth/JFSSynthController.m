@@ -47,6 +47,10 @@
         _ampEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
         _oscillator = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         
+        _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
+        [_cutoffLFO setWaveType:JFSSineWave];
+        [_cutoffLFO updateFrequency:0.0f];
+        
         [self setUpOscillatorChannel];
         
         AudioComponentDescription lpFilterComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
@@ -93,6 +97,16 @@
                           0);
 }
 
+- (void)adjustCutoffLevel:(Float32)adjustMultiplier
+{
+    AudioUnitSetParameter(self.lpFilter.audioUnit,
+                          kLowPassParam_CutoffFrequency,
+                          kAudioUnitScope_Global,
+                          0,
+                          self.cutoffLevel * adjustMultiplier,
+                          0);
+}
+
 - (void)setResonanceLevel:(Float32)resonanceLevel
 {
     _resonanceLevel = resonanceLevel;
@@ -103,6 +117,13 @@
                           0,
                           resonanceLevel,
                           0);
+}
+
+- (void)setCutoffLFOFrequency:(Float32)cutoffLFOFrequency
+{
+    _cutoffLFOFrequency = cutoffLFOFrequency;
+    
+    [self.cutoffLFO updateFrequency:cutoffLFOFrequency];
 }
 
 - (Float32)minimumCutoff
@@ -125,6 +146,16 @@
     return 40.0f;
 }
 
+- (Float32)minimumCutoffLFO
+{
+    return 0.0f;
+}
+
+- (Float32)maximumCutoffLFO
+{
+    return 20.0f;
+}
+
 - (Float32)minimumEnvelopeTime
 {
     return 0.0001f;
@@ -139,14 +170,15 @@
 
 - (void)setUpOscillatorChannel
 {
-    __weak JFSSynthController *weakSelf = self;
-
+    __block __weak JFSSynthController *weakSelf = self;
+    
     _oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
         
         for (int i = 0; i < frames; i++) {
+            [weakSelf adjustCutoffLevel:(Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX];
             
             SInt16 sample = [weakSelf.oscillator updateOscillator] * [weakSelf.ampEnvelopeGenerator updateState];
-        
+            
             ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
             ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
         }

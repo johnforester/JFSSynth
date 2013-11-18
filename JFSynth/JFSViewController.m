@@ -17,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UISlider *cutoffSlider;
 @property (weak, nonatomic) IBOutlet UISlider *resonanceSlider;
+@property (weak, nonatomic) IBOutlet UISlider *cutoffLFOSlider;
 
 @property (weak, nonatomic) IBOutlet UISlider *noteSlider;
 
@@ -42,6 +43,9 @@
     self.cutoffSlider.minimumValue = [audioManager minimumCutoff];
     self.cutoffSlider.maximumValue = [audioManager maximumCutoff];
     self.cutoffSlider.value = audioManager.cutoffLevel;
+    
+    self.cutoffLFOSlider.minimumValue = [audioManager minimumCutoffLFO];
+    self.cutoffLFOSlider.maximumValue = [audioManager maximumCutoffLFO];
     
     self.resonanceSlider.minimumValue = [audioManager minimumResonance];
     self.resonanceSlider.maximumValue = [audioManager maximumResonance];
@@ -93,6 +97,10 @@
 - (IBAction)resonanceSliderChanged:(UISlider *)slider
 {
     [JFSSynthController sharedManager].resonanceLevel = slider.value;
+}
+- (IBAction)cutoffLFOSLiderChanged:(UISlider *)slider
+{
+    [JFSSynthController sharedManager].cutoffLFOFrequency = slider.value;
 }
 
 #pragma mark - JFSEnvelopeViewDataSource

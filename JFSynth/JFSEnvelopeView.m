@@ -264,11 +264,14 @@
 
 - (void)moveTouchPointAtIndex:(JFSEnvelopeViewStagePoint)touchPointIdx toPoint:(CGPoint)point
 {
-    [self.touchPointLayers[@(touchPointIdx)] setPath:CGPathCreateWithEllipseInRect(CGRectMake(point.x - TOUCH_POINTS_RADIUS,
-                                                                                              point.y - TOUCH_POINTS_RADIUS,
-                                                                                              TOUCH_POINTS_RADIUS * 2,
-                                                                                              TOUCH_POINTS_RADIUS * 2),
-                                                                                   &_touchPointsTransform)];
+    CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - TOUCH_POINTS_RADIUS,
+                                                              point.y - TOUCH_POINTS_RADIUS,
+                                                              TOUCH_POINTS_RADIUS * 2,
+                                                              TOUCH_POINTS_RADIUS * 2),
+                                                   &_touchPointsTransform);
+    [self.touchPointLayers[@(touchPointIdx)] setPath:path];
+    
+    CGPathRelease(path);
 }
 
 #pragma mark - UI Elements
@@ -278,11 +281,15 @@
     CAShapeLayer *dotLayer = [CAShapeLayer layer];
     
     dotLayer.strokeColor = [UIColor blackColor].CGColor;
-    dotLayer.path = CGPathCreateWithEllipseInRect(CGRectMake(CGPointZero.x,
-                                                             CGPointZero.y,
-                                                             TOUCH_POINTS_RADIUS * 2,
-                                                             TOUCH_POINTS_RADIUS * 2),
-                                                  &_touchPointsTransform);
+    CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(CGPointZero.x,
+                                                              CGPointZero.y,
+                                                              TOUCH_POINTS_RADIUS * 2,
+                                                              TOUCH_POINTS_RADIUS * 2),
+                                                   &_touchPointsTransform);
+    dotLayer.path = path;
+    
+    CGPathRelease(path);
+    
     dotLayer.fillColor = [UIColor colorWithRed:0.0 green:1.0 blue:0.5 alpha:0.8].CGColor;
     dotLayer.zPosition = 2;
     
