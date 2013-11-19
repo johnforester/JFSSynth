@@ -24,6 +24,7 @@
 
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *ampEnvelopeView;
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *filterEnvelopeView;
+@property (weak, nonatomic) IBOutlet JFSKeyboardView *keyBoardView;
 
 @end
 
@@ -32,6 +33,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    self.keyBoardView.delegate = self;
     
     self.ampEnvelopeView.dataSource = self;
     self.ampEnvelopeView.delegate = self;
@@ -66,25 +69,6 @@
 }
 
 #pragma mark - IBAction
-
-- (IBAction)play:(id)sender
-{
-    double note = pow(2, ((int)self.noteSlider.value - 69) / 12) * 440;
-    
-    [[JFSSynthController sharedManager] playFrequency:note];
-}
-
-- (IBAction)noteSliderChanged:(id)sender
-{
-    double note = pow(2, ((int)self.noteSlider.value - 69) / 12) * 440;
-    
-    [[JFSSynthController sharedManager] updateFrequency:note];
-}
-
-- (IBAction)stop:(id)sender
-{
-    [[JFSSynthController sharedManager] stopPlaying];
-}
 
 - (IBAction)waveTypeControlChanged:(UISegmentedControl *)segmentedControl
 {
@@ -191,6 +175,22 @@
         default:
             break;
     }
+}
+
+#pragma mark - JFSKeyboardViewDelegate
+
+- (void)keyPressedWithMidiNote:(int)midiNote
+{
+    NSLog(@"midi note %d", midiNote);
+    
+    double frequency = pow(2, (double)(midiNote - 69) / 12) * 440;
+        
+    [[JFSSynthController sharedManager] playFrequency:frequency];
+}
+
+- (void)keyReleasedWithMidiNote:(int)midiNote
+{
+    [[JFSSynthController sharedManager] stopPlaying];
 }
 
 @end

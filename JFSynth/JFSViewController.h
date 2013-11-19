@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "JFSEnvelopeView.h"
+#import "JFSKeyboardView.h"
 
-@interface JFSViewController : UIViewController <JFSEnvelopeViewDataSource, JFSEnvelopeViewDelegate>
+@interface JFSViewController : UIViewController <JFSEnvelopeViewDataSource, JFSEnvelopeViewDelegate, JFSKeyboardViewDelegate>
 
 @end
