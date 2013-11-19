@@ -56,7 +56,7 @@
                                 </connections>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="yUh-Bv-tiW">
-                                <rect key="frame" x="549" y="382" width="201" height="34"/>
+                                <rect key="frame" x="549" y="341" width="201" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.01085100634" alpha="1" colorSpace="calibratedRGB"/>
@@ -70,20 +70,20 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="C" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bcF-o3-1ys">
-                                <rect key="frame" x="518" y="387" width="13" height="21"/>
+                                <rect key="frame" x="518" y="346" width="13" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="R" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ADw-Xe-EkK">
-                                <rect key="frame" x="518" y="428" width="12" height="21"/>
+                                <rect key="frame" x="518" y="387" width="12" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="t0f-E1-Ivr">
-                                <rect key="frame" x="549" y="422" width="201" height="34"/>
+                                <rect key="frame" x="549" y="381" width="201" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -94,7 +94,7 @@
                                 </connections>
                             </slider>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4pB-OF-ha8" customClass="JFSEnvelopeView">
-                                <rect key="frame" x="20" y="99" width="400" height="220"/>
+                                <rect key="frame" x="20" y="58" width="400" height="220"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
@@ -103,7 +103,7 @@
                                 </constraints>
                             </view>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="B3E-Yg-BA6">
-                                <rect key="frame" x="549" y="463" width="201" height="34"/>
+                                <rect key="frame" x="549" y="422" width="201" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -114,14 +114,14 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LFO FREQ" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZt-PC-F85">
-                                <rect key="frame" x="464" y="469" width="83" height="21"/>
+                                <rect key="frame" x="464" y="428" width="83" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="7Ep-Cr-DBK">
-                                <rect key="frame" x="549" y="504" width="201" height="34"/>
+                                <rect key="frame" x="549" y="463" width="201" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -132,14 +132,14 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LFO Amount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xJo-wh-Rbh">
-                                <rect key="frame" x="451" y="510" width="98" height="21"/>
+                                <rect key="frame" x="451" y="469" width="98" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ej1-zr-R5T" customClass="JFSEnvelopeView">
-                                <rect key="frame" x="20" y="382" width="400" height="220"/>
+                                <rect key="frame" x="20" y="341" width="400" height="220"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
@@ -157,8 +157,8 @@
                         <constraints>
                             <constraint firstItem="7Ep-Cr-DBK" firstAttribute="leading" secondItem="xJo-wh-Rbh" secondAttribute="trailing" constant="2" id="44u-Rf-kee"/>
                             <constraint firstItem="i7e-eV-uys" firstAttribute="top" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="841" id="5r2-gt-L20"/>
-                            <constraint firstItem="4pB-OF-ha8" firstAttribute="top" secondItem="wE0-an-tkJ" secondAttribute="bottom" constant="49" id="A59-TP-KPx"/>
-                            <constraint firstItem="U2M-di-gqM" firstAttribute="top" secondItem="t0f-E1-Ivr" secondAttribute="top" constant="-399" id="A7v-Qw-Gm8"/>
+                            <constraint firstItem="4pB-OF-ha8" firstAttribute="top" secondItem="wE0-an-tkJ" secondAttribute="bottom" constant="8" id="A59-TP-KPx"/>
+                            <constraint firstItem="U2M-di-gqM" firstAttribute="top" secondItem="t0f-E1-Ivr" secondAttribute="top" constant="-358" id="A7v-Qw-Gm8"/>
                             <constraint firstItem="t0f-E1-Ivr" firstAttribute="width" secondItem="7Ep-Cr-DBK" secondAttribute="width" id="ANe-EA-Xfk"/>
                             <constraint firstItem="wE0-an-tkJ" firstAttribute="leading" secondItem="U2M-di-gqM" secondAttribute="trailing" constant="29" id="AfL-uS-TAQ"/>
                             <constraint firstItem="yUh-Bv-tiW" firstAttribute="leading" secondItem="t0f-E1-Ivr" secondAttribute="leading" id="CDM-sx-8hw"/>
@@ -170,7 +170,7 @@
                             <constraint firstItem="yUh-Bv-tiW" firstAttribute="leading" secondItem="bcF-o3-1ys" secondAttribute="trailing" constant="20" id="KSj-AQ-QZl"/>
                             <constraint firstItem="4pB-OF-ha8" firstAttribute="leading" secondItem="ej1-zr-R5T" secondAttribute="leading" id="LbS-MH-bQm"/>
                             <constraint firstItem="t0f-E1-Ivr" firstAttribute="width" secondItem="yUh-Bv-tiW" secondAttribute="width" id="M7q-vt-Vc7"/>
-                            <constraint firstItem="wE0-an-tkJ" firstAttribute="bottom" secondItem="ADw-Xe-EkK" secondAttribute="bottom" constant="-399" id="Mwn-dp-RCI"/>
+                            <constraint firstItem="wE0-an-tkJ" firstAttribute="bottom" secondItem="ADw-Xe-EkK" secondAttribute="bottom" constant="-358" id="Mwn-dp-RCI"/>
                             <constraint firstAttribute="bottom" secondItem="i7e-eV-uys" secondAttribute="bottom" id="NnV-Yi-Jyn"/>
                             <constraint firstItem="bcF-o3-1ys" firstAttribute="leading" secondItem="ADw-Xe-EkK" secondAttribute="leading" id="RHS-HP-5mL"/>
                             <constraint firstItem="t0f-E1-Ivr" firstAttribute="width" secondItem="B3E-Yg-BA6" secondAttribute="width" id="Ums-pn-aXw"/>
@@ -179,7 +179,7 @@
                             <constraint firstItem="7Ep-Cr-DBK" firstAttribute="trailing" secondItem="t0f-E1-Ivr" secondAttribute="trailing" id="Yvp-K6-UVh"/>
                             <constraint firstItem="7Ep-Cr-DBK" firstAttribute="trailing" secondItem="B3E-Yg-BA6" secondAttribute="trailing" id="Zj0-Um-y3d"/>
                             <constraint firstItem="4pB-OF-ha8" firstAttribute="height" secondItem="ej1-zr-R5T" secondAttribute="height" id="ZyR-bL-1C2"/>
-                            <constraint firstItem="xJo-wh-Rbh" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="510" id="a82-Bi-avh"/>
+                            <constraint firstItem="xJo-wh-Rbh" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="469" id="a82-Bi-avh"/>
                             <constraint firstAttribute="trailing" secondItem="yUh-Bv-tiW" secondAttribute="trailing" constant="20" id="aMe-1T-iUB"/>
                             <constraint firstItem="U2M-di-gqM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="580" id="bfl-cn-DBI"/>
                             <constraint firstItem="t0f-E1-Ivr" firstAttribute="top" secondItem="yUh-Bv-tiW" secondAttribute="bottom" constant="7" id="cal-Rp-Tx2"/>
@@ -189,7 +189,7 @@
                             <constraint firstItem="wE0-an-tkJ" firstAttribute="centerY" secondItem="U2M-di-gqM" secondAttribute="centerY" id="j0V-Vl-DIz"/>
                             <constraint firstItem="i7e-eV-uys" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jgA-Zp-z1y"/>
                             <constraint firstItem="4pB-OF-ha8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="lBY-In-3nT"/>
-                            <constraint firstItem="4pB-OF-ha8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="99" id="liY-CY-acn"/>
+                            <constraint firstItem="4pB-OF-ha8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="58" id="liY-CY-acn"/>
                             <constraint firstItem="xJo-wh-Rbh" firstAttribute="centerY" secondItem="7Ep-Cr-DBK" secondAttribute="centerY" id="nDy-L9-Q8C"/>
                             <constraint firstItem="ADw-Xe-EkK" firstAttribute="top" secondItem="bcF-o3-1ys" secondAttribute="bottom" constant="20" id="r16-o5-jzW"/>
                             <constraint firstItem="4pB-OF-ha8" firstAttribute="leading" secondItem="ej1-zr-R5T" secondAttribute="leading" id="tME-za-6LS"/>

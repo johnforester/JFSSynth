@@ -25,6 +25,7 @@ typedef void(^KeyReleaseBlock)();
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIView *keyboardView;
 @property (nonatomic, strong) NSArray *keyLayers;
+@property (nonatomic, assign) BOOL initialLayoutCompleted;
 
 @end
 
@@ -71,7 +72,7 @@ typedef void(^KeyReleaseBlock)();
             CGRect frame;
             BOOL blackKey = NO;
             
-            if (j == 1 || j == 4 || j == 6 || j == 8 || j == 11) {
+            if (j == 1 || j == 3 || j == 6 || j == 8 || j == 10) {
                 frame = CGRectMake((currentWhiteKey - 1) * whiteKeyWidth + (blackKeyWidth * 1.5), 0, blackKeyWidth, blackKeyHeight);
                 blackKey = YES;
             } else {
@@ -121,6 +122,11 @@ typedef void(^KeyReleaseBlock)();
     }
     
     _scrollView.contentSize = CGSizeMake(_keyboardView.frame.size.width, 0);
+    
+    if (!_initialLayoutCompleted) {
+        _scrollView.contentOffset = CGPointMake(_scrollView.contentSize.width/2, 0);
+        _initialLayoutCompleted = YES;
+    }
 }
 
 @end
