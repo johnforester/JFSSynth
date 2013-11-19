@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 
 @property (nonatomic, assign) JFSWaveType waveType;
 @property (nonatomic, readonly) double frequency;
+@property (nonatomic, assign) double coarseAmount;
 
 - (instancetype)initWithSampleRate:(Float32)sampleRate;
 

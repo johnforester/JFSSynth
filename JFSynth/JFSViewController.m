@@ -72,7 +72,12 @@
 
 - (IBAction)waveTypeControlChanged:(UISegmentedControl *)segmentedControl
 {
-    [[JFSSynthController sharedManager].oscillator setWaveType:segmentedControl.selectedSegmentIndex];
+    [[JFSSynthController sharedManager].oscillatorOne setWaveType:segmentedControl.selectedSegmentIndex];
+}
+
+- (IBAction)waveTypeTwoControlChanged:(UISegmentedControl *)segmentedControl
+{
+    [[JFSSynthController sharedManager].oscillatorTwo setWaveType:segmentedControl.selectedSegmentIndex];
 }
 
 - (IBAction)peakSliderChanged:(UISlider *)slider
@@ -180,9 +185,9 @@
 #pragma mark - JFSKeyboardViewDelegate
 
 - (void)keyPressedWithMidiNote:(int)midiNote
-{    
+{
     double frequency = pow(2, (double)(midiNote - 69) / 12) * 440;
-        
+    
     [[JFSSynthController sharedManager] playFrequency:frequency];
 }
 

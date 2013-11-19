@@ -180,7 +180,7 @@
                                 </segments>
                                 <color key="tintColor" red="1" green="0.0" blue="0.01085100634" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="waveTypeControlChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="e8u-Ec-dwA"/>
+                                    <action selector="waveTypeTwoControlChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="JGJ-xd-z1A"/>
                                 </connections>
                             </segmentedControl>
                         </subviews>

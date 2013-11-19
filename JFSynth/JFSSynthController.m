@@ -48,15 +48,16 @@
         _ampEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
         _filterEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
         
-        _oscillator = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
+        _oscillatorOne = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
+        _oscillatorTwo = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         
+        [self updateFrequency:440];
+
         _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         [_cutoffLFO setWaveType:JFSSineWave];
         [_cutoffLFO updateFrequency:0.0f];
         _cuttoffLFOAmount = 0.0f;
-        
-        [self setUpOscillatorChannel];
-        
+
         AudioComponentDescription lpFilterComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
                                                                                       kAudioUnitType_Effect,
                                                                                       kAudioUnitSubType_LowPassFilter);
@@ -74,7 +75,7 @@
         self.cutoffLevel = 6200.0f;
         self.resonanceLevel = 0.0;
         
-        [_audioController addChannels:@[_oscillatorChannel]];
+        [_audioController addChannels:@[[self oscillatorChannelWithOscillator:_oscillatorOne], [self oscillatorChannelWithOscillator:_oscillatorTwo]]];
         [_audioController addFilter:self.lpFilter];
         
         error = nil;
@@ -179,11 +180,11 @@
 
 #pragma setup methods
 
-- (void)setUpOscillatorChannel
+- (AEBlockChannel *)oscillatorChannelWithOscillator:(JFSOscillator *)oscillator
 {
     __block __weak JFSSynthController *weakSelf = self;
     
-    _oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
+    AEBlockChannel *oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
         
         for (int i = 0; i < frames; i++) {
             AudioUnitSetParameter(weakSelf.lpFilter.audioUnit,
@@ -202,16 +203,16 @@
                 [weakSelf adjustCutoffLevel:filterModAmount];
             }
             
-            SInt16 sample = [weakSelf.oscillator updateOscillator] * [weakSelf.ampEnvelopeGenerator updateState];
+            SInt16 sample = [oscillator updateOscillator] * [weakSelf.ampEnvelopeGenerator updateState];
             
             ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
             ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
         }
     }];
     
-    _oscillatorChannel.audioDescription = [AEAudioController nonInterleaved16BitStereoAudioDescription];
+    oscillatorChannel.audioDescription = [AEAudioController nonInterleaved16BitStereoAudioDescription];
     
-    [self updateFrequency:440];
+    return oscillatorChannel;
 }
 
 - (void)playFrequency:(double)frequency
@@ -224,7 +225,8 @@
 
 - (void)updateFrequency:(double)frequency
 {
-    [self.oscillator updateFrequency:frequency];
+    [self.oscillatorOne updateFrequency:frequency];
+    [self.oscillatorTwo updateFrequency:frequency];
 }
 
 - (void)updateLFOAmount:(Float32)lfoAmount
