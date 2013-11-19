@@ -16,7 +16,7 @@
 @property (nonatomic, strong) AEAudioController *audioController;
 @property (nonatomic, strong) AEBlockChannel *oscillatorChannel;
 @property (nonatomic, strong) AEAudioUnitFilter *lpFilter;
-@property (nonatomic, assign) Float32 lfoAmount;
+@property (nonatomic, assign) Float32 cuttoffLFOAmount;
 
 @end
 
@@ -53,7 +53,7 @@
         _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         [_cutoffLFO setWaveType:JFSSineWave];
         [_cutoffLFO updateFrequency:0.0f];
-        _lfoAmount = 0.0f;
+        _cuttoffLFOAmount = 0.0f;
         
         [self setUpOscillatorChannel];
         
@@ -103,13 +103,18 @@
     self.filterEnvelopeGenerator.peak = cutoffLevel;
 }
 
-- (void)adjustCutoffLevel:(Float32)adjustMultiplier
+- (void)adjustCutoffLevel:(Float32)adjustment
 {
+    Float32 adjustedFilterCutoff = self.cutoffLevel + adjustment;
+    
+    adjustedFilterCutoff = MAX(adjustedFilterCutoff, [self minimumCutoff]);
+    adjustedFilterCutoff = MIN(adjustedFilterCutoff, [self maximumCutoff]);
+    
     AudioUnitSetParameter(self.lpFilter.audioUnit,
                           kLowPassParam_CutoffFrequency,
                           kAudioUnitScope_Global,
                           0,
-                          self.cutoffLevel + adjustMultiplier,
+                          self.cutoffLevel + adjustment,
                           0);
 }
 
@@ -181,7 +186,7 @@
     _oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
         
         for (int i = 0; i < frames; i++) {
-            AudioUnitSetParameter(self.lpFilter.audioUnit,
+            AudioUnitSetParameter(weakSelf.lpFilter.audioUnit,
                                   kLowPassParam_CutoffFrequency,
                                   kAudioUnitScope_Global,
                                   0,
@@ -190,12 +195,12 @@
             
             if (weakSelf.cutoffLFO.frequency > 0) {
                 
-                [weakSelf adjustCutoffLevel:((((Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX) * ((SAMPLE_RATE/2) - [self minimumCutoff]) ) +
-                                             [self minimumCutoff]) * weakSelf.lfoAmount];
+                CGFloat filterModAmount = ((Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX) * ([self minimumCutoff] + [self maximumCutoff]) + [self minimumCutoff];
                 
+                filterModAmount *= weakSelf.cuttoffLFOAmount;
+                
+                [weakSelf adjustCutoffLevel:filterModAmount];
             }
-            
-            
             
             SInt16 sample = [weakSelf.oscillator updateOscillator] * [weakSelf.ampEnvelopeGenerator updateState];
             
@@ -224,7 +229,7 @@
 
 - (void)updateLFOAmount:(Float32)lfoAmount
 {
-    _lfoAmount = lfoAmount;
+    _cuttoffLFOAmount = lfoAmount;
 }
 
 - (void)stopPlaying

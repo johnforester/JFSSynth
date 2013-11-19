@@ -24,7 +24,7 @@
 @property (nonatomic, assign) Float32 cutoffLevel;
 @property (nonatomic, assign) Float32 resonanceLevel;
 @property (nonatomic, assign) Float32 cutoffLFOFrequency;
-@property (nonatomic, readonly) Float32 lfoAmount;
+@property (nonatomic, readonly) Float32 cuttoffLFOAmount;
 
 + (JFSSynthController *) sharedManager;
 
