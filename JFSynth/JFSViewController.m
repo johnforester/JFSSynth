@@ -68,6 +68,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
 #pragma mark - IBAction
 
 - (IBAction)waveTypeControlChanged:(UISegmentedControl *)segmentedControl

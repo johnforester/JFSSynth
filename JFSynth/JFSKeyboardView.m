@@ -157,6 +157,8 @@ typedef void(^KeyReleaseBlock)();
     return self;
 }
 
+#pragma mark - key start and stop
+
 - (void)play
 {
     self.isPlaying = YES;
@@ -172,6 +174,8 @@ typedef void(^KeyReleaseBlock)();
         self.keyReleaseBlock();
     }
 }
+
+#pragma mark - key touches
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
