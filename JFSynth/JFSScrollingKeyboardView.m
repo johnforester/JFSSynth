@@ -227,8 +227,4 @@ typedef void(^KeyReleaseBlock)();
     }
 }
 
-#pragma mark - key touches
-
-
-
 @end

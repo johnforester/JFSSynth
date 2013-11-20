@@ -52,12 +52,12 @@
         _oscillatorTwo = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         
         [self updateFrequency:440];
-
+        
         _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         [_cutoffLFO setWaveType:JFSSineWave];
         [_cutoffLFO updateFrequency:0.0f];
         _cuttoffLFOAmount = 0.0f;
-
+        
         AudioComponentDescription lpFilterComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
                                                                                       kAudioUnitType_Effect,
                                                                                       kAudioUnitSubType_LowPassFilter);
@@ -102,21 +102,6 @@
                           0);
     
     self.filterEnvelopeGenerator.peak = cutoffLevel;
-}
-
-- (void)adjustCutoffLevel:(Float32)adjustment
-{
-    Float32 adjustedFilterCutoff = self.cutoffLevel + adjustment;
-    
-    adjustedFilterCutoff = MAX(adjustedFilterCutoff, [self minimumCutoff]);
-    adjustedFilterCutoff = MIN(adjustedFilterCutoff, [self maximumCutoff]);
-    
-    AudioUnitSetParameter(self.lpFilter.audioUnit,
-                          kLowPassParam_CutoffFrequency,
-                          kAudioUnitScope_Global,
-                          0,
-                          self.cutoffLevel + adjustment,
-                          0);
 }
 
 - (void)setResonanceLevel:(Float32)resonanceLevel
@@ -187,21 +172,22 @@
     AEBlockChannel *oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
         
         for (int i = 0; i < frames; i++) {
+       
+            Float32 filterModAmount = 0.0f;
+            
+            if (weakSelf.cutoffLFO.frequency > 0) {
+                
+                filterModAmount = ((Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX) * ([self minimumCutoff] + [self maximumCutoff]) + [self minimumCutoff];
+                
+                filterModAmount *= weakSelf.cuttoffLFOAmount;
+            }
+            
             AudioUnitSetParameter(weakSelf.lpFilter.audioUnit,
                                   kLowPassParam_CutoffFrequency,
                                   kAudioUnitScope_Global,
                                   0,
-                                  [weakSelf.filterEnvelopeGenerator updateState],
+                                  [weakSelf.filterEnvelopeGenerator updateState] + filterModAmount,
                                   0);
-            
-            if (weakSelf.cutoffLFO.frequency > 0) {
-                
-                CGFloat filterModAmount = ((Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX) * ([self minimumCutoff] + [self maximumCutoff]) + [self minimumCutoff];
-                
-                filterModAmount *= weakSelf.cuttoffLFOAmount;
-                
-                [weakSelf adjustCutoffLevel:filterModAmount];
-            }
             
             SInt16 sample = [oscillator updateOscillator] * [weakSelf.ampEnvelopeGenerator updateState];
             
