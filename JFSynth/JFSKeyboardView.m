@@ -139,7 +139,7 @@ typedef void(^KeyReleaseBlock)();
 
 @property (nonatomic, strong) UIColor *originalBackgroundColor;
 @property (nonatomic, assign) BOOL isPlaying;
-@property (nonatomic, strong) JFSKeyView *nextKey;
+@property (nonatomic, strong) JFSKeyView *currentKey;
 
 @end
 
@@ -189,14 +189,17 @@ typedef void(^KeyReleaseBlock)();
     if (![self pointInside:[touch locationInView:self] withEvent:event]) {
         [self stop];
         
-        if (self.nextKey) {
-            [self.nextKey stop];
-        }
         
-        self.nextKey = (JFSKeyView *)[self.superview hitTest:[touch locationInView:self.superview] withEvent:event];
-        
-        if (self.nextKey) {
-            [self.nextKey play];
+        JFSKeyView *nextKey = (JFSKeyView *)[self.superview hitTest:[touch locationInView:self.superview] withEvent:event];
+
+        if (self.currentKey != nextKey) {
+            [self.currentKey stop];
+            
+            if (nextKey) {
+                [nextKey play];
+            }
+            
+            self.currentKey = nextKey;
         }
     }
 }
@@ -204,13 +207,13 @@ typedef void(^KeyReleaseBlock)();
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self stop];
-    [self.nextKey stop];
+    [self.currentKey stop];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self stop];
-    [self.nextKey stop];
+    [self.currentKey stop];
 }
 
 @end
