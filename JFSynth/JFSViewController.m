@@ -24,7 +24,7 @@
 
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *ampEnvelopeView;
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *filterEnvelopeView;
-@property (weak, nonatomic) IBOutlet JFSKeyboardView *keyBoardView;
+@property (weak, nonatomic) IBOutlet JFSScrollingKeyboardView *keyBoardView;
 
 @end
 

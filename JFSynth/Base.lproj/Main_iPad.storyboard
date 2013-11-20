@@ -147,7 +147,7 @@
                                     <constraint firstAttribute="width" constant="400" id="UfR-Hz-530"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i7e-eV-uys" customClass="JFSKeyboardView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i7e-eV-uys" customClass="JFSScrollingKeyboardView">
                                 <rect key="frame" x="0.0" y="804" width="768" height="220"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>

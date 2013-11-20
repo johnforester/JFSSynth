@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 John Forester. All rights reserved.
 //
 
-#import "JFSKeyboardView.h"
+#import "JFSScrollingKeyboardView.h"
 
 #define KEYBOARD_HEIGHT 180
 
@@ -19,19 +19,27 @@ typedef void(^KeyReleaseBlock)();
 @property (nonatomic, strong) KeyReleaseBlock keyReleaseBlock;
 
 - (instancetype)initWithFrame:(CGRect)frame blackKey:(BOOL)blackKey;
+- (void)play;
+- (void)stop;
 
 @end
 
-@interface JFSKeyboardView ()
+@interface JFSKeyBoardView : UIView
+
+@property (nonatomic, strong) JFSKeyView *currentKey;
+
+@end
+
+@interface JFSScrollingKeyboardView ()
 
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIView *keyboardView;
+@property (nonatomic, strong) JFSKeyBoardView *keyboardView;
 @property (nonatomic, strong) NSArray *keyViews;
 @property (nonatomic, assign) BOOL initialLayoutCompleted;
 
 @end
 
-@implementation JFSKeyboardView
+@implementation JFSScrollingKeyboardView
 
 - (void)layoutSubviews
 {
@@ -57,7 +65,7 @@ typedef void(^KeyReleaseBlock)();
     CGRect keyBoardFrame = CGRectMake(0, frame.size.height - KEYBOARD_HEIGHT, whiteKeyWidth * whiteKeyCount, KEYBOARD_HEIGHT);
     
     if (_keyboardView == nil) {
-        _keyboardView = [[UIView alloc] initWithFrame:keyBoardFrame];
+        _keyboardView = [[JFSKeyBoardView alloc] initWithFrame:keyBoardFrame];
         [_scrollView addSubview:_keyboardView];
     } else {
         _keyboardView.frame = keyBoardFrame;
@@ -133,13 +141,57 @@ typedef void(^KeyReleaseBlock)();
     }
 }
 
+
+@end
+
+@implementation JFSKeyBoardView
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    
+    JFSKeyView *nextKey = (JFSKeyView *)[self hitTest:[touch locationInView:self] withEvent:event];
+    
+    if (nextKey) {
+        self.currentKey = nextKey;
+        [self.currentKey play];
+    }
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    
+    JFSKeyView *nextKey = (JFSKeyView *)[self hitTest:[touch locationInView:self] withEvent:event];
+    
+    if (nextKey != self.currentKey) {
+        
+        [self.currentKey stop];
+        
+        if (nextKey) {
+            [nextKey play];
+        }
+        
+        self.currentKey = nextKey;
+    }
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.currentKey stop];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.currentKey stop];
+}
+
 @end
 
 @interface JFSKeyView()
 
 @property (nonatomic, strong) UIColor *originalBackgroundColor;
 @property (nonatomic, assign) BOOL isPlaying;
-@property (nonatomic, strong) JFSKeyView *currentKey;
 
 @end
 
@@ -177,43 +229,6 @@ typedef void(^KeyReleaseBlock)();
 
 #pragma mark - key touches
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self play];
-}
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [touches anyObject];
-    
-    if (![self pointInside:[touch locationInView:self] withEvent:event]) {
-        [self stop];
-        
-        
-        JFSKeyView *nextKey = (JFSKeyView *)[self.superview hitTest:[touch locationInView:self.superview] withEvent:event];
-
-        if (self.currentKey != nextKey) {
-            [self.currentKey stop];
-            
-            if (nextKey) {
-                [nextKey play];
-            }
-            
-            self.currentKey = nextKey;
-        }
-    }
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self stop];
-    [self.currentKey stop];
-}
-
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self stop];
-    [self.currentKey stop];
-}
 
 @end

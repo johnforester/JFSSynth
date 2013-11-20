@@ -27,7 +27,7 @@
 		7A6C68AD181D84DA009F4A83 /* JFSSynthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A6C68AC181D84DA009F4A83 /* JFSSynthController.m */; };
 		7AD42CC01835AB25009DBEBF /* JFSEnvelopeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD42CBF1835AB25009DBEBF /* JFSEnvelopeGenerator.m */; };
 		7AD42CC31835C9BD009DBEBF /* JFSOscillator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD42CC21835C9BD009DBEBF /* JFSOscillator.m */; };
-		88CDDD93183BC3BF0000FD5F /* JFSKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CDDD92183BC3BF0000FD5F /* JFSKeyboardView.m */; };
+		88CDDD93183BC3BF0000FD5F /* JFSScrollingKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CDDD92183BC3BF0000FD5F /* JFSScrollingKeyboardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,8 +70,8 @@
 		7AD42CBF1835AB25009DBEBF /* JFSEnvelopeGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSEnvelopeGenerator.m; sourceTree = "<group>"; };
 		7AD42CC11835C9BD009DBEBF /* JFSOscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSOscillator.h; sourceTree = "<group>"; };
 		7AD42CC21835C9BD009DBEBF /* JFSOscillator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSOscillator.m; sourceTree = "<group>"; };
-		88CDDD91183BC3BF0000FD5F /* JFSKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSKeyboardView.h; sourceTree = "<group>"; };
-		88CDDD92183BC3BF0000FD5F /* JFSKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSKeyboardView.m; sourceTree = "<group>"; };
+		88CDDD91183BC3BF0000FD5F /* JFSScrollingKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSScrollingKeyboardView.h; sourceTree = "<group>"; };
+		88CDDD92183BC3BF0000FD5F /* JFSScrollingKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSScrollingKeyboardView.m; sourceTree = "<group>"; };
 		DEB310698CEA446691085808 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -195,8 +195,8 @@
 			children = (
 				7A20C5CE1824898500634B09 /* JFSEnvelopeView.h */,
 				7A20C5CF1824898500634B09 /* JFSEnvelopeView.m */,
-				88CDDD91183BC3BF0000FD5F /* JFSKeyboardView.h */,
-				88CDDD92183BC3BF0000FD5F /* JFSKeyboardView.m */,
+				88CDDD91183BC3BF0000FD5F /* JFSScrollingKeyboardView.h */,
+				88CDDD92183BC3BF0000FD5F /* JFSScrollingKeyboardView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -345,7 +345,7 @@
 				7A6C68AD181D84DA009F4A83 /* JFSSynthController.m in Sources */,
 				7A20C5D01824898500634B09 /* JFSEnvelopeView.m in Sources */,
 				7A6C688C181D833E009F4A83 /* JFSViewController.m in Sources */,
-				88CDDD93183BC3BF0000FD5F /* JFSKeyboardView.m in Sources */,
+				88CDDD93183BC3BF0000FD5F /* JFSScrollingKeyboardView.m in Sources */,
 				7AD42CC01835AB25009DBEBF /* JFSEnvelopeGenerator.m in Sources */,
 				7A6C6883181D833E009F4A83 /* JFSAppDelegate.m in Sources */,
 				7A6C687F181D833E009F4A83 /* main.m in Sources */,
