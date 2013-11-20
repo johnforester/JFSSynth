@@ -115,10 +115,9 @@
 - (void)setPeak:(Float32)peak
 {
     Float32 oldPeak = _peak;
-    
-    _peak = peak;
-
     Float32 sustainPercentageOfVelocity = _sustainLevel / oldPeak;
+
+    _peak = peak;
 
     self.level += (peak - oldPeak);
     self.sustainLevel = _peak * sustainPercentageOfVelocity;
