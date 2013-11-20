@@ -8,6 +8,8 @@
 
 #import "JFSKeyboardView.h"
 
+#define KEYBOARD_HEIGHT 180
+
 typedef void(^KeyPressBlock)();
 typedef void(^KeyReleaseBlock)();
 
@@ -44,17 +46,15 @@ typedef void(^KeyReleaseBlock)();
         _scrollView.frame = scrollViewFrame;
     }
     
-    _scrollView.scrollEnabled = NO;
-    
     CGFloat whiteKeyWidth = frame.size.width / 12;
-    CGFloat whiteKeyHeight = frame.size.height;
+    CGFloat whiteKeyHeight = KEYBOARD_HEIGHT;
     
     CGFloat blackKeyWidth = whiteKeyWidth/2;
     CGFloat blackKeyHeight = whiteKeyHeight/2;
     
     int whiteKeyCount = 77;
     
-    CGRect keyBoardFrame = CGRectMake(0, 0, whiteKeyWidth * whiteKeyCount, frame.size.height);
+    CGRect keyBoardFrame = CGRectMake(0, frame.size.height - KEYBOARD_HEIGHT, whiteKeyWidth * whiteKeyCount, KEYBOARD_HEIGHT);
     
     if (_keyboardView == nil) {
         _keyboardView = [[UIView alloc] initWithFrame:keyBoardFrame];
@@ -97,10 +97,12 @@ typedef void(^KeyReleaseBlock)();
                 int note = currentKey;
                 
                 keyView.keyPressBlock = ^{
+                    self.scrollView.scrollEnabled = NO;
                     [self.delegate keyPressedWithMidiNote:note];
                 };
                 
                 keyView.keyReleaseBlock = ^{
+                    self.scrollView.scrollEnabled = YES;
                     [self.delegate keyReleasedWithMidiNote:note];
                 };
                 
