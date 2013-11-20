@@ -24,7 +24,7 @@ typedef void(^KeyReleaseBlock)();
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIView *keyboardView;
-@property (nonatomic, strong) NSArray *keyLayers;
+@property (nonatomic, strong) NSArray *keyViews;
 @property (nonatomic, assign) BOOL initialLayoutCompleted;
 
 @end
@@ -43,6 +43,8 @@ typedef void(^KeyReleaseBlock)();
     } else {
         _scrollView.frame = scrollViewFrame;
     }
+    
+    _scrollView.scrollEnabled = NO;
     
     CGFloat whiteKeyWidth = frame.size.width / 12;
     CGFloat whiteKeyHeight = frame.size.height;
@@ -80,7 +82,7 @@ typedef void(^KeyReleaseBlock)();
                 currentWhiteKey++;
             }
             
-            JFSKeyView *keyView = self.keyLayers[currentKey];
+            JFSKeyView *keyView = self.keyViews[currentKey];
             
             if (keyView == nil) {
                 if (tempKeyLayers == nil) {
@@ -112,13 +114,13 @@ typedef void(^KeyReleaseBlock)();
             } else {
                 keyView.frame = frame;
             }
-
+            
             currentKey++;
         }
     }
     
     if (tempKeyLayers) {
-        self.keyLayers = [NSArray arrayWithArray:tempKeyLayers];
+        self.keyViews = [NSArray arrayWithArray:tempKeyLayers];
     }
     
     _scrollView.contentSize = CGSizeMake(_keyboardView.frame.size.width, 0);
@@ -134,6 +136,8 @@ typedef void(^KeyReleaseBlock)();
 @interface JFSKeyView()
 
 @property (nonatomic, strong) UIColor *originalBackgroundColor;
+@property (nonatomic, assign) BOOL isPlaying;
+@property (nonatomic, strong) JFSKeyView *nextKey;
 
 @end
 
@@ -151,24 +155,56 @@ typedef void(^KeyReleaseBlock)();
     return self;
 }
 
+- (void)play
+{
+    self.isPlaying = YES;
+    self.backgroundColor = [UIColor grayColor];
+    self.keyPressBlock();
+}
+
+- (void)stop
+{
+    if (self.isPlaying) {
+        self.isPlaying = NO;
+        self.backgroundColor = self.originalBackgroundColor;
+        self.keyReleaseBlock();
+    }
+}
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    self.backgroundColor = [UIColor grayColor];
+    [self play];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
     
-    self.keyPressBlock();
+    if (![self pointInside:[touch locationInView:self] withEvent:event]) {
+        [self stop];
+        
+        if (self.nextKey) {
+            [self.nextKey stop];
+        }
+        
+        self.nextKey = (JFSKeyView *)[self.superview hitTest:[touch locationInView:self.superview] withEvent:event];
+        
+        if (self.nextKey) {
+            [self.nextKey play];
+        }
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    self.backgroundColor = self.originalBackgroundColor;
-    
-    self.keyReleaseBlock();
+    [self stop];
+    [self.nextKey stop];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    self.backgroundColor = self.originalBackgroundColor;
-    
-    self.keyReleaseBlock();}
+    [self stop];
+    [self.nextKey stop];
+}
 
 @end
