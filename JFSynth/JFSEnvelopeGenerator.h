@@ -11,9 +11,9 @@
 typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
     JFSEnvelopeStateNone,
     JFSEnvelopeStateAttack,
-    JFSEnvelopeStateSustain,
     JFSEnvelopeStateDecay,
-    JFSEnvelopeStateRelease,
+    JFSEnvelopeStateSustain,
+    JFSEnvelopeStateRelease
 };
 
 @interface JFSEnvelopeGenerator : NSObject

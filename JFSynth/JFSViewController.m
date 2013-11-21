@@ -29,6 +29,8 @@
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *filterEnvelopeView;
 @property (weak, nonatomic) IBOutlet JFSScrollingKeyboardView *keyBoardView;
 
+@property (nonatomic, strong) NSTimer *refreshTimer;
+
 @end
 
 @implementation JFSViewController
@@ -77,6 +79,10 @@
     self.oscTwoCoarseSlider.value = audioManager.oscillatorTwo.coarse;
     self.oscOneFineSlider.value = audioManager.oscillatorOne.fine;
     self.oscTwoFineSlider.value = audioManager.oscillatorTwo.fine;
+    
+    self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(refreshViews) userInfo:nil repeats:YES];
+    
+    [self.refreshTimer fire];
 }
 
 - (void)didReceiveMemoryWarning
@@ -88,6 +94,19 @@
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+ - (void)dealloc
+{
+    [self.refreshTimer invalidate];
+}
+
+#pragma mark - UI Refresh
+
+- (void)refreshViews
+{
+    [self.ampEnvelopeView updateStage:[JFSSynthController sharedController].ampEnvelopeGenerator.envelopeState - 1];
+    [self.filterEnvelopeView updateStage:[JFSSynthController sharedController].filterEnvelopeGenerator.envelopeState - 1];
 }
 
 #pragma mark - IBAction

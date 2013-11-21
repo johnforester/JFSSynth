@@ -22,7 +22,7 @@
 @property (nonatomic, strong) CAShapeLayer *envelopeLayer;
 @property (nonatomic, strong) NSDictionary *touchPointLayers;
 @property (nonatomic, strong) UIView *envelopeContainer;
-@property (nonatomic, strong) CAShapeLayer *currentStageLayer;
+@property (nonatomic, strong) CALayer *currentStageLayer;
 @property (nonatomic, assign) JFSEnvelopeViewStagePoint currentPoint;
 
 @end
@@ -108,9 +108,9 @@
     }
     
     if (_currentStageLayer == nil) {
-        _currentStageLayer = [CAShapeLayer layer];
-        _currentStageLayer.fillColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5].CGColor;
-        
+        _currentStageLayer = [CALayer layer];
+        _currentStageLayer.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5].CGColor;
+        _currentStageLayer.zPosition = 2;
         [self.envelopeContainer.layer addSublayer:_currentStageLayer];
     }
     
@@ -128,6 +128,22 @@
     [self.touchPointLayers enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, CAShapeLayer *touchPointLayer, BOOL *stop) {
         [self moveTouchPointAtIndex:[key integerValue] toPoint:_points[[key integerValue]]];
     }];
+}
+
+- (void)updateStage:(JFSEnvelopeViewStagePoint)stage
+{
+    if (stage < JFSEnvelopeViewPointCount && stage >= 0) {
+        
+        if (stage == JFSEnvelopeViewPointAttack) {
+            self.currentStageLayer.frame = CGRectMake(0, 0, _points[stage].x, self.envelopeContainer.frame.size.height);
+        } else if (stage < JFSEnvelopeViewPointRelease) {
+            self.currentStageLayer.frame = CGRectMake(_points[stage - 1].x, 0, _points[stage].x - _points[stage - 1].x, self.envelopeContainer.frame.size.height);
+        } else {
+            self.currentStageLayer.frame = CGRectMake(_points[stage].x, 0, CGRectGetMaxX(self.envelopeContainer.frame) - _points[stage].x, self.envelopeContainer.frame.size.height);
+        }
+    } else {
+        self.currentStageLayer.frame = CGRectZero;
+    }
 }
 
 #pragma mark - touch tracking
@@ -176,7 +192,7 @@
         
         if (self.currentPoint == JFSEnvelopeViewPointDecay) {
             CGFloat height = CGRectGetHeight(self.envelopeContainer.frame);
-
+            
             [self.delegate envelopeView:self didUpdateEnvelopePoint:JFSEnvelopeViewPointSustain value:((height - adjustedPoint.y) / height)];
         }
     }
