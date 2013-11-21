@@ -55,7 +55,7 @@
         
         _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         [_cutoffLFO setWaveType:JFSSineWave];
-        [_cutoffLFO updateFrequency:0.0f];
+        [_cutoffLFO updateBaseFrequency:0.0f];
         _cuttoffLFOAmount = 0.0f;
         
         AudioComponentDescription lpFilterComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
@@ -120,7 +120,7 @@
 {
     _cutoffLFOFrequency = cutoffLFOFrequency;
     
-    [self.cutoffLFO updateFrequency:cutoffLFOFrequency];
+    [self.cutoffLFO updateBaseFrequency:cutoffLFOFrequency];
 }
 
 - (Float32)minimumCutoff
@@ -175,7 +175,7 @@
        
             Float32 filterModAmount = 0.0f;
             
-            if (weakSelf.cutoffLFO.frequency > 0) {
+            if (weakSelf.cutoffLFO.baseFrequency > 0) {
                 
                 filterModAmount = ((Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX) * ([weakSelf minimumCutoff] + [weakSelf maximumCutoff]) + [weakSelf minimumCutoff];
                 
@@ -211,8 +211,8 @@
 
 - (void)updateFrequency:(double)frequency
 {
-    [self.oscillatorOne updateFrequency:frequency];
-    [self.oscillatorTwo updateFrequency:frequency];
+    [self.oscillatorOne updateBaseFrequency:frequency];
+    [self.oscillatorTwo updateBaseFrequency:frequency];
 }
 
 - (void)updateLFOAmount:(Float32)lfoAmount
@@ -224,6 +224,11 @@
 {
     [self.ampEnvelopeGenerator stop];
     [self.filterEnvelopeGenerator stop];
+}
+
+- (void)updateOscillator:(JFSOscillator *)oscillator coarse:(Float32)coarse
+{
+    [oscillator updateCoarse:coarse];
 }
 
 @end

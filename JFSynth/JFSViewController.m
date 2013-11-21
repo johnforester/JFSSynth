@@ -109,6 +109,16 @@
     [[JFSSynthController sharedManager] updateLFOAmount:slider.value];
 }
 
+- (IBAction)oscOneCoarseSliderChanged:(UISlider *)slider
+{
+    [[JFSSynthController sharedManager]updateOscillator:[JFSSynthController sharedManager].oscillatorOne coarse:slider.value];
+}
+
+- (IBAction)oscTwoCoarseSliderChanged:(UISlider *)slider
+{
+     [[JFSSynthController sharedManager]updateOscillator:[JFSSynthController sharedManager].oscillatorTwo coarse:slider.value];
+}
+
 #pragma mark - JFSEnvelopeViewDataSource
 
 - (Float32)attackTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView

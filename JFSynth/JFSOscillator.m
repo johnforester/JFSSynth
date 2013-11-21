@@ -13,7 +13,10 @@
 @property (nonatomic, assign) double phase;
 @property (nonatomic, assign) double waveLengthInSamples;
 @property (nonatomic, assign) double sampleRate;
-@property (nonatomic, assign) double frequency;
+
+@property (nonatomic, assign) double baseFrequency;
+@property (nonatomic, assign) double adjustedFrequency;
+@property (nonatomic, assign) Float32 coarse;
 
 @end
 
@@ -55,14 +58,31 @@
     if (self.phase > self.waveLengthInSamples) {
         self.phase -= self.waveLengthInSamples;
     }
-        
+    
     return sample;
 }
 
-- (void)updateFrequency:(double)frequency
+- (void)updateFrequencyForDetune
 {
-    _frequency = frequency;
-    self.waveLengthInSamples = self.sampleRate / frequency;
+    self.adjustedFrequency = pow(pow(2, 1.0f/12), 24 * self.coarse) * self.baseFrequency;
+    self.waveLengthInSamples = self.sampleRate / [self frequency];
+}
+
+- (void)updateBaseFrequency:(double)frequency
+{
+    self.baseFrequency = frequency;
+    [self updateFrequencyForDetune];
+}
+
+- (void)updateCoarse:(Float32)coarse
+{
+    self.coarse = coarse;
+    [self updateFrequencyForDetune];
+}
+
+- (double)frequency
+{
+    return self.adjustedFrequency;
 }
 
 @end

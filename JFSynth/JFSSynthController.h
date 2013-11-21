@@ -34,6 +34,7 @@
 - (void)updateFrequency:(double)frequency;
 - (void)updateLFOAmount:(Float32)lfoAmount;
 - (void)stopPlaying;
+- (void)updateOscillator:(JFSOscillator *)oscillator coarse:(Float32)coarse;
 
 - (Float32)minimumCutoff;
 - (Float32)maximumCutoff;
