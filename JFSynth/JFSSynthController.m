@@ -50,6 +50,7 @@
         
         _oscillatorOne = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         _oscillatorTwo = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
+        [_oscillatorTwo updateFine:0.05];
         
         [self updateFrequency:440];
         
@@ -229,6 +230,11 @@
 - (void)updateOscillator:(JFSOscillator *)oscillator coarse:(Float32)coarse
 {
     [oscillator updateCoarse:coarse];
+}
+
+- (void)updateOscillator:(JFSOscillator *)oscillator fine:(Float32)fine
+{
+    [oscillator updateFine:fine];
 }
 
 @end

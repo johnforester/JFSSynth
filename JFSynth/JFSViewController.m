@@ -20,7 +20,10 @@
 @property (weak, nonatomic) IBOutlet UISlider *cutoffLFOSlider;
 @property (weak, nonatomic) IBOutlet UISlider *lfoAmountSlider;
 
-@property (weak, nonatomic) IBOutlet UISlider *noteSlider;
+@property (weak, nonatomic) IBOutlet UISlider *oscOneCoarseSlider;
+@property (weak, nonatomic) IBOutlet UISlider *oscTwoCoarseSlider;
+@property (weak, nonatomic) IBOutlet UISlider *oscOneFineSlider;
+@property (weak, nonatomic) IBOutlet UISlider *oscTwoFineSlider;
 
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *ampEnvelopeView;
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *filterEnvelopeView;
@@ -60,6 +63,11 @@
     self.resonanceSlider.value = audioManager.resonanceLevel;
     
     self.lfoAmountSlider.value = [audioManager cuttoffLFOAmount];
+    
+    self.oscOneCoarseSlider.value = audioManager.oscillatorOne.coarse;
+    self.oscTwoCoarseSlider.value = audioManager.oscillatorTwo.coarse;
+    self.oscOneFineSlider.value = audioManager.oscillatorOne.fine;
+    self.oscTwoFineSlider.value = audioManager.oscillatorTwo.fine;
 }
 
 - (void)didReceiveMemoryWarning
@@ -116,7 +124,17 @@
 
 - (IBAction)oscTwoCoarseSliderChanged:(UISlider *)slider
 {
-     [[JFSSynthController sharedManager]updateOscillator:[JFSSynthController sharedManager].oscillatorTwo coarse:slider.value];
+    [[JFSSynthController sharedManager]updateOscillator:[JFSSynthController sharedManager].oscillatorTwo coarse:slider.value];
+}
+
+- (IBAction)oscOneFineSliderChanged:(UISlider *)slider
+{
+    [[JFSSynthController sharedManager]updateOscillator:[JFSSynthController sharedManager].oscillatorOne fine:slider.value];
+}
+
+- (IBAction)oscTwoFineSliderChanged:(UISlider *)slider
+{
+    [[JFSSynthController sharedManager]updateOscillator:[JFSSynthController sharedManager].oscillatorTwo fine:slider.value];
 }
 
 #pragma mark - JFSEnvelopeViewDataSource

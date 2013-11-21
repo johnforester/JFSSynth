@@ -17,6 +17,7 @@
 @property (nonatomic, assign) double baseFrequency;
 @property (nonatomic, assign) double adjustedFrequency;
 @property (nonatomic, assign) Float32 coarse;
+@property (nonatomic, assign) Float32 fine;
 
 @end
 
@@ -64,7 +65,9 @@
 
 - (void)updateFrequencyForDetune
 {
-    self.adjustedFrequency = pow(pow(2, 1.0f/12), 24 * self.coarse) * self.baseFrequency;
+    double frequencyWithCoarse = pow(pow(2, 1.0f/12), 24 * self.coarse) * self.baseFrequency;
+    self.adjustedFrequency = pow(pow(2, 1.0f/12), self.fine) * frequencyWithCoarse;
+    
     self.waveLengthInSamples = self.sampleRate / [self frequency];
 }
 
@@ -77,6 +80,12 @@
 - (void)updateCoarse:(Float32)coarse
 {
     self.coarse = coarse;
+    [self updateFrequencyForDetune];
+}
+
+- (void)updateFine:(Float32)fine
+{
+    self.fine = fine;
     [self updateFrequencyForDetune];
 }
 
