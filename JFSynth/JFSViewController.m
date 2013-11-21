@@ -64,6 +64,15 @@
     
     self.lfoAmountSlider.value = [audioManager cuttoffLFOAmount];
     
+    self.oscOneCoarseSlider.minimumValue = -1;
+    self.oscOneCoarseSlider.maximumValue = 1;
+    self.oscTwoCoarseSlider.minimumValue = -1;
+    self.oscTwoCoarseSlider.maximumValue = 1;
+    self.oscOneFineSlider.minimumValue = 0;
+    self.oscOneFineSlider.maximumValue = 1;
+    self.oscTwoFineSlider.minimumValue = 0;
+    self.oscTwoFineSlider.maximumValue = 1;
+    
     self.oscOneCoarseSlider.value = audioManager.oscillatorOne.coarse;
     self.oscTwoCoarseSlider.value = audioManager.oscillatorTwo.coarse;
     self.oscOneFineSlider.value = audioManager.oscillatorOne.fine;
