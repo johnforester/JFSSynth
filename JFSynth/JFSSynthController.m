@@ -167,7 +167,7 @@
 
 - (AEBlockChannel *)oscillatorChannelWithOscillator:(JFSOscillator *)oscillator
 {
-    __block __weak JFSSynthController *weakSelf = self;
+    __weak JFSSynthController *weakSelf = self;
     
     AEBlockChannel *oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
         
@@ -177,7 +177,7 @@
             
             if (weakSelf.cutoffLFO.frequency > 0) {
                 
-                filterModAmount = ((Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX) * ([self minimumCutoff] + [self maximumCutoff]) + [self minimumCutoff];
+                filterModAmount = ((Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX) * ([weakSelf minimumCutoff] + [weakSelf maximumCutoff]) + [weakSelf minimumCutoff];
                 
                 filterModAmount *= weakSelf.cuttoffLFOAmount;
             }
