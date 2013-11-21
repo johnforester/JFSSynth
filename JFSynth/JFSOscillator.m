@@ -50,6 +50,12 @@
         case JFSSineWave:
             sample = INT16_MAX * sin(2 * M_PI * (self.phase / self.waveLengthInSamples));
             break;
+        case JFSTriangle:
+            sample = 2.0 * (fabs(INT16_MIN + ((2.0 * (self.phase / self.waveLengthInSamples)) * INT16_MAX)) - (INT16_MAX/2));
+            break;
+        case JFSSawtooth:
+            sample = INT16_MAX - (2.0 * (self.phase / self.waveLengthInSamples) * INT16_MAX);
+            break;
         default:
             break;
     }

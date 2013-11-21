@@ -11,6 +11,8 @@
 typedef NS_ENUM(NSInteger, JFSWaveType) {
     JFSSquareWave,
     JFSSineWave,
+    JFSTriangle,
+    JFSSawtooth,
 };
 
 @interface JFSOscillator : NSObject
