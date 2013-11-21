@@ -8,8 +8,8 @@
 
 #import "JFSEnvelopeView.h"
 
-#define ATTACK_X_RIGHT_BOUND CGRectGetWidth(self.frame) / 3
-#define RELEASE_X_LEFT_BOUND (CGRectGetWidth(self.frame) / 3) * 2
+#define ATTACK_X_RIGHT_BOUND CGRectGetWidth(self.envelopeContainer.frame) / 3
+#define RELEASE_X_LEFT_BOUND (CGRectGetWidth(self.envelopeContainer.frame) / 3) * 2
 #define TOUCH_POINTS_RADIUS 10
 
 @interface JFSEnvelopeView ()
@@ -169,13 +169,13 @@
         self.envelopeLayer.path = [self pathForCurrentStagePoints].CGPath;
         
         CGPoint adjustedPoint = [self adjustedStagePointAtIndex:self.currentPoint];
-        CGFloat width = CGRectGetWidth(self.frame);
+        CGFloat width = CGRectGetWidth(self.envelopeContainer.frame);
         CGFloat timeValue = (adjustedPoint.x / (width/3)) * [self.dataSource maxEnvelopeTimeForEnvelopeView:self];
         
         [self.delegate envelopeView:self didUpdateEnvelopePoint:self.currentPoint value:timeValue];
         
         if (self.currentPoint == JFSEnvelopeViewPointDecay) {
-            CGFloat height = CGRectGetHeight(self.frame);
+            CGFloat height = CGRectGetHeight(self.envelopeContainer.frame);
 
             [self.delegate envelopeView:self didUpdateEnvelopePoint:JFSEnvelopeViewPointSustain value:((height - adjustedPoint.y) / height)];
         }
