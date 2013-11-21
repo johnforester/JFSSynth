@@ -16,17 +16,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="R3N-ba-dvt">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="R3N-ba-dvt">
                                 <rect key="frame" x="451" y="87" width="130" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="101" id="BHa-cf-cxT"/>
+                                    <constraint firstAttribute="width" constant="130" id="BHa-cf-cxT"/>
                                 </constraints>
                                 <segments>
                                     <segment title="squ"/>
                                     <segment title="sin"/>
                                     <segment title="tri"/>
-                                    <segment title=""/>
+                                    <segment title="saw"/>
                                 </segments>
                                 <color key="tintColor" red="1" green="0.0" blue="0.01085100634" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -164,23 +164,23 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="OSC 2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xso-Ab-jep">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OSC 2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xso-Ab-jep">
                                 <rect key="frame" x="617" y="58" width="51" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uaU-ty-FcH">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uaU-ty-FcH">
                                 <rect key="frame" x="617" y="87" width="130" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="101" id="GkI-yE-baK"/>
+                                    <constraint firstAttribute="width" constant="130" id="GkI-yE-baK"/>
                                 </constraints>
                                 <segments>
                                     <segment title="squ"/>
                                     <segment title="sine"/>
                                     <segment title="tri"/>
-                                    <segment title=""/>
+                                    <segment title="saw"/>
                                 </segments>
                                 <color key="tintColor" red="1" green="0.0" blue="0.01085100634" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -292,7 +292,7 @@
                             <constraint firstItem="ADw-Xe-EkK" firstAttribute="top" secondItem="bcF-o3-1ys" secondAttribute="bottom" constant="20" id="r16-o5-jzW"/>
                             <constraint firstItem="uaU-ty-FcH" firstAttribute="top" secondItem="R3N-ba-dvt" secondAttribute="top" id="rRy-Zb-Pof"/>
                             <constraint firstItem="4pB-OF-ha8" firstAttribute="leading" secondItem="ej1-zr-R5T" secondAttribute="leading" id="tME-za-6LS"/>
-                            <constraint firstItem="uaU-ty-FcH" firstAttribute="trailing" secondItem="wE0-an-tkJ" secondAttribute="trailing" id="wSi-wa-sBA"/>
+                            <constraint firstItem="uaU-ty-FcH" firstAttribute="trailing" secondItem="wE0-an-tkJ" secondAttribute="trailing" constant="-1" id="wSi-wa-sBA"/>
                             <constraint firstItem="xJo-wh-Rbh" firstAttribute="top" secondItem="kZt-PC-F85" secondAttribute="bottom" constant="20" id="xBY-cc-DuO"/>
                             <constraint firstItem="B3E-Yg-BA6" firstAttribute="leading" secondItem="kZt-PC-F85" secondAttribute="trailing" constant="4" id="y4L-Nt-dpV"/>
                             <constraint firstItem="R3N-ba-dvt" firstAttribute="leading" secondItem="4pB-OF-ha8" secondAttribute="leading" constant="431" id="yvJ-Wm-qW5"/>
