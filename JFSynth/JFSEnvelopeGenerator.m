@@ -40,6 +40,8 @@
     return self;
 }
 
+#pragma mark - instance methods
+
 - (void)start
 {
     self.envelopeState = JFSEnvelopeStateAttack;

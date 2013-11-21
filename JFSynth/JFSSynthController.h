@@ -28,7 +28,7 @@
 @property (nonatomic, assign) Float32 cutoffLFOFrequency;
 @property (nonatomic, readonly) Float32 cuttoffLFOAmount;
 
-+ (JFSSynthController *) sharedManager;
++ (JFSSynthController *) sharedController;
 
 - (void)playFrequency:(double)frequency;
 - (void)updateFrequency:(double)frequency;

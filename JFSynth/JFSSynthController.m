@@ -25,7 +25,7 @@
 
 #define SAMPLE_RATE 44100.0
 
-+ (JFSSynthController *)sharedManager
++ (JFSSynthController *)sharedController
 {
     static dispatch_once_t pred = 0;
     __strong static id _sharedObject = nil;

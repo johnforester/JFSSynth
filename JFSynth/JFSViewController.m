@@ -45,7 +45,7 @@
     self.filterEnvelopeView.dataSource = self;
     self.filterEnvelopeView.delegate = self;
     
-    JFSSynthController *audioManager = [JFSSynthController sharedManager];
+    JFSSynthController *audioManager = [JFSSynthController sharedController];
     
     self.velocityPeakSlider.minimumValue = 0.001;
     self.velocityPeakSlider.maximumValue = 127.0;
@@ -94,61 +94,61 @@
 
 - (IBAction)waveTypeControlChanged:(UISegmentedControl *)segmentedControl
 {
-    [[JFSSynthController sharedManager].oscillatorOne setWaveType:segmentedControl.selectedSegmentIndex];
+    [[JFSSynthController sharedController].oscillatorOne setWaveType:segmentedControl.selectedSegmentIndex];
 }
 
 - (IBAction)waveTypeTwoControlChanged:(UISegmentedControl *)segmentedControl
 {
-    [[JFSSynthController sharedManager].oscillatorTwo setWaveType:segmentedControl.selectedSegmentIndex];
+    [[JFSSynthController sharedController].oscillatorTwo setWaveType:segmentedControl.selectedSegmentIndex];
 }
 
 - (IBAction)velocitySliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedManager].ampEnvelopeGenerator updatePeakWithMidiVelocity:slider.value];
+    [[JFSSynthController sharedController].ampEnvelopeGenerator updatePeakWithMidiVelocity:slider.value];
 }
 
 - (IBAction)cutoffSliderChanged:(UISlider *)slider
 {
-    [JFSSynthController sharedManager].cutoffLevel = slider.value;
+    [JFSSynthController sharedController].cutoffLevel = slider.value;
 }
 
 - (IBAction)resonanceSliderChanged:(UISlider *)slider
 {
-    [JFSSynthController sharedManager].resonanceLevel = slider.value;
+    [JFSSynthController sharedController].resonanceLevel = slider.value;
 }
 - (IBAction)cutoffLFOSliderChanged:(UISlider *)slider
 {
-    [JFSSynthController sharedManager].cutoffLFOFrequency = slider.value;
+    [JFSSynthController sharedController].cutoffLFOFrequency = slider.value;
 }
 
 - (IBAction)filterLFOAmountSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedManager] updateLFOAmount:slider.value];
+    [[JFSSynthController sharedController] updateLFOAmount:slider.value];
 }
 
 - (IBAction)oscOneCoarseSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedManager] updateOscillator:[JFSSynthController sharedManager].oscillatorOne coarse:slider.value];
+    [[JFSSynthController sharedController] updateOscillator:[JFSSynthController sharedController].oscillatorOne coarse:slider.value];
 }
 
 - (IBAction)oscTwoCoarseSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedManager] updateOscillator:[JFSSynthController sharedManager].oscillatorTwo coarse:slider.value];
+    [[JFSSynthController sharedController] updateOscillator:[JFSSynthController sharedController].oscillatorTwo coarse:slider.value];
 }
 
 - (IBAction)oscOneFineSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedManager] updateOscillator:[JFSSynthController sharedManager].oscillatorOne fine:slider.value];
+    [[JFSSynthController sharedController] updateOscillator:[JFSSynthController sharedController].oscillatorOne fine:slider.value];
 }
 
 - (IBAction)oscTwoFineSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedManager] updateOscillator:[JFSSynthController sharedManager].oscillatorTwo fine:slider.value];
+    [[JFSSynthController sharedController] updateOscillator:[JFSSynthController sharedController].oscillatorTwo fine:slider.value];
 }
 
 - (IBAction)oscillatorVolumeSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedManager] updateVolumeForOscillatorAtIndex:slider.tag value:slider.value];
+    [[JFSSynthController sharedController] updateVolumeForOscillatorAtIndex:slider.tag value:slider.value];
 }
 
 #pragma mark - JFSEnvelopeViewDataSource
@@ -156,42 +156,42 @@
 - (Float32)attackTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView
 {
     if (envelopeView == self.ampEnvelopeView) {
-        return [JFSSynthController sharedManager].ampEnvelopeGenerator.attackTime;
+        return [JFSSynthController sharedController].ampEnvelopeGenerator.attackTime;
     }
     
-    return [JFSSynthController sharedManager].filterEnvelopeGenerator.attackTime;
+    return [JFSSynthController sharedController].filterEnvelopeGenerator.attackTime;
 }
 
 - (Float32)decayTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView
 {
     if (envelopeView == self.ampEnvelopeView) {
-        return [JFSSynthController sharedManager].ampEnvelopeGenerator.decayTime;
+        return [JFSSynthController sharedController].ampEnvelopeGenerator.decayTime;
     }
     
-    return [JFSSynthController sharedManager].filterEnvelopeGenerator.decayTime;
+    return [JFSSynthController sharedController].filterEnvelopeGenerator.decayTime;
 }
 
 - (Float32)sustainPercentageOfPeakForEnvelopeView:(JFSEnvelopeView *)envelopeView
 {
     if (envelopeView == self.ampEnvelopeView) {
-        return [JFSSynthController sharedManager].ampEnvelopeGenerator.sustainLevel / [JFSSynthController sharedManager].ampEnvelopeGenerator.peak;
+        return [JFSSynthController sharedController].ampEnvelopeGenerator.sustainLevel / [JFSSynthController sharedController].ampEnvelopeGenerator.peak;
     }
     
-    return [JFSSynthController sharedManager].filterEnvelopeGenerator.sustainLevel / [JFSSynthController sharedManager].filterEnvelopeGenerator.peak;
+    return [JFSSynthController sharedController].filterEnvelopeGenerator.sustainLevel / [JFSSynthController sharedController].filterEnvelopeGenerator.peak;
 }
 
 - (Float32)releaseTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView
 {
     if (envelopeView == self.ampEnvelopeView) {
-        return [JFSSynthController sharedManager].ampEnvelopeGenerator.releaseTime;
+        return [JFSSynthController sharedController].ampEnvelopeGenerator.releaseTime;
     }
     
-    return [JFSSynthController sharedManager].filterEnvelopeGenerator.releaseTime;
+    return [JFSSynthController sharedController].filterEnvelopeGenerator.releaseTime;
 }
 
 - (Float32)maxEnvelopeTimeForEnvelopeView:(JFSEnvelopeView *)envelopeView
 {
-    return [JFSSynthController sharedManager].maximumEnvelopeTime;
+    return [JFSSynthController sharedController].maximumEnvelopeTime;
 }
 
 #pragma mark - JFSEnvelopViewDelegate
@@ -201,9 +201,9 @@
     JFSEnvelopeGenerator *envelopeGenerator;
     
     if (envelopeView == self.ampEnvelopeView) {
-        envelopeGenerator = [JFSSynthController sharedManager].ampEnvelopeGenerator;
+        envelopeGenerator = [JFSSynthController sharedController].ampEnvelopeGenerator;
     } else {
-        envelopeGenerator = [JFSSynthController sharedManager].filterEnvelopeGenerator;
+        envelopeGenerator = [JFSSynthController sharedController].filterEnvelopeGenerator;
     }
     
     switch (envelopePoint) {
@@ -230,12 +230,12 @@
 {
     double frequency = pow(2, (double)(midiNote - 69) / 12) * 440;
     
-    [[JFSSynthController sharedManager] playFrequency:frequency];
+    [[JFSSynthController sharedController] playFrequency:frequency];
 }
 
 - (void)keyReleasedWithMidiNote:(int)midiNote
 {
-    [[JFSSynthController sharedManager] stopPlaying];
+    [[JFSSynthController sharedController] stopPlaying];
 }
 
 @end
