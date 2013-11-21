@@ -11,7 +11,7 @@
 typedef NS_ENUM(NSInteger, JFSEnvelopeViewStagePoint) {
     JFSEnvelopeViewPointAttack,
     JFSEnvelopeViewPointDecay,
-    JFSEnvelopeViewPointSustainEnd,
+    JFSEnvelopeViewPointSustain,
     JFSEnvelopeViewPointRelease,
     
     JFSEnvelopeViewPointCount
@@ -41,6 +41,6 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeViewStagePoint) {
 @protocol JFSEnvelopeViewDelegate <NSObject>
 
 @required
-- (void)envelopeView:(JFSEnvelopeView *)envelopeView didUpdateEnvelopePoint:(JFSEnvelopeViewStagePoint)envelopePoint adjustedPoint:(CGPoint)point;
+- (void)envelopeView:(JFSEnvelopeView *)envelopeView didUpdateEnvelopePoint:(JFSEnvelopeViewStagePoint)envelopePoint value:(Float32)value;
 
 @end

@@ -154,13 +154,8 @@
 
 #pragma mark - JFSEnvelopViewDelegate
 
-- (void)envelopeView:(JFSEnvelopeView *)envelopeView didUpdateEnvelopePoint:(JFSEnvelopeViewStagePoint)envelopePoint adjustedPoint:(CGPoint)point
+- (void)envelopeView:(JFSEnvelopeView *)envelopeView didUpdateEnvelopePoint:(JFSEnvelopeViewStagePoint)envelopePoint value:(Float32)value
 {
-    CGFloat width = CGRectGetWidth(envelopeView.frame);
-    CGFloat height = CGRectGetHeight(envelopeView.frame);
-    
-    CGFloat timeValue = (point.x / (width/3)) * [self maxEnvelopeTimeForEnvelopeView:envelopeView];
-    
     JFSEnvelopeGenerator *envelopeGenerator;
     
     if (envelopeView == self.ampEnvelopeView) {
@@ -171,16 +166,16 @@
     
     switch (envelopePoint) {
         case JFSEnvelopeViewPointAttack:
-            envelopeGenerator.attackTime = timeValue;
+            envelopeGenerator.attackTime = value;
             break;
         case JFSEnvelopeViewPointDecay:
-            envelopeGenerator.decayTime = timeValue;
-            [envelopeGenerator updateSustainWithMidiVelocity:((height - point.y) / height) * 127.];
+            envelopeGenerator.decayTime = value;
             break;
-        case JFSEnvelopeViewPointSustainEnd:
+        case JFSEnvelopeViewPointSustain:
+            [envelopeGenerator updateSustainWithMidiVelocity:value * 127.];
             break;
         case JFSEnvelopeViewPointRelease:
-            envelopeGenerator.releaseTime = timeValue;
+            envelopeGenerator.releaseTime = value;
             break;
         default:
             break;
