@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="R3N-ba-dvt">
-                                <rect key="frame" x="451" y="87" width="130" height="29"/>
+                                <rect key="frame" x="451" y="71" width="130" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="130" id="BHa-cf-cxT"/>
@@ -34,7 +34,7 @@
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VEL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U2M-di-gqM">
-                                <rect key="frame" x="580" y="23" width="31" height="21"/>
+                                <rect key="frame" x="452" y="13" width="31" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="K7z-kI-I3L"/>
@@ -45,7 +45,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="127" translatesAutoresizingMaskIntoConstraints="NO" id="wE0-an-tkJ">
-                                <rect key="frame" x="638" y="17" width="112" height="34"/>
+                                <rect key="frame" x="510" y="7" width="112" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.01085100634" alpha="1" colorSpace="calibratedRGB"/>
@@ -158,20 +158,20 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="OSC 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRg-0p-XGw">
-                                <rect key="frame" x="451" y="58" width="51" height="21"/>
+                                <rect key="frame" x="451" y="42" width="51" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OSC 2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xso-Ab-jep">
-                                <rect key="frame" x="617" y="58" width="51" height="21"/>
+                                <rect key="frame" x="617" y="42" width="51" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uaU-ty-FcH">
-                                <rect key="frame" x="617" y="87" width="130" height="29"/>
+                                <rect key="frame" x="617" y="71" width="130" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="130" id="GkI-yE-baK"/>
@@ -188,7 +188,7 @@
                                 </connections>
                             </segmentedControl>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="F2J-e3-9VA">
-                                <rect key="frame" x="450" y="147" width="134" height="34"/>
+                                <rect key="frame" x="450" y="170" width="134" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -196,7 +196,7 @@
                                 </connections>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="x16-OU-Okt">
-                                <rect key="frame" x="616" y="147" width="134" height="34"/>
+                                <rect key="frame" x="616" y="170" width="134" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -204,21 +204,21 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Coarse" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MyC-k1-m0S">
-                                <rect key="frame" x="452" y="132" width="55" height="21"/>
+                                <rect key="frame" x="452" y="155" width="55" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Coarse" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fc6-rL-uGl">
-                                <rect key="frame" x="618" y="132" width="55" height="21"/>
+                                <rect key="frame" x="618" y="155" width="55" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="CQY-38-yGY">
-                                <rect key="frame" x="450" y="204" width="134" height="34"/>
+                                <rect key="frame" x="450" y="215" width="134" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -226,7 +226,7 @@
                                 </connections>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.050000000000000003" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="tta-8j-zVB">
-                                <rect key="frame" x="616" y="204" width="134" height="34"/>
+                                <rect key="frame" x="616" y="215" width="134" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -234,14 +234,44 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fine" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lx5-qL-7mm">
-                                <rect key="frame" x="452" y="188" width="33" height="21"/>
+                                <rect key="frame" x="452" y="199" width="33" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fine" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="St6-IQ-ION">
-                                <rect key="frame" x="618" y="188" width="33" height="21"/>
+                                <rect key="frame" x="618" y="199" width="33" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ujl-cQ-Rxu">
+                                <rect key="frame" x="449" y="124" width="134" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="oscillatorVolumeSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="KkC-Tx-yjq"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vol" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAH-Wf-ENg">
+                                <rect key="frame" x="451" y="108" width="24" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="WZG-Ns-aSj">
+                                <rect key="frame" x="615" y="125" width="134" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="oscillatorVolumeSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Pwh-VM-uWi"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vol" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIx-QH-e57">
+                                <rect key="frame" x="617" y="108" width="24" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -251,8 +281,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="7Ep-Cr-DBK" firstAttribute="leading" secondItem="xJo-wh-Rbh" secondAttribute="trailing" constant="2" id="44u-Rf-kee"/>
-                            <constraint firstItem="4pB-OF-ha8" firstAttribute="top" secondItem="wE0-an-tkJ" secondAttribute="bottom" constant="-27" id="A59-TP-KPx"/>
-                            <constraint firstItem="U2M-di-gqM" firstAttribute="top" secondItem="t0f-E1-Ivr" secondAttribute="top" constant="-293" id="A7v-Qw-Gm8"/>
+                            <constraint firstItem="4pB-OF-ha8" firstAttribute="top" secondItem="wE0-an-tkJ" secondAttribute="bottom" constant="-17" id="A59-TP-KPx"/>
+                            <constraint firstItem="U2M-di-gqM" firstAttribute="top" secondItem="t0f-E1-Ivr" secondAttribute="top" constant="-303" id="A7v-Qw-Gm8"/>
                             <constraint firstItem="i7e-eV-uys" firstAttribute="top" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="841" id="AMe-AE-UpD"/>
                             <constraint firstItem="t0f-E1-Ivr" firstAttribute="width" secondItem="7Ep-Cr-DBK" secondAttribute="width" id="ANe-EA-Xfk"/>
                             <constraint firstItem="wE0-an-tkJ" firstAttribute="leading" secondItem="U2M-di-gqM" secondAttribute="trailing" constant="29" id="AfL-uS-TAQ"/>
@@ -265,20 +295,20 @@
                             <constraint firstItem="yUh-Bv-tiW" firstAttribute="leading" secondItem="bcF-o3-1ys" secondAttribute="trailing" constant="20" id="KSj-AQ-QZl"/>
                             <constraint firstItem="4pB-OF-ha8" firstAttribute="leading" secondItem="ej1-zr-R5T" secondAttribute="leading" id="LbS-MH-bQm"/>
                             <constraint firstItem="t0f-E1-Ivr" firstAttribute="width" secondItem="yUh-Bv-tiW" secondAttribute="width" id="M7q-vt-Vc7"/>
-                            <constraint firstItem="wE0-an-tkJ" firstAttribute="bottom" secondItem="ADw-Xe-EkK" secondAttribute="bottom" constant="-293" id="Mwn-dp-RCI"/>
+                            <constraint firstItem="wE0-an-tkJ" firstAttribute="bottom" secondItem="ADw-Xe-EkK" secondAttribute="bottom" constant="-303" id="Mwn-dp-RCI"/>
                             <constraint firstAttribute="bottom" secondItem="i7e-eV-uys" secondAttribute="bottom" id="NnV-Yi-Jyn"/>
                             <constraint firstItem="bcF-o3-1ys" firstAttribute="leading" secondItem="ADw-Xe-EkK" secondAttribute="leading" id="RHS-HP-5mL"/>
                             <constraint firstItem="uaU-ty-FcH" firstAttribute="baseline" secondItem="R3N-ba-dvt" secondAttribute="baseline" id="Rzp-Sk-4WL"/>
                             <constraint firstItem="t0f-E1-Ivr" firstAttribute="width" secondItem="B3E-Yg-BA6" secondAttribute="width" id="Ums-pn-aXw"/>
                             <constraint firstItem="ej1-zr-R5T" firstAttribute="top" secondItem="4pB-OF-ha8" secondAttribute="bottom" constant="33" id="Ur7-o8-MZx"/>
                             <constraint firstItem="uaU-ty-FcH" firstAttribute="leading" secondItem="xso-Ab-jep" secondAttribute="leading" id="VvI-Hr-Zaa"/>
-                            <constraint firstItem="R3N-ba-dvt" firstAttribute="top" secondItem="wE0-an-tkJ" secondAttribute="top" constant="70" id="WSA-Se-nF3"/>
+                            <constraint firstItem="R3N-ba-dvt" firstAttribute="top" secondItem="wE0-an-tkJ" secondAttribute="top" constant="64" id="WSA-Se-nF3"/>
                             <constraint firstItem="7Ep-Cr-DBK" firstAttribute="trailing" secondItem="t0f-E1-Ivr" secondAttribute="trailing" id="Yvp-K6-UVh"/>
                             <constraint firstItem="7Ep-Cr-DBK" firstAttribute="trailing" secondItem="B3E-Yg-BA6" secondAttribute="trailing" id="Zj0-Um-y3d"/>
                             <constraint firstItem="4pB-OF-ha8" firstAttribute="height" secondItem="ej1-zr-R5T" secondAttribute="height" id="ZyR-bL-1C2"/>
                             <constraint firstItem="xJo-wh-Rbh" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="404" id="a82-Bi-avh"/>
                             <constraint firstAttribute="trailing" secondItem="yUh-Bv-tiW" secondAttribute="trailing" constant="20" id="aMe-1T-iUB"/>
-                            <constraint firstItem="U2M-di-gqM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="580" id="bfl-cn-DBI"/>
+                            <constraint firstItem="U2M-di-gqM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="452" id="bfl-cn-DBI"/>
                             <constraint firstItem="t0f-E1-Ivr" firstAttribute="top" secondItem="yUh-Bv-tiW" secondAttribute="bottom" constant="7" id="cal-Rp-Tx2"/>
                             <constraint firstItem="7Ep-Cr-DBK" firstAttribute="top" secondItem="B3E-Yg-BA6" secondAttribute="bottom" constant="8" symbolic="YES" id="dpz-PS-7kp"/>
                             <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="t0f-E1-Ivr" secondAttribute="trailing" constant="28" id="eHE-rr-cwZ"/>
@@ -292,7 +322,7 @@
                             <constraint firstItem="ADw-Xe-EkK" firstAttribute="top" secondItem="bcF-o3-1ys" secondAttribute="bottom" constant="20" id="r16-o5-jzW"/>
                             <constraint firstItem="uaU-ty-FcH" firstAttribute="top" secondItem="R3N-ba-dvt" secondAttribute="top" id="rRy-Zb-Pof"/>
                             <constraint firstItem="4pB-OF-ha8" firstAttribute="leading" secondItem="ej1-zr-R5T" secondAttribute="leading" id="tME-za-6LS"/>
-                            <constraint firstItem="uaU-ty-FcH" firstAttribute="trailing" secondItem="wE0-an-tkJ" secondAttribute="trailing" constant="-1" id="wSi-wa-sBA"/>
+                            <constraint firstItem="uaU-ty-FcH" firstAttribute="trailing" secondItem="wE0-an-tkJ" secondAttribute="trailing" constant="127" id="wSi-wa-sBA"/>
                             <constraint firstItem="xJo-wh-Rbh" firstAttribute="top" secondItem="kZt-PC-F85" secondAttribute="bottom" constant="20" id="xBY-cc-DuO"/>
                             <constraint firstItem="B3E-Yg-BA6" firstAttribute="leading" secondItem="kZt-PC-F85" secondAttribute="trailing" constant="4" id="y4L-Nt-dpV"/>
                             <constraint firstItem="R3N-ba-dvt" firstAttribute="leading" secondItem="4pB-OF-ha8" secondAttribute="leading" constant="431" id="yvJ-Wm-qW5"/>

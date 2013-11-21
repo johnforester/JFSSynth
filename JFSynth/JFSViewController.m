@@ -128,22 +128,27 @@
 
 - (IBAction)oscOneCoarseSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedManager]updateOscillator:[JFSSynthController sharedManager].oscillatorOne coarse:slider.value];
+    [[JFSSynthController sharedManager] updateOscillator:[JFSSynthController sharedManager].oscillatorOne coarse:slider.value];
 }
 
 - (IBAction)oscTwoCoarseSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedManager]updateOscillator:[JFSSynthController sharedManager].oscillatorTwo coarse:slider.value];
+    [[JFSSynthController sharedManager] updateOscillator:[JFSSynthController sharedManager].oscillatorTwo coarse:slider.value];
 }
 
 - (IBAction)oscOneFineSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedManager]updateOscillator:[JFSSynthController sharedManager].oscillatorOne fine:slider.value];
+    [[JFSSynthController sharedManager] updateOscillator:[JFSSynthController sharedManager].oscillatorOne fine:slider.value];
 }
 
 - (IBAction)oscTwoFineSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedManager]updateOscillator:[JFSSynthController sharedManager].oscillatorTwo fine:slider.value];
+    [[JFSSynthController sharedManager] updateOscillator:[JFSSynthController sharedManager].oscillatorTwo fine:slider.value];
+}
+
+- (IBAction)oscillatorVolumeSliderChanged:(UISlider *)slider
+{
+    [[JFSSynthController sharedManager] updateVolumeForOscillatorAtIndex:slider.tag value:slider.value];
 }
 
 #pragma mark - JFSEnvelopeViewDataSource

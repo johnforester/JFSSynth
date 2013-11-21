@@ -17,6 +17,7 @@
 @property (nonatomic, strong) AEBlockChannel *oscillatorChannel;
 @property (nonatomic, strong) AEAudioUnitFilter *lpFilter;
 @property (nonatomic, assign) Float32 cuttoffLFOAmount;
+@property (nonatomic, strong) NSArray *oscillatorChannels;
 
 @end
 
@@ -76,7 +77,9 @@
         self.cutoffLevel = 6200.0f;
         self.resonanceLevel = 0.0;
         
-        [_audioController addChannels:@[[self oscillatorChannelWithOscillator:_oscillatorOne], [self oscillatorChannelWithOscillator:_oscillatorTwo]]];
+        self.oscillatorChannels = @[[self oscillatorChannelWithOscillator:_oscillatorOne], [self oscillatorChannelWithOscillator:_oscillatorTwo]];
+        
+        [_audioController addChannels:self.oscillatorChannels];
         [_audioController addFilter:self.lpFilter];
         
         error = nil;
@@ -173,7 +176,7 @@
     AEBlockChannel *oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
         
         for (int i = 0; i < frames; i++) {
-       
+            
             Float32 filterModAmount = 0.0f;
             
             if (weakSelf.cutoffLFO.baseFrequency > 0) {
@@ -219,6 +222,14 @@
 - (void)updateLFOAmount:(Float32)lfoAmount
 {
     _cuttoffLFOAmount = lfoAmount;
+}
+
+- (void)updateVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value
+{
+    if ([self.oscillatorChannels count] > oscillatorIdx) {
+        AEBlockChannel *channel = self.oscillatorChannels[oscillatorIdx];
+        channel.volume = value;
+    }
 }
 
 - (void)stopPlaying

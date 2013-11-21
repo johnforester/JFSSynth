@@ -36,6 +36,7 @@
 - (void)stopPlaying;
 - (void)updateOscillator:(JFSOscillator *)oscillator coarse:(Float32)coarse;
 - (void)updateOscillator:(JFSOscillator *)oscillator fine:(Float32)fine;
+- (void)updateVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value;
 
 - (Float32)minimumCutoff;
 - (Float32)maximumCutoff;
