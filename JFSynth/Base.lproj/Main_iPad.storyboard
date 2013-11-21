@@ -54,7 +54,7 @@
                                 </constraints>
                                 <color key="thumbTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="peakSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Kuh-eE-dts"/>
+                                    <action selector="velocitySliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="GNn-Dn-Y0e"/>
                                 </connections>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="yUh-Bv-tiW">

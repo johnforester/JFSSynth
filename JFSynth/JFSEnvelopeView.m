@@ -16,13 +16,14 @@
 {
     CGPoint _points[JFSEnvelopeViewPointCount];
     CGAffineTransform _touchPointsTransform;
-    int _currentPoint;
     BOOL _isMoving;
 }
 
 @property (nonatomic, strong) CAShapeLayer *envelopeLayer;
 @property (nonatomic, strong) NSDictionary *touchPointLayers;
 @property (nonatomic, strong) UIView *envelopeContainer;
+@property (nonatomic, strong) CAShapeLayer *currentStageLayer;
+@property (nonatomic, assign) JFSEnvelopeViewStagePoint currentPoint;
 
 @end
 
@@ -106,6 +107,13 @@
         [self.envelopeContainer.layer addSublayer:_envelopeLayer];
     }
     
+    if (_currentStageLayer == nil) {
+        _currentStageLayer = [CAShapeLayer layer];
+        _currentStageLayer.fillColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5].CGColor;
+        
+        [self.envelopeContainer.layer addSublayer:_currentStageLayer];
+    }
+    
     if (self.touchPointLayers == nil) {
         self.touchPointLayers = @{@(JFSEnvelopeViewPointAttack)   : [self dotLayer],
                                   @(JFSEnvelopeViewPointDecay)    : [self dotLayer],
@@ -142,7 +150,7 @@
                                       TOUCH_POINTS_RADIUS * 2);
         
         if (CGRectContainsPoint(touchArea, locationInView)) {
-            _currentPoint = i;
+            self.currentPoint = i;
             _isMoving = YES;
             return YES;
         }
@@ -154,19 +162,19 @@
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
     if (_isMoving) {
-        _points[_currentPoint] = [self pointForTouch:touch];
+        _points[self.currentPoint] = [self pointForTouch:touch];
         
-        [self moveTouchPointAtIndex:_currentPoint toPoint:_points[_currentPoint]];
+        [self moveTouchPointAtIndex:self.currentPoint toPoint:_points[self.currentPoint]];
         
         self.envelopeLayer.path = [self pathForCurrentStagePoints].CGPath;
         
-        CGPoint adjustedPoint = [self adjustedStagePointAtIndex:_currentPoint];
+        CGPoint adjustedPoint = [self adjustedStagePointAtIndex:self.currentPoint];
         CGFloat width = CGRectGetWidth(self.frame);
         CGFloat timeValue = (adjustedPoint.x / (width/3)) * [self.dataSource maxEnvelopeTimeForEnvelopeView:self];
         
-        [self.delegate envelopeView:self didUpdateEnvelopePoint:_currentPoint value:timeValue];
+        [self.delegate envelopeView:self didUpdateEnvelopePoint:self.currentPoint value:timeValue];
         
-        if (_currentPoint == JFSEnvelopeViewPointDecay) {
+        if (self.currentPoint == JFSEnvelopeViewPointDecay) {
             CGFloat height = CGRectGetHeight(self.frame);
 
             [self.delegate envelopeView:self didUpdateEnvelopePoint:JFSEnvelopeViewPointSustain value:((height - adjustedPoint.y) / height)];
@@ -208,7 +216,7 @@
     locationInView.y = MIN(locationInView.y, CGRectGetHeight(self.envelopeContainer.frame));
     locationInView.y = MAX(locationInView.y, 0);
     
-    switch (_currentPoint) {
+    switch (self.currentPoint) {
         case JFSEnvelopeViewPointAttack:
         {
             locationInView.y = 0;

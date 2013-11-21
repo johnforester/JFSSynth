@@ -54,6 +54,9 @@
 - (Float32)updateState
 {
     switch (self.envelopeState) {
+        case JFSEnvelopeStateNone:
+            self.level = 0;
+            break;
         case JFSEnvelopeStateAttack:
             if (self.level < self.peak) {
                 self.level += self.attackSlope;

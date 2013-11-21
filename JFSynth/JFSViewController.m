@@ -102,7 +102,7 @@
     [[JFSSynthController sharedManager].oscillatorTwo setWaveType:segmentedControl.selectedSegmentIndex];
 }
 
-- (IBAction)peakSliderChanged:(UISlider *)slider
+- (IBAction)velocitySliderChanged:(UISlider *)slider
 {
     [[JFSSynthController sharedManager].ampEnvelopeGenerator updatePeakWithMidiVelocity:slider.value];
 }
