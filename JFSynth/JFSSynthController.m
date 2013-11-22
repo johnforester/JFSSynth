@@ -238,9 +238,9 @@
     [self.filterEnvelopeGenerator stop];
 }
 
-- (void)updateOscillator:(JFSOscillator *)oscillator coarse:(Float32)coarse
+- (void)updateOscillator:(JFSOscillator *)oscillator semitones:(int)semitones
 {
-    [oscillator updateCoarse:coarse];
+    [oscillator updateSemitone:semitones];
 }
 
 - (void)updateOscillator:(JFSOscillator *)oscillator fine:(Float32)fine

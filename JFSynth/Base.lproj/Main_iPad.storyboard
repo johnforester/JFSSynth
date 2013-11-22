@@ -187,7 +187,7 @@
                                     <action selector="waveTypeTwoControlChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="JGJ-xd-z1A"/>
                                 </connections>
                             </segmentedControl>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="F2J-e3-9VA">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-24" maxValue="24" translatesAutoresizingMaskIntoConstraints="NO" id="F2J-e3-9VA">
                                 <rect key="frame" x="450" y="170" width="134" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -195,7 +195,7 @@
                                     <action selector="oscOneCoarseSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Vcm-dv-qQO"/>
                                 </connections>
                             </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="x16-OU-Okt">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-24" maxValue="24" translatesAutoresizingMaskIntoConstraints="NO" id="x16-OU-Okt">
                                 <rect key="frame" x="616" y="170" width="134" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -203,15 +203,15 @@
                                     <action selector="oscTwoCoarseSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="0Pa-Xg-Mya"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Coarse" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MyC-k1-m0S">
-                                <rect key="frame" x="452" y="155" width="55" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Semi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MyC-k1-m0S">
+                                <rect key="frame" x="452" y="155" width="39" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Coarse" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fc6-rL-uGl">
-                                <rect key="frame" x="618" y="155" width="55" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Semi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fc6-rL-uGl">
+                                <rect key="frame" x="618" y="155" width="39" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -233,15 +233,15 @@
                                     <action selector="oscTwoFineSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="FPG-2l-2SI"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fine" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lx5-qL-7mm">
-                                <rect key="frame" x="452" y="199" width="33" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Detune" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lx5-qL-7mm">
+                                <rect key="frame" x="452" y="199" width="55" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fine" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="St6-IQ-ION">
-                                <rect key="frame" x="618" y="199" width="33" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Detune" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="St6-IQ-ION">
+                                <rect key="frame" x="618" y="199" width="55" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -275,6 +275,19 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myr-1p-rG7">
+                                <rect key="frame" x="539" y="155" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ARu-Ok-h0r">
+                                <rect key="frame" x="705" y="155" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -335,10 +348,12 @@
                         <outlet property="filterEnvelopeView" destination="ej1-zr-R5T" id="1On-cn-z5p"/>
                         <outlet property="keyBoardView" destination="i7e-eV-uys" id="Hiz-Ye-hsN"/>
                         <outlet property="lfoAmountSlider" destination="7Ep-Cr-DBK" id="Z2e-02-vMS"/>
-                        <outlet property="oscOneCoarseSlider" destination="F2J-e3-9VA" id="3LC-0x-Rrz"/>
                         <outlet property="oscOneFineSlider" destination="CQY-38-yGY" id="lur-qa-wCk"/>
-                        <outlet property="oscTwoCoarseSlider" destination="x16-OU-Okt" id="0os-cZ-jyS"/>
+                        <outlet property="oscOneSemitoneLabel" destination="myr-1p-rG7" id="RI9-Oj-c07"/>
+                        <outlet property="oscOneSemitoneSlider" destination="F2J-e3-9VA" id="IRV-jC-i3w"/>
                         <outlet property="oscTwoFineSlider" destination="tta-8j-zVB" id="y5l-NE-PuM"/>
+                        <outlet property="oscTwoSemitoneLabel" destination="ARu-Ok-h0r" id="DwN-lo-7jF"/>
+                        <outlet property="oscTwoSemitoneSlider" destination="x16-OU-Okt" id="UiG-W4-1ba"/>
                         <outlet property="resonanceSlider" destination="t0f-E1-Ivr" id="VE7-J6-iGQ"/>
                         <outlet property="velocityPeakSlider" destination="wE0-an-tkJ" id="aNE-Vi-mYY"/>
                     </connections>

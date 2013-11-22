@@ -20,8 +20,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *cutoffLFOSlider;
 @property (weak, nonatomic) IBOutlet UISlider *lfoAmountSlider;
 
-@property (weak, nonatomic) IBOutlet UISlider *oscOneCoarseSlider;
-@property (weak, nonatomic) IBOutlet UISlider *oscTwoCoarseSlider;
+@property (weak, nonatomic) IBOutlet UISlider *oscOneSemitoneSlider;
+@property (weak, nonatomic) IBOutlet UISlider *oscTwoSemitoneSlider;
 @property (weak, nonatomic) IBOutlet UISlider *oscOneFineSlider;
 @property (weak, nonatomic) IBOutlet UISlider *oscTwoFineSlider;
 
@@ -30,6 +30,9 @@
 @property (weak, nonatomic) IBOutlet JFSScrollingKeyboardView *keyBoardView;
 
 @property (nonatomic, strong) NSTimer *refreshTimer;
+
+@property (weak, nonatomic) IBOutlet UILabel *oscOneSemitoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *oscTwoSemitoneLabel;
 
 @end
 
@@ -66,17 +69,21 @@
     
     self.lfoAmountSlider.value = [audioManager cuttoffLFOAmount];
     
-    self.oscOneCoarseSlider.minimumValue = -1;
-    self.oscOneCoarseSlider.maximumValue = 1;
-    self.oscTwoCoarseSlider.minimumValue = -1;
-    self.oscTwoCoarseSlider.maximumValue = 1;
+    self.oscOneSemitoneSlider.minimumValue = -24;
+    self.oscOneSemitoneSlider.maximumValue = 24;
+    self.oscTwoSemitoneSlider.minimumValue = -24;
+    self.oscTwoSemitoneSlider.maximumValue = 24;
+    
     self.oscOneFineSlider.minimumValue = 0;
     self.oscOneFineSlider.maximumValue = 1;
     self.oscTwoFineSlider.minimumValue = 0;
     self.oscTwoFineSlider.maximumValue = 1;
     
-    self.oscOneCoarseSlider.value = audioManager.oscillatorOne.coarse;
-    self.oscTwoCoarseSlider.value = audioManager.oscillatorTwo.coarse;
+    self.oscOneSemitoneSlider.value = audioManager.oscillatorOne.semitones;
+    self.oscTwoSemitoneSlider.value = audioManager.oscillatorTwo.semitones;
+    self.oscOneSemitoneLabel.text = [NSString stringWithFormat:@"%+d",(int)self.oscOneSemitoneSlider.value];
+    self.oscTwoSemitoneLabel.text = [NSString stringWithFormat:@"%+d",(int)self.oscTwoSemitoneSlider.value];
+
     self.oscOneFineSlider.value = audioManager.oscillatorOne.fine;
     self.oscTwoFineSlider.value = audioManager.oscillatorTwo.fine;
     
@@ -147,12 +154,16 @@
 
 - (IBAction)oscOneCoarseSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedController] updateOscillator:[JFSSynthController sharedController].oscillatorOne coarse:slider.value];
+    int semitones = (int)slider.value;
+    self.oscOneSemitoneLabel.text = [NSString stringWithFormat:@"%+d",semitones];
+    [[JFSSynthController sharedController] updateOscillator:[JFSSynthController sharedController].oscillatorOne semitones:semitones];
 }
 
 - (IBAction)oscTwoCoarseSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedController] updateOscillator:[JFSSynthController sharedController].oscillatorTwo coarse:slider.value];
+    int semitones = (int)slider.value;
+    self.oscTwoSemitoneLabel.text = [NSString stringWithFormat:@"%+d",semitones];
+    [[JFSSynthController sharedController] updateOscillator:[JFSSynthController sharedController].oscillatorTwo semitones:semitones];
 }
 
 - (IBAction)oscOneFineSliderChanged:(UISlider *)slider
@@ -213,7 +224,7 @@
     return [JFSSynthController sharedController].maximumEnvelopeTime;
 }
 
-#pragma mark - JFSEnvelopViewDelegate
+#pragma mark - JFSEnvelopeViewDelegate
 
 - (void)envelopeView:(JFSEnvelopeView *)envelopeView didUpdateEnvelopePoint:(JFSEnvelopeViewStagePoint)envelopePoint value:(Float32)value
 {

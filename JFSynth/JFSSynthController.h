@@ -34,7 +34,7 @@
 - (void)updateFrequency:(double)frequency;
 - (void)updateLFOAmount:(Float32)lfoAmount;
 - (void)stopPlaying;
-- (void)updateOscillator:(JFSOscillator *)oscillator coarse:(Float32)coarse;
+- (void)updateOscillator:(JFSOscillator *)oscillator semitones:(int)semitones;
 - (void)updateOscillator:(JFSOscillator *)oscillator fine:(Float32)fine;
 - (void)updateVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value;
 
