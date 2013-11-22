@@ -106,7 +106,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g5w-zk-G7L" customClass="JFSEnvelopeView">
                                                 <rect key="frame" x="20" y="23" width="400" height="220"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="400" id="0iP-Fd-hZG"/>
                                                     <constraint firstAttribute="height" constant="220" id="qj1-V3-tro"/>
@@ -151,7 +151,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UMS-yK-JH2" customClass="JFSEnvelopeView">
                                                 <rect key="frame" x="20" y="276" width="400" height="220"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="220" id="1J3-wg-u7t"/>
                                                     <constraint firstAttribute="width" constant="400" id="3Tw-Mp-h0I"/>

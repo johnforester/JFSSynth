@@ -66,7 +66,8 @@
 {
     _touchPointsTransform = CGAffineTransformMakeRotation(2 * M_PI);
     _envelopeContainer = [[UIView alloc] initWithFrame:CGRectInset(self.bounds, 10, 10)];
-    _envelopeContainer.layer.borderColor = [UIColor blackColor].CGColor;
+    _envelopeContainer.layer.borderColor = [UIColor redColor].CGColor;
+    _envelopeContainer.backgroundColor = [UIColor blackColor];
     _envelopeContainer.layer.borderWidth = 1.0f;
     _envelopeContainer.userInteractionEnabled = NO;
     
@@ -316,7 +317,7 @@
 {
     CAShapeLayer *dotLayer = [CAShapeLayer layer];
     
-    dotLayer.strokeColor = [UIColor blackColor].CGColor;
+    dotLayer.strokeColor = [UIColor redColor].CGColor;
     CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(CGPointZero.x,
                                                               CGPointZero.y,
                                                               TOUCH_POINTS_RADIUS * 2,
