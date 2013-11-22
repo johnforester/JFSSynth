@@ -158,7 +158,7 @@
 
 - (IBAction)filterLFOAmountSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedController] setLFOAmount:slider.value];
+    [[JFSSynthController sharedController] setCutoffLFOAmount:slider.value];
 }
 
 - (IBAction)semiToneSliderChanged:(UISlider *)slider

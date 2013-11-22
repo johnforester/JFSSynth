@@ -196,7 +196,7 @@
     }];
 }
 
-- (void)setLFOAmount:(Float32)lfoAmount
+- (void)setCutoffLFOAmount:(Float32)lfoAmount
 {
     _cuttoffLFOAmount = lfoAmount;
 }

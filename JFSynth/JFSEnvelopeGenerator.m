@@ -23,7 +23,6 @@
     self = [super init];
     
     if (self) {
-        
         _level = 0;
         _peak = 0.4 * pow(60/127., 3.);
         _attackTime = 0.0f;

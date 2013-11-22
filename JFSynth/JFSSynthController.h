@@ -31,8 +31,10 @@
 
 - (void)playFrequency:(double)frequency;
 - (void)setBaseFrequency:(double)frequency;
-- (void)setLFOAmount:(Float32)lfoAmount;
 - (void)stopPlaying;
+
+- (void)setCutoffLFOAmount:(Float32)lfoAmount;
+
 - (void)setSemitonesForOscillatorAtIndex:(int)oscillatorIdx value:(int)semitones;
 - (void)setFineForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)fine;
 - (void)setVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value;
