@@ -84,13 +84,13 @@
     self.oscTwoFineSlider.minimumValue = 0;
     self.oscTwoFineSlider.maximumValue = 1;
     
-    self.oscOneSemitoneSlider.value = audioManager.oscillatorOne.semitones;
-    self.oscTwoSemitoneSlider.value = audioManager.oscillatorTwo.semitones;
+    self.oscOneSemitoneSlider.value = [audioManager.oscillators[0] semitones];
+    self.oscTwoSemitoneSlider.value = [audioManager.oscillators[1] semitones];
     self.oscOneSemitoneLabel.text = [NSString stringWithFormat:@"%+d",(int)self.oscOneSemitoneSlider.value];
     self.oscTwoSemitoneLabel.text = [NSString stringWithFormat:@"%+d",(int)self.oscTwoSemitoneSlider.value];
     
-    self.oscOneFineSlider.value = audioManager.oscillatorOne.fine;
-    self.oscTwoFineSlider.value = audioManager.oscillatorTwo.fine;
+    self.oscOneFineSlider.value = [audioManager.oscillators[0] fine];
+    self.oscTwoFineSlider.value = [audioManager.oscillators[1] fine];
     
     self.delayDryWetSlider.minimumValue = [audioManager minimumDelayDryWet];
     self.delayDryWetSlider.maximumValue = [audioManager maximumDelayDryWet];
@@ -134,12 +134,7 @@
 
 - (IBAction)waveTypeControlChanged:(UISegmentedControl *)segmentedControl
 {
-    [[JFSSynthController sharedController].oscillatorOne setWaveType:segmentedControl.selectedSegmentIndex];
-}
-
-- (IBAction)waveTypeTwoControlChanged:(UISegmentedControl *)segmentedControl
-{
-    [[JFSSynthController sharedController].oscillatorTwo setWaveType:segmentedControl.selectedSegmentIndex];
+    [[JFSSynthController sharedController].oscillators[segmentedControl.tag] setWaveType:segmentedControl.selectedSegmentIndex];
 }
 
 - (IBAction)velocitySliderChanged:(UISlider *)slider
@@ -163,36 +158,36 @@
 
 - (IBAction)filterLFOAmountSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedController] updateLFOAmount:slider.value];
+    [[JFSSynthController sharedController] setLFOAmount:slider.value];
 }
 
-- (IBAction)oscOneCoarseSliderChanged:(UISlider *)slider
+- (IBAction)semiToneSliderChanged:(UISlider *)slider
 {
     int semitones = (int)slider.value;
-    self.oscOneSemitoneLabel.text = [NSString stringWithFormat:@"%+d",semitones];
-    [[JFSSynthController sharedController] updateOscillator:[JFSSynthController sharedController].oscillatorOne semitones:semitones];
-}
-
-- (IBAction)oscTwoCoarseSliderChanged:(UISlider *)slider
-{
-    int semitones = (int)slider.value;
-    self.oscTwoSemitoneLabel.text = [NSString stringWithFormat:@"%+d",semitones];
-    [[JFSSynthController sharedController] updateOscillator:[JFSSynthController sharedController].oscillatorTwo semitones:semitones];
+    
+    int tag = slider.tag;
+    
+    UILabel *semitoneLabel;
+    
+    if (tag == 0) {
+        semitoneLabel = self.oscOneSemitoneLabel;
+    } else {
+        semitoneLabel = self.oscTwoSemitoneLabel;
+    }
+    
+    semitoneLabel.text = [NSString stringWithFormat:@"%+d",semitones];;
+    
+    [[JFSSynthController sharedController] setSemitonesForOscillatorAtIndex:slider.tag value:semitones];
 }
 
 - (IBAction)oscOneFineSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedController] updateOscillator:[JFSSynthController sharedController].oscillatorOne fine:slider.value];
-}
-
-- (IBAction)oscTwoFineSliderChanged:(UISlider *)slider
-{
-    [[JFSSynthController sharedController] updateOscillator:[JFSSynthController sharedController].oscillatorTwo fine:slider.value];
+    [[JFSSynthController sharedController] setFineForOscillatorAtIndex:slider.tag value:slider.value];
 }
 
 - (IBAction)oscillatorVolumeSliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedController] updateVolumeForOscillatorAtIndex:slider.tag value:slider.value];
+    [[JFSSynthController sharedController] setVolumeForOscillatorAtIndex:slider.tag value:slider.value];
 }
 
 - (IBAction)delayWetDrySliderChanged:(UISlider *)slider

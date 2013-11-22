@@ -170,7 +170,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="OuA-au-2M3">
+                                            <segmentedControl opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="OuA-au-2M3">
                                                 <rect key="frame" x="617" y="71" width="130" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <constraints>
@@ -184,7 +184,7 @@
                                                 </segments>
                                                 <color key="tintColor" red="1" green="0.0" blue="0.01085100634" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <action selector="waveTypeTwoControlChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="aOH-9U-Ref"/>
+                                                    <action selector="waveTypeControlChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="UMT-Nc-uB0"/>
                                                 </connections>
                                             </segmentedControl>
                                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-24" maxValue="24" translatesAutoresizingMaskIntoConstraints="NO" id="FAD-pe-OzZ">
@@ -192,15 +192,15 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <action selector="oscOneCoarseSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="2gB-5R-drB"/>
+                                                    <action selector="semiToneSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="tU9-Ql-bX4"/>
                                                 </connections>
                                             </slider>
-                                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-24" maxValue="24" translatesAutoresizingMaskIntoConstraints="NO" id="p54-pS-eRU">
+                                            <slider opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-24" maxValue="24" translatesAutoresizingMaskIntoConstraints="NO" id="p54-pS-eRU">
                                                 <rect key="frame" x="616" y="170" width="134" height="34"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <action selector="oscTwoCoarseSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Z5J-r0-nTr"/>
+                                                    <action selector="semiToneSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="vAx-0W-Eoz"/>
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Semi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5g-ax-Yg3">
@@ -225,12 +225,12 @@
                                                     <action selector="oscOneFineSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="FWk-9a-0UM"/>
                                                 </connections>
                                             </slider>
-                                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.05000000074505806" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ILd-DO-uRB">
+                                            <slider opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.05000000074505806" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ILd-DO-uRB">
                                                 <rect key="frame" x="616" y="215" width="134" height="34"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
-                                                    <action selector="oscTwoFineSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="XJ4-qj-lJe"/>
+                                                    <action selector="oscOneFineSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="18K-oB-heH"/>
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Detune" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eP-ef-X7b">
@@ -284,7 +284,7 @@
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UPE-hr-kU7">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UPE-hr-kU7">
                                                 <rect key="frame" x="705" y="155" width="42" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -435,10 +435,10 @@
                         <outlet property="keyBoardView" destination="H7L-JE-lcd" id="TA0-iZ-edH"/>
                         <outlet property="lfoAmountSlider" destination="doB-Qu-GJB" id="Z85-6W-RiP"/>
                         <outlet property="oscOneFineSlider" destination="wob-7N-ipG" id="qSa-uc-uVS"/>
-                        <outlet property="oscOneSemitoneLabel" destination="8FX-Zb-PyL" id="K8Q-QW-8uY"/>
+                        <outlet property="oscOneSemitoneLabel" destination="8FX-Zb-PyL" id="BzS-xn-n8D"/>
                         <outlet property="oscOneSemitoneSlider" destination="FAD-pe-OzZ" id="vpY-kc-0In"/>
                         <outlet property="oscTwoFineSlider" destination="ILd-DO-uRB" id="p8k-DA-gbs"/>
-                        <outlet property="oscTwoSemitoneLabel" destination="UPE-hr-kU7" id="riF-7G-2gK"/>
+                        <outlet property="oscTwoSemitoneLabel" destination="UPE-hr-kU7" id="aKn-o2-jaL"/>
                         <outlet property="oscTwoSemitoneSlider" destination="p54-pS-eRU" id="Z1l-4j-EVj"/>
                         <outlet property="resonanceSlider" destination="ozA-ui-znl" id="B0G-Qg-4Af"/>
                         <outlet property="velocityPeakSlider" destination="YsY-V1-Kri" id="aL4-eE-oeo"/>

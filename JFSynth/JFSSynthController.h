@@ -16,8 +16,7 @@
 @property (nonatomic, strong) JFSEnvelopeGenerator *ampEnvelopeGenerator;
 @property (nonatomic, strong) JFSEnvelopeGenerator *filterEnvelopeGenerator;
 
-@property (nonatomic, strong) JFSOscillator *oscillatorOne;
-@property (nonatomic, strong) JFSOscillator *oscillatorTwo;
+@property (nonatomic, readonly) NSArray *oscillators;
 
 @property (nonatomic, strong) JFSOscillator *cutoffLFO;
 
@@ -31,12 +30,12 @@
 + (JFSSynthController *) sharedController;
 
 - (void)playFrequency:(double)frequency;
-- (void)updateFrequency:(double)frequency;
-- (void)updateLFOAmount:(Float32)lfoAmount;
+- (void)setBaseFrequency:(double)frequency;
+- (void)setLFOAmount:(Float32)lfoAmount;
 - (void)stopPlaying;
-- (void)updateOscillator:(JFSOscillator *)oscillator semitones:(int)semitones;
-- (void)updateOscillator:(JFSOscillator *)oscillator fine:(Float32)fine;
-- (void)updateVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value;
+- (void)setSemitonesForOscillatorAtIndex:(int)oscillatorIdx value:(int)semitones;
+- (void)setFineForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)fine;
+- (void)setVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value;
 
 - (Float32)minimumCutoff;
 - (Float32)maximumCutoff;

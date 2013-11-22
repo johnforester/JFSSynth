@@ -20,6 +20,7 @@
 
 @property (nonatomic, assign) Float32 cuttoffLFOAmount;
 @property (nonatomic, strong) NSArray *oscillatorChannels;
+@property (nonatomic, strong) NSArray *oscillators;
 
 @end
 
@@ -51,14 +52,13 @@
         _ampEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
         _filterEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
         
-        _oscillatorOne = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
-        _oscillatorTwo = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
-        [_oscillatorTwo updateFine:0.05];
+        _oscillators = @[[[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE], [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE]];
+        [_oscillators[1] updateFine:0.05];
         
-        [self updateFrequency:440];
+        [self setBaseFrequency:440];
         
-        _oscillatorChannels = @[[self oscillatorChannelWithOscillator:_oscillatorOne], [self oscillatorChannelWithOscillator:_oscillatorTwo]];
-        [_audioController addChannels:self.oscillatorChannels];
+        _oscillatorChannels = @[[self oscillatorChannelWithOscillator:_oscillators[0]], [self oscillatorChannelWithOscillator:_oscillators[1]]];
+        [_audioController addChannels:_oscillatorChannels];
         
         _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         [_cutoffLFO setWaveType:JFSSineWave];
@@ -189,6 +189,35 @@
     [self.cutoffLFO updateBaseFrequency:cutoffLFOFrequency];
 }
 
+- (void)setBaseFrequency:(double)frequency
+{
+    [self.oscillators enumerateObjectsUsingBlock:^(JFSOscillator *oscillator, NSUInteger idx, BOOL *stop) {
+        [oscillator updateBaseFrequency:frequency];
+    }];
+}
+
+- (void)setLFOAmount:(Float32)lfoAmount
+{
+    _cuttoffLFOAmount = lfoAmount;
+}
+
+- (void)setVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value
+{
+    if ([self.oscillatorChannels count] > oscillatorIdx) {
+        AEBlockChannel *channel = self.oscillatorChannels[oscillatorIdx];
+        channel.volume = value;
+    }
+}
+- (void)setSemitonesForOscillatorAtIndex:(int)oscillatorIdx value:(int)semitones
+{
+    [self.oscillators[oscillatorIdx] updateSemitone:semitones];
+}
+
+- (void)setFineForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)fine
+{
+    [self.oscillators[oscillatorIdx] updateFine:fine];
+}
+
 #pragma setup methods
 
 - (AEBlockChannel *)oscillatorChannelWithOscillator:(JFSOscillator *)oscillator
@@ -229,45 +258,16 @@
 
 - (void)playFrequency:(double)frequency
 {
-    [self updateFrequency:frequency];
+    [self setBaseFrequency:frequency];
     
     [self.ampEnvelopeGenerator start];
     [self.filterEnvelopeGenerator start];
-}
-
-- (void)updateFrequency:(double)frequency
-{
-    [self.oscillatorOne updateBaseFrequency:frequency];
-    [self.oscillatorTwo updateBaseFrequency:frequency];
-}
-
-- (void)updateLFOAmount:(Float32)lfoAmount
-{
-    _cuttoffLFOAmount = lfoAmount;
-}
-
-- (void)updateVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value
-{
-    if ([self.oscillatorChannels count] > oscillatorIdx) {
-        AEBlockChannel *channel = self.oscillatorChannels[oscillatorIdx];
-        channel.volume = value;
-    }
 }
 
 - (void)stopPlaying
 {
     [self.ampEnvelopeGenerator stop];
     [self.filterEnvelopeGenerator stop];
-}
-
-- (void)updateOscillator:(JFSOscillator *)oscillator semitones:(int)semitones
-{
-    [oscillator updateSemitone:semitones];
-}
-
-- (void)updateOscillator:(JFSOscillator *)oscillator fine:(Float32)fine
-{
-    [oscillator updateFine:fine];
 }
 
 #pragma mark - min/max values
