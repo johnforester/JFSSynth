@@ -16,6 +16,8 @@
 @property (nonatomic, strong) AEAudioController *audioController;
 @property (nonatomic, strong) AEBlockChannel *oscillatorChannel;
 @property (nonatomic, strong) AEAudioUnitFilter *lpFilter;
+@property (nonatomic, strong) AEAudioUnitFilter *delay;
+
 @property (nonatomic, assign) Float32 cuttoffLFOAmount;
 @property (nonatomic, strong) NSArray *oscillatorChannels;
 
@@ -55,6 +57,9 @@
         
         [self updateFrequency:440];
         
+        _oscillatorChannels = @[[self oscillatorChannelWithOscillator:_oscillatorOne], [self oscillatorChannelWithOscillator:_oscillatorTwo]];
+        [_audioController addChannels:self.oscillatorChannels];
+        
         _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         [_cutoffLFO setWaveType:JFSSineWave];
         [_cutoffLFO updateBaseFrequency:0.0f];
@@ -66,21 +71,34 @@
         
         NSError *error = nil;
         
-        self.lpFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:lpFilterComponent
+        _lpFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:lpFilterComponent
                                                                 audioController:_audioController
                                                                           error:&error];
         
-        if (!self.lpFilter) {
+        if (error) {
             NSLog(@"filter initialization error %@", [error localizedDescription]);
+        } else {
+            [_audioController addFilter:_lpFilter];
         }
         
         self.cutoffLevel = 6200.0f;
         self.resonanceLevel = 0.0;
         
-        self.oscillatorChannels = @[[self oscillatorChannelWithOscillator:_oscillatorOne], [self oscillatorChannelWithOscillator:_oscillatorTwo]];
+        AudioComponentDescription delayComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
+                                                                                      kAudioUnitType_Effect,
+                                                                                      kAudioUnitSubType_Delay);
         
-        [_audioController addChannels:self.oscillatorChannels];
-        [_audioController addFilter:self.lpFilter];
+        error = nil;
+        
+        _delay = [[AEAudioUnitFilter alloc] initWithComponentDescription:delayComponent
+                                                            audioController:_audioController
+                                                                      error:&error];
+        
+        if (error) {
+            NSLog(@"filter initialization error %@", [error localizedDescription]);
+        } else {
+            [_audioController addFilter:_delay];
+        }
         
         error = nil;
         
@@ -117,6 +135,50 @@
                           kAudioUnitScope_Global,
                           0,
                           resonanceLevel,
+                          0);
+}
+
+// Global, EqPow Crossfade, 0->100, 50
+- (void)setDelayWetDry:(Float32)level
+{
+    AudioUnitSetParameter(self.delay.audioUnit,
+                          kDelayParam_WetDryMix,
+                          kAudioUnitScope_Global,
+                          0,
+                          level,
+                          0);
+}
+
+// Global, Secs, 0->2, 1
+- (void)setDelayTime:(Float32)level
+{
+    AudioUnitSetParameter(self.delay.audioUnit,
+                          kDelayParam_DelayTime,
+                          kAudioUnitScope_Global,
+                          0,
+                          level,
+                          0);
+}
+
+// Global, Percent, -100->100, 50
+- (void)setDelayFeedback:(Float32)level
+{
+    AudioUnitSetParameter(self.delay.audioUnit,
+                          kDelayParam_Feedback,
+                          kAudioUnitScope_Global,
+                          0,
+                          level,
+                          0);
+}
+
+// Global, Hz, 10->(SampleRate/2), 15000
+- (void)setDelayCutoff:(Float32)level
+{
+    AudioUnitSetParameter(self.delay.audioUnit,
+                          kDelayParam_LopassCutoff,
+                          kAudioUnitScope_Global,
+                          0,
+                          level,
                           0);
 }
 

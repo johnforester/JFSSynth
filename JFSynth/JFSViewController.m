@@ -83,7 +83,7 @@
     self.oscTwoSemitoneSlider.value = audioManager.oscillatorTwo.semitones;
     self.oscOneSemitoneLabel.text = [NSString stringWithFormat:@"%+d",(int)self.oscOneSemitoneSlider.value];
     self.oscTwoSemitoneLabel.text = [NSString stringWithFormat:@"%+d",(int)self.oscTwoSemitoneSlider.value];
-
+    
     self.oscOneFineSlider.value = audioManager.oscillatorOne.fine;
     self.oscTwoFineSlider.value = audioManager.oscillatorTwo.fine;
     
@@ -103,7 +103,7 @@
     return YES;
 }
 
- - (void)dealloc
+- (void)dealloc
 {
     [self.refreshTimer invalidate];
 }
@@ -179,6 +179,26 @@
 - (IBAction)oscillatorVolumeSliderChanged:(UISlider *)slider
 {
     [[JFSSynthController sharedController] updateVolumeForOscillatorAtIndex:slider.tag value:slider.value];
+}
+
+- (IBAction)delayWetDrySliderChanged:(UISlider *)slider
+{
+    [[JFSSynthController sharedController] setDelayWetDry:slider.value];
+}
+
+- (IBAction)delayFeedbackSliderChanged:(UISlider *)slider
+{
+    [[JFSSynthController sharedController] setDelayFeedback:slider.value];
+}
+
+- (IBAction)delayTimeSliderChanged:(UISlider *)slider
+{
+    [[JFSSynthController sharedController] setDelayTime:slider.value];
+}
+
+- (IBAction)delayCutoffSliderChanged:(UISlider *)slider
+{
+    [[JFSSynthController sharedController] setDelayCutoff:slider.value];
 }
 
 #pragma mark - JFSEnvelopeViewDataSource

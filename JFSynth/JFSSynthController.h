@@ -48,4 +48,9 @@
 - (Float32)minimumEnvelopeTime;
 - (Float32)maximumEnvelopeTime;
 
+- (void)setDelayWetDry:(Float32)level;
+- (void)setDelayTime:(Float32)level;
+- (void)setDelayFeedback:(Float32)level;
+- (void)setDelayCutoff:(Float32)level;
+
 @end
