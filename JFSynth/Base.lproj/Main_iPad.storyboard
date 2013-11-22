@@ -322,7 +322,7 @@
                                                     <action selector="delayCutoffSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="rvt-ub-Jc4"/>
                                                 </connections>
                                             </slider>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Wet/Dry" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOx-ap-zFa">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dry/Wet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOx-ap-zFa">
                                                 <rect key="frame" x="25" y="532" width="62" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -427,6 +427,10 @@
                         <outlet property="ampEnvelopeView" destination="g5w-zk-G7L" id="3lp-xJ-Aqc"/>
                         <outlet property="cutoffLFOSlider" destination="swU-sh-Nrk" id="8Vd-wH-SXR"/>
                         <outlet property="cutoffSlider" destination="WcB-yz-mQy" id="EI2-F1-AC9"/>
+                        <outlet property="delayCutoffSlider" destination="CyQ-Kn-Dna" id="iJP-CO-sDz"/>
+                        <outlet property="delayDryWetSlider" destination="nMM-h0-nQc" id="QID-lE-MIO"/>
+                        <outlet property="delayFeedbackSlider" destination="jfz-Wt-VOY" id="Wuv-Y4-hT6"/>
+                        <outlet property="delayTimeSlider" destination="KxA-e2-uJA" id="XKy-g2-PMR"/>
                         <outlet property="filterEnvelopeView" destination="UMS-yK-JH2" id="DWU-Ew-51W"/>
                         <outlet property="keyBoardView" destination="H7L-JE-lcd" id="TA0-iZ-edH"/>
                         <outlet property="lfoAmountSlider" destination="doB-Qu-GJB" id="Z85-6W-RiP"/>

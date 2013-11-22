@@ -189,46 +189,6 @@
     [self.cutoffLFO updateBaseFrequency:cutoffLFOFrequency];
 }
 
-- (Float32)minimumCutoff
-{
-    return 10.0f;
-}
-
-- (Float32)maximumCutoff
-{
-    return SAMPLE_RATE/2.0f;
-}
-
-- (Float32)minimumResonance
-{
-    return -20.0f;
-}
-
-- (Float32)maximumResonance
-{
-    return 40.0f;
-}
-
-- (Float32)minimumCutoffLFO
-{
-    return 0.0f;
-}
-
-- (Float32)maximumCutoffLFO
-{
-    return 20.0f;
-}
-
-- (Float32)minimumEnvelopeTime
-{
-    return 0.0001f;
-}
-
-- (Float32)maximumEnvelopeTime
-{
-    return 8.0f;
-}
-
 #pragma setup methods
 
 - (AEBlockChannel *)oscillatorChannelWithOscillator:(JFSOscillator *)oscillator
@@ -308,6 +268,88 @@
 - (void)updateOscillator:(JFSOscillator *)oscillator fine:(Float32)fine
 {
     [oscillator updateFine:fine];
+}
+
+#pragma mark - min/max values
+
+- (Float32)minimumCutoff
+{
+    return 10.0f;
+}
+
+- (Float32)maximumCutoff
+{
+    return SAMPLE_RATE/2.0f;
+}
+
+- (Float32)minimumResonance
+{
+    return -20.0f;
+}
+
+- (Float32)maximumResonance
+{
+    return 40.0f;
+}
+
+- (Float32)minimumCutoffLFO
+{
+    return 0.0f;
+}
+
+- (Float32)maximumCutoffLFO
+{
+    return 20.0f;
+}
+
+- (Float32)minimumEnvelopeTime
+{
+    return 0.0001f;
+}
+
+- (Float32)maximumEnvelopeTime
+{
+    return 8.0f;
+}
+
+- (Float32)minimumDelayDryWet
+{
+    return 0;
+}
+
+- (Float32)maximumDelayDryWet
+{
+    return 100;
+}
+
+- (Float32)minimumDelayFeedback
+{
+    return -100;
+}
+
+- (Float32)maximumDelayFeedback
+{
+    return 100;
+}
+
+- (Float32)minimumDelayTime
+{
+    return 0;
+}
+
+- (Float32)maximumDelayTime
+{
+    return 2;
+}
+
+- (Float32)minimumDelayCutoff
+{
+    return 10;
+}
+
+- (Float32)maximumDelayCutoff
+{
+    return SAMPLE_RATE/2;
 }
 
 @end

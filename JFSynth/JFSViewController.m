@@ -25,6 +25,11 @@
 @property (weak, nonatomic) IBOutlet UISlider *oscOneFineSlider;
 @property (weak, nonatomic) IBOutlet UISlider *oscTwoFineSlider;
 
+@property (weak, nonatomic) IBOutlet UISlider *delayDryWetSlider;
+@property (weak, nonatomic) IBOutlet UISlider *delayFeedbackSlider;
+@property (weak, nonatomic) IBOutlet UISlider *delayTimeSlider;
+@property (weak, nonatomic) IBOutlet UISlider *delayCutoffSlider;
+
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *ampEnvelopeView;
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *filterEnvelopeView;
 @property (weak, nonatomic) IBOutlet JFSScrollingKeyboardView *keyBoardView;
@@ -86,6 +91,15 @@
     
     self.oscOneFineSlider.value = audioManager.oscillatorOne.fine;
     self.oscTwoFineSlider.value = audioManager.oscillatorTwo.fine;
+    
+    self.delayDryWetSlider.minimumValue = [audioManager minimumDelayDryWet];
+    self.delayDryWetSlider.maximumValue = [audioManager maximumDelayDryWet];
+    self.delayFeedbackSlider.minimumValue = [audioManager minimumDelayFeedback];
+    self.delayFeedbackSlider.maximumValue = [audioManager maximumDelayFeedback];
+    self.delayCutoffSlider.minimumValue = [audioManager minimumDelayCutoff];
+    self.delayCutoffSlider.maximumValue = [audioManager maximumDelayCutoff];
+    self.delayTimeSlider.minimumValue = [audioManager minimumDelayTime];
+    self.delayTimeSlider.maximumValue = [audioManager maximumDelayTime];
     
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(refreshViews) userInfo:nil repeats:YES];
     

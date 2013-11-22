@@ -42,11 +42,21 @@
 - (Float32)maximumCutoff;
 - (Float32)minimumResonance;
 - (Float32)maximumResonance;
+
 - (Float32)minimumCutoffLFO;
 - (Float32)maximumCutoffLFO;
 
 - (Float32)minimumEnvelopeTime;
 - (Float32)maximumEnvelopeTime;
+
+- (Float32)minimumDelayDryWet;
+- (Float32)maximumDelayDryWet;
+- (Float32)minimumDelayFeedback;
+- (Float32)maximumDelayFeedback;
+- (Float32)minimumDelayTime;
+- (Float32)maximumDelayTime;
+- (Float32)minimumDelayCutoff;
+- (Float32)maximumDelayCutoff;
 
 - (void)setDelayWetDry:(Float32)level;
 - (void)setDelayTime:(Float32)level;
