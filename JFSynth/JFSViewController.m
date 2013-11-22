@@ -112,8 +112,8 @@
 
 - (void)refreshViews
 {
-    [self.ampEnvelopeView updateStage:[JFSSynthController sharedController].ampEnvelopeGenerator.envelopeState - 1];
-    [self.filterEnvelopeView updateStage:[JFSSynthController sharedController].filterEnvelopeGenerator.envelopeState - 1];
+    [self.ampEnvelopeView updateStageViewWithStage:[JFSSynthController sharedController].ampEnvelopeGenerator.envelopeState - 1];
+    [self.filterEnvelopeView updateStageViewWithStage:[JFSSynthController sharedController].filterEnvelopeGenerator.envelopeState - 1];
 }
 
 #pragma mark - IBAction

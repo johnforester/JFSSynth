@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeViewStagePoint) {
 @property (nonatomic, assign) id<JFSEnvelopeViewDataSource> dataSource;
 @property (nonatomic, assign) id<JFSEnvelopeViewDelegate> delegate;
 
-- (void)updateStage:(JFSEnvelopeViewStagePoint)stage;
+- (void)updateStageViewWithStage:(JFSEnvelopeViewStagePoint)stage;
 
 @end
 

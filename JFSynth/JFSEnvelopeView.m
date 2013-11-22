@@ -130,7 +130,7 @@
     }];
 }
 
-- (void)updateStage:(JFSEnvelopeViewStagePoint)stage
+- (void)updateStageViewWithStage:(JFSEnvelopeViewStagePoint)stage
 {
     if (stage < JFSEnvelopeViewPointCount && stage >= 0) {
         
@@ -139,7 +139,7 @@
         } else if (stage < JFSEnvelopeViewPointRelease) {
             self.currentStageLayer.frame = CGRectMake(_points[stage - 1].x, 0, _points[stage].x - _points[stage - 1].x, self.envelopeContainer.frame.size.height);
         } else {
-            self.currentStageLayer.frame = CGRectMake(_points[stage].x, 0, CGRectGetMaxX(self.envelopeContainer.frame) - _points[stage].x, self.envelopeContainer.frame.size.height);
+            self.currentStageLayer.frame = CGRectMake(_points[stage - 1].x, 0, self.envelopeContainer.frame.size.width - _points[stage - 1].x, self.envelopeContainer.frame.size.height);
         }
     } else {
         self.currentStageLayer.frame = CGRectZero;
