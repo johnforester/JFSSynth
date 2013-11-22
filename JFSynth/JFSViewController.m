@@ -63,14 +63,14 @@
     
     self.cutoffSlider.minimumValue = [audioManager minimumCutoff];
     self.cutoffSlider.maximumValue = [audioManager maximumCutoff];
-    self.cutoffSlider.value = audioManager.cutoffLevel;
+    self.cutoffSlider.value = [audioManager cutoffLevel];
     
     self.cutoffLFOSlider.minimumValue = [audioManager minimumCutoffLFO];
     self.cutoffLFOSlider.maximumValue = [audioManager maximumCutoffLFO];
     
     self.resonanceSlider.minimumValue = [audioManager minimumResonance];
     self.resonanceSlider.maximumValue = [audioManager maximumResonance];
-    self.resonanceSlider.value = audioManager.resonanceLevel;
+    self.resonanceSlider.value = [audioManager resonanceLevel];
     
     self.lfoAmountSlider.value = [audioManager cuttoffLFOAmount];
     
@@ -144,12 +144,12 @@
 
 - (IBAction)cutoffSliderChanged:(UISlider *)slider
 {
-    [JFSSynthController sharedController].cutoffLevel = slider.value;
+    [[JFSSynthController sharedController] setCutoffLevel:slider.value];
 }
 
 - (IBAction)resonanceSliderChanged:(UISlider *)slider
 {
-    [JFSSynthController sharedController].resonanceLevel = slider.value;
+    [[JFSSynthController sharedController]setResonanceLevel:slider.value];
 }
 - (IBAction)cutoffLFOSliderChanged:(UISlider *)slider
 {

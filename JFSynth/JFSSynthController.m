@@ -55,8 +55,6 @@
         _oscillators = @[[[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE], [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE]];
         [_oscillators[1] updateFine:0.05];
         
-        [self setBaseFrequency:440];
-        
         _oscillatorChannels = @[[self oscillatorChannelWithOscillator:_oscillators[0]], [self oscillatorChannelWithOscillator:_oscillators[1]]];
         [_audioController addChannels:_oscillatorChannels];
         
@@ -81,8 +79,8 @@
             [_audioController addFilter:_lpFilter];
         }
         
-        self.cutoffLevel = 6200.0f;
-        self.resonanceLevel = 0.0;
+        [self setCutoffLevel: 6200.0f];
+        [self setResonanceLevel: 0.0];
         
         AudioComponentDescription delayComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
                                                                                       kAudioUnitType_Effect,
@@ -112,10 +110,9 @@
 
 #pragma accessor methods
 
+// Global, Hz, 10->(SampleRate/2), 6900
 - (void)setCutoffLevel:(Float32)cutoffLevel
 {
-    _cutoffLevel = cutoffLevel;
-    
     AudioUnitSetParameter(self.lpFilter.audioUnit,
                           kLowPassParam_CutoffFrequency,
                           kAudioUnitScope_Global,
@@ -126,16 +123,41 @@
     self.filterEnvelopeGenerator.peak = cutoffLevel;
 }
 
+// Global, dB, -20->40, 0
 - (void)setResonanceLevel:(Float32)resonanceLevel
 {
-    _resonanceLevel = resonanceLevel;
-    
     AudioUnitSetParameter(self.lpFilter.audioUnit,
                           kLowPassParam_Resonance,
                           kAudioUnitScope_Global,
                           0,
                           resonanceLevel,
                           0);
+}
+
+- (Float32)cutoffLevel
+{
+    Float32 value;
+    
+    AudioUnitGetParameter(self.lpFilter.audioUnit,
+                          kLowPassParam_CutoffFrequency,
+                          kAudioUnitScope_Global,
+                          0,
+                          &value);
+    
+    return value;
+}
+
+- (Float32)resonanceLevel
+{
+    Float32 value;
+    
+    AudioUnitGetParameter(self.lpFilter.audioUnit,
+                          kLowPassParam_Resonance,
+                          kAudioUnitScope_Global,
+                          0,
+                          &value);
+    
+    return value;
 }
 
 // Global, EqPow Crossfade, 0->100, 50

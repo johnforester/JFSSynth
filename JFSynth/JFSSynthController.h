@@ -22,8 +22,6 @@
 
 @property (nonatomic, assign) Float32 velocityPeak;
 
-@property (nonatomic, assign) Float32 cutoffLevel;
-@property (nonatomic, assign) Float32 resonanceLevel;
 @property (nonatomic, assign) Float32 cutoffLFOFrequency;
 @property (nonatomic, readonly) Float32 cuttoffLFOAmount;
 
@@ -38,6 +36,11 @@
 - (void)setSemitonesForOscillatorAtIndex:(int)oscillatorIdx value:(int)semitones;
 - (void)setFineForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)fine;
 - (void)setVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value;
+
+- (Float32)cutoffLevel;
+- (Float32)resonanceLevel;
+- (void)setCutoffLevel:(Float32)cutoffLevel;
+- (void)setResonanceLevel:(Float32)resonanceLevel;
 
 - (Float32)minimumCutoff;
 - (Float32)maximumCutoff;
