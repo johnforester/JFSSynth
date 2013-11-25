@@ -10,12 +10,13 @@
 #import "JFSSynthController.h"
 #import "JFSEnvelopeGenerator.h"
 #import "JFSOscillator.h"
+#import "JFSKnob.h"
 
 @interface JFSViewController ()
 
 @property (weak, nonatomic) IBOutlet UISlider *velocityPeakSlider;
 
-@property (weak, nonatomic) IBOutlet UISlider *cutoffSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *cutoffSlider;
 @property (weak, nonatomic) IBOutlet UISlider *resonanceSlider;
 @property (weak, nonatomic) IBOutlet UISlider *cutoffLFOSlider;
 @property (weak, nonatomic) IBOutlet UISlider *lfoAmountSlider;
@@ -63,7 +64,7 @@
     
     self.cutoffSlider.minimumValue = [audioManager minimumCutoff];
     self.cutoffSlider.maximumValue = [audioManager maximumCutoff];
-    self.cutoffSlider.value = [audioManager cutoffLevel];
+    self.cutoffSlider.value = 10;
     
     self.cutoffLFOSlider.minimumValue = [audioManager minimumCutoffLFO];
     self.cutoffLFOSlider.maximumValue = [audioManager maximumCutoffLFO];
@@ -142,7 +143,7 @@
     [[JFSSynthController sharedController].ampEnvelopeGenerator updatePeakWithMidiVelocity:slider.value];
 }
 
-- (IBAction)cutoffSliderChanged:(UISlider *)slider
+- (IBAction)cutoffSliderChanged:(JFSKnob *)slider
 {
     [[JFSSynthController sharedController] setCutoffLevel:slider.value];
 }

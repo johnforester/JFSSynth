@@ -79,7 +79,7 @@
             [_audioController addFilter:_lpFilter];
         }
         
-        [self setCutoffLevel: 6200.0f];
+        [self setCutoffLevel: 6900.0f];
         [self setResonanceLevel: 0.0];
         
         AudioComponentDescription delayComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,

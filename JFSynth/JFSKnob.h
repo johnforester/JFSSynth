@@ -12,5 +12,6 @@
 
 @property (nonatomic, assign) Float32 minimumValue;
 @property (nonatomic, assign) Float32 maximumValue;
+@property (nonatomic, assign) Float32 value;
 
 @end

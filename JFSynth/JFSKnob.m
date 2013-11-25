@@ -46,6 +46,9 @@
 
 - (void)setUpKnob
 {
+    _minimumValue = 0.0;
+    _maximumValue = 1.0;
+    
     _valueLayer = [CAShapeLayer layer];
     _valueLayer.fillColor = [UIColor redColor].CGColor;
     _valueLayer.strokeColor = [UIColor blackColor].CGColor;
@@ -82,6 +85,33 @@
     [self.layer addSublayer:_innerCircleLayer];
 }
 
+- (void)updateKnobWithAngle:(CGFloat)angle
+{
+    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))
+                                                        radius:self.frame.size.width/2
+                                                    startAngle:MIN_ANGLE
+                                                      endAngle:angle
+                                                     clockwise:YES];
+    
+    [path addLineToPoint:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))];
+    [path closePath];
+    
+    self.valueLayer.path = path.CGPath;
+}
+
+#pragma mark - accessors
+
+- (void)setValue:(Float32)value
+{
+    _value = value;
+    
+    CGFloat angle = ((value - self.minimumValue) / (self.maximumValue + self.minimumValue)) * MAX_ANGLE;
+    
+    NSLog(@"angle %f", angle);
+    
+    [self updateKnobWithAngle:angle];
+}
+
 #pragma mark - touches
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
@@ -100,24 +130,21 @@
         CGFloat endAngle = MIN(((diff / self.bounds.size.width) * (MAX_ANGLE - MIN_ANGLE)) + _currentAngle, MAX_ANGLE);
         _currentAngle = MAX(endAngle, MIN_ANGLE);
     } else {
-        CGFloat diff = nextPoint.y - _curentPoint.y;
+        CGFloat diff = _curentPoint.y - nextPoint.y;
         CGFloat endAngle = MIN(((diff / self.bounds.size.height) * (MAX_ANGLE - MIN_ANGLE)) + _currentAngle, MAX_ANGLE);
         _currentAngle = MAX(endAngle, MIN_ANGLE);
     }
     
-    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))
-                                                        radius:self.frame.size.width/2
-                                                    startAngle:MIN_ANGLE
-                                                      endAngle:_currentAngle
-                                                     clockwise:YES];
-    
-    [path addLineToPoint:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))];
-    [path closePath];
-    
-    _valueLayer.path = path.CGPath;
+    [self updateKnobWithAngle:_currentAngle];
     
     _curentPoint = nextPoint;
-        
+
+    _value = self.minimumValue + ((_currentAngle - MIN_ANGLE) / (MAX_ANGLE - MIN_ANGLE) * (self.maximumValue - self.minimumValue));
+
+    NSLog(@"%f", self.value);
+
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
+    
     return YES;
 }
 
