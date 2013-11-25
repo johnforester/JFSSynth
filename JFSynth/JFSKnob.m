@@ -77,9 +77,7 @@
                                        clockwise:YES];
     
     _innerCircleLayer = [CAShapeLayer layer];
-    _innerCircleLayer.fillColor = self.backgroundColor.CGColor;
-    _innerCircleLayer.strokeColor = [UIColor blackColor].CGColor;
-    _innerCircleLayer.lineWidth = 1.0;
+    _innerCircleLayer.fillColor = [UIColor grayColor].CGColor;
     _innerCircleLayer.path = path.CGPath;
     
     [self.layer addSublayer:_innerCircleLayer];

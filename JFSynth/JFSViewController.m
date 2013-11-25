@@ -26,10 +26,10 @@
 @property (weak, nonatomic) IBOutlet JFSKnob *oscOneFineSlider;
 @property (weak, nonatomic) IBOutlet JFSKnob *oscTwoFineSlider;
 
-@property (weak, nonatomic) IBOutlet UISlider *delayDryWetSlider;
-@property (weak, nonatomic) IBOutlet UISlider *delayFeedbackSlider;
-@property (weak, nonatomic) IBOutlet UISlider *delayTimeSlider;
-@property (weak, nonatomic) IBOutlet UISlider *delayCutoffSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *delayDryWetSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *delayFeedbackSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *delayTimeSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *delayCutoffSlider;
 
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *ampEnvelopeView;
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *filterEnvelopeView;
@@ -195,22 +195,22 @@
     [[JFSSynthController sharedController] setVolumeForOscillatorAtIndex:slider.tag value:slider.value];
 }
 
-- (IBAction)delayWetDrySliderChanged:(UISlider *)slider
+- (IBAction)delayWetDrySliderChanged:(JFSKnob *)slider
 {
     [[JFSSynthController sharedController] setDelayWetDry:slider.value];
 }
 
-- (IBAction)delayFeedbackSliderChanged:(UISlider *)slider
+- (IBAction)delayFeedbackSliderChanged:(JFSKnob *)slider
 {
     [[JFSSynthController sharedController] setDelayFeedback:slider.value];
 }
 
-- (IBAction)delayTimeSliderChanged:(UISlider *)slider
+- (IBAction)delayTimeSliderChanged:(JFSKnob *)slider
 {
     [[JFSSynthController sharedController] setDelayTime:slider.value];
 }
 
-- (IBAction)delayCutoffSliderChanged:(UISlider *)slider
+- (IBAction)delayCutoffSliderChanged:(JFSKnob *)slider
 {
     [[JFSSynthController sharedController] setDelayCutoff:slider.value];
 }
