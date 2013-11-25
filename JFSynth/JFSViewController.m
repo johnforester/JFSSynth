@@ -21,10 +21,10 @@
 @property (weak, nonatomic) IBOutlet JFSKnob *cutoffLFOSlider;
 @property (weak, nonatomic) IBOutlet JFSKnob *lfoAmountSlider;
 
-@property (weak, nonatomic) IBOutlet UISlider *oscOneSemitoneSlider;
-@property (weak, nonatomic) IBOutlet UISlider *oscTwoSemitoneSlider;
-@property (weak, nonatomic) IBOutlet UISlider *oscOneFineSlider;
-@property (weak, nonatomic) IBOutlet UISlider *oscTwoFineSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *oscOneSemitoneSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *oscTwoSemitoneSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *oscOneFineSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *oscTwoFineSlider;
 
 @property (weak, nonatomic) IBOutlet UISlider *delayDryWetSlider;
 @property (weak, nonatomic) IBOutlet UISlider *delayFeedbackSlider;
@@ -166,7 +166,7 @@
     [[JFSSynthController sharedController] setCutoffLFOAmount:slider.value];
 }
 
-- (IBAction)semiToneSliderChanged:(UISlider *)slider
+- (IBAction)semiToneSliderChanged:(JFSKnob *)slider
 {
     int semitones = (int)slider.value;
     
@@ -185,12 +185,12 @@
     [[JFSSynthController sharedController] setSemitonesForOscillatorAtIndex:slider.tag value:semitones];
 }
 
-- (IBAction)oscOneFineSliderChanged:(UISlider *)slider
+- (IBAction)oscOneFineSliderChanged:(JFSKnob *)slider
 {
     [[JFSSynthController sharedController] setFineForOscillatorAtIndex:slider.tag value:slider.value];
 }
 
-- (IBAction)oscillatorVolumeSliderChanged:(UISlider *)slider
+- (IBAction)oscillatorVolumeSliderChanged:(JFSKnob *)slider
 {
     [[JFSSynthController sharedController] setVolumeForOscillatorAtIndex:slider.tag value:slider.value];
 }

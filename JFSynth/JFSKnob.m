@@ -105,9 +105,7 @@
 {
     _value = value;
     
-    CGFloat angle = MIN_ANGLE + ((value / self.maximumValue) * (MAX_ANGLE - MIN_ANGLE));
-    
-    NSLog(@"angle %f", angle);
+    CGFloat angle = MIN_ANGLE + (((value + abs(self.minimumValue)) / (self.maximumValue + abs(self.minimumValue))) * (MAX_ANGLE - MIN_ANGLE));
     
     [self updateKnobWithAngle:angle];
 }
@@ -140,8 +138,6 @@
     _curentPoint = nextPoint;
 
     _value = self.minimumValue + ((_currentAngle - MIN_ANGLE) / (MAX_ANGLE - MIN_ANGLE) * (self.maximumValue - self.minimumValue));
-
-    NSLog(@"%f", self.value);
 
     [self sendActionsForControlEvents:UIControlEventValueChanged];
     
