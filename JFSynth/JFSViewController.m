@@ -17,9 +17,9 @@
 @property (weak, nonatomic) IBOutlet UISlider *velocityPeakSlider;
 
 @property (weak, nonatomic) IBOutlet JFSKnob *cutoffSlider;
-@property (weak, nonatomic) IBOutlet UISlider *resonanceSlider;
-@property (weak, nonatomic) IBOutlet UISlider *cutoffLFOSlider;
-@property (weak, nonatomic) IBOutlet UISlider *lfoAmountSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *resonanceSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *cutoffLFOSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *lfoAmountSlider;
 
 @property (weak, nonatomic) IBOutlet UISlider *oscOneSemitoneSlider;
 @property (weak, nonatomic) IBOutlet UISlider *oscTwoSemitoneSlider;
@@ -64,15 +64,18 @@
     
     self.cutoffSlider.minimumValue = [audioManager minimumCutoff];
     self.cutoffSlider.maximumValue = [audioManager maximumCutoff];
-    self.cutoffSlider.value = 10;
-    
-    self.cutoffLFOSlider.minimumValue = [audioManager minimumCutoffLFO];
-    self.cutoffLFOSlider.maximumValue = [audioManager maximumCutoffLFO];
+    self.cutoffSlider.value = [audioManager cutoffLevel];
     
     self.resonanceSlider.minimumValue = [audioManager minimumResonance];
     self.resonanceSlider.maximumValue = [audioManager maximumResonance];
     self.resonanceSlider.value = [audioManager resonanceLevel];
     
+    self.cutoffLFOSlider.minimumValue = [audioManager minimumCutoffLFO];
+    self.cutoffLFOSlider.maximumValue = [audioManager maximumCutoffLFO];
+    self.cutoffLFOSlider.value = 0;
+    
+    self.lfoAmountSlider.minimumValue = 0;
+    self.lfoAmountSlider.maximumValue = 1;
     self.lfoAmountSlider.value = [audioManager cuttoffLFOAmount];
     
     self.oscOneSemitoneSlider.minimumValue = -24;
@@ -148,16 +151,17 @@
     [[JFSSynthController sharedController] setCutoffLevel:slider.value];
 }
 
-- (IBAction)resonanceSliderChanged:(UISlider *)slider
+- (IBAction)resonanceSliderChanged:(JFSKnob *)slider
 {
     [[JFSSynthController sharedController]setResonanceLevel:slider.value];
 }
-- (IBAction)cutoffLFOSliderChanged:(UISlider *)slider
+
+- (IBAction)cutoffLFOSliderChanged:(JFSKnob *)slider
 {
     [JFSSynthController sharedController].cutoffLFOFrequency = slider.value;
 }
 
-- (IBAction)filterLFOAmountSliderChanged:(UISlider *)slider
+- (IBAction)filterLFOAmountSliderChanged:(JFSKnob *)slider
 {
     [[JFSSynthController sharedController] setCutoffLFOAmount:slider.value];
 }

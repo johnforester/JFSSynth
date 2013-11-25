@@ -105,7 +105,7 @@
 {
     _value = value;
     
-    CGFloat angle = ((value - self.minimumValue) / (self.maximumValue + self.minimumValue)) * MAX_ANGLE;
+    CGFloat angle = MIN_ANGLE + ((value / self.maximumValue) * (MAX_ANGLE - MIN_ANGLE));
     
     NSLog(@"angle %f", angle);
     
