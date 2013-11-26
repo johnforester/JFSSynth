@@ -75,6 +75,8 @@
                                                             audioController:_audioController
                                                                       error:&error];
         
+        [self setCutoffLevel:6900];
+        
         if (error) {
             NSLog(@"filter initialization error %@", [error localizedDescription]);
         } else {
