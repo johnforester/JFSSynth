@@ -136,7 +136,7 @@
     _curentPoint = nextPoint;
 
     _value = self.minimumValue + ((_currentAngle - MIN_ANGLE) / (MAX_ANGLE - MIN_ANGLE) * (self.maximumValue - self.minimumValue));
-
+    
     [self sendActionsForControlEvents:UIControlEventValueChanged];
     
     return YES;

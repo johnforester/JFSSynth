@@ -168,8 +168,6 @@
 
 - (IBAction)semiToneSliderChanged:(JFSKnob *)slider
 {
-    int semitones = (int)slider.value;
-    
     int tag = slider.tag;
     
     UILabel *semitoneLabel;
@@ -180,9 +178,9 @@
         semitoneLabel = self.oscTwoSemitoneLabel;
     }
     
-    semitoneLabel.text = [NSString stringWithFormat:@"%+d",semitones];;
+    semitoneLabel.text = [NSString stringWithFormat:@"%+d",(int)round(slider.value)];
     
-    [[JFSSynthController sharedController] setSemitonesForOscillatorAtIndex:slider.tag value:semitones];
+    [[JFSSynthController sharedController] setSemitonesForOscillatorAtIndex:slider.tag value:(int)round(slider.value)];
 }
 
 - (IBAction)oscOneFineSliderChanged:(JFSKnob *)slider
