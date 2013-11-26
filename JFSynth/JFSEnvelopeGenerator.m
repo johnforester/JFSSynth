@@ -49,7 +49,8 @@
 
 - (void)stop
 {
-    self.envelopeState = JFSEnvelopeStateRelease; 
+    [self updateReleaseSlope];
+    self.envelopeState = JFSEnvelopeStateRelease;
 }
 
 - (Float32)updateState
@@ -120,9 +121,9 @@
 {
     Float32 oldPeak = _peak;
     Float32 sustainPercentageOfVelocity = _sustainLevel / oldPeak;
-
+    
     _peak = peak;
-
+    
     self.level += (peak - oldPeak);
     self.sustainLevel = _peak * sustainPercentageOfVelocity;
     
@@ -160,7 +161,7 @@
 
 - (void)updateReleaseSlope
 {
-    self.releaseSlope = -self.sustainLevel / (self.releaseTime * self.sampleRate);
+    self.releaseSlope = -self.level / (self.releaseTime * self.sampleRate);
 }
 
 @end
