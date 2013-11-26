@@ -98,12 +98,19 @@
     
     self.delayDryWetSlider.minimumValue = [audioManager minimumDelayDryWet];
     self.delayDryWetSlider.maximumValue = [audioManager maximumDelayDryWet];
+    self.delayDryWetSlider.value = [audioManager delayDryWet];
+    
     self.delayFeedbackSlider.minimumValue = [audioManager minimumDelayFeedback];
     self.delayFeedbackSlider.maximumValue = [audioManager maximumDelayFeedback];
+    self.delayFeedbackSlider.value = [audioManager delayFeedback];
+    
     self.delayCutoffSlider.minimumValue = [audioManager minimumDelayCutoff];
     self.delayCutoffSlider.maximumValue = [audioManager maximumDelayCutoff];
+    self.delayCutoffSlider.value = [audioManager delayCutoff];
+    
     self.delayTimeSlider.minimumValue = [audioManager minimumDelayTime];
     self.delayTimeSlider.maximumValue = [audioManager maximumDelayTime];
+    self.delayTimeSlider.value = [audioManager delayTime];
     
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(refreshViews) userInfo:nil repeats:YES];
     

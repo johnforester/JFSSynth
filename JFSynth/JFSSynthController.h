@@ -55,12 +55,16 @@
 
 - (Float32)minimumDelayDryWet;
 - (Float32)maximumDelayDryWet;
+- (Float32)delayDryWet;
 - (Float32)minimumDelayFeedback;
 - (Float32)maximumDelayFeedback;
+- (Float32)delayFeedback;
 - (Float32)minimumDelayTime;
 - (Float32)maximumDelayTime;
+- (Float32)delayTime;
 - (Float32)minimumDelayCutoff;
 - (Float32)maximumDelayCutoff;
+- (Float32)delayCutoff;
 
 - (void)setDelayWetDry:(Float32)level;
 - (void)setDelayTime:(Float32)level;

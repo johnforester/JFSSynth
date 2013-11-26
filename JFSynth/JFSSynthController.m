@@ -72,8 +72,8 @@
         NSError *error = nil;
         
         _lpFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:lpFilterComponent
-                                                                audioController:_audioController
-                                                                          error:&error];
+                                                            audioController:_audioController
+                                                                      error:&error];
         
         if (error) {
             NSLog(@"filter initialization error %@", [error localizedDescription]);
@@ -81,18 +81,15 @@
             [_audioController addFilter:_lpFilter];
         }
         
-        [self setCutoffLevel: 6900.0f];
-        [self setResonanceLevel: 0.0];
-        
         AudioComponentDescription delayComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
-                                                                                      kAudioUnitType_Effect,
-                                                                                      kAudioUnitSubType_Delay);
+                                                                                   kAudioUnitType_Effect,
+                                                                                   kAudioUnitSubType_Delay);
         
         error = nil;
         
         _delay = [[AEAudioUnitFilter alloc] initWithComponentDescription:delayComponent
-                                                            audioController:_audioController
-                                                                      error:&error];
+                                                         audioController:_audioController
+                                                                   error:&error];
         
         if (error) {
             NSLog(@"filter initialization error %@", [error localizedDescription]);
@@ -173,6 +170,19 @@
                           0);
 }
 
+- (Float32)delayDryWet
+{
+    Float32 value;
+    
+    AudioUnitGetParameter(self.lpFilter.audioUnit,
+                          kDelayParam_WetDryMix,
+                          kAudioUnitScope_Global,
+                          0,
+                          &value);
+    
+    return value;
+}
+
 // Global, Secs, 0->2, 1
 - (void)setDelayTime:(Float32)level
 {
@@ -182,6 +192,19 @@
                           0,
                           level,
                           0);
+}
+
+- (Float32)delayTime
+{
+    Float32 value;
+    
+    AudioUnitGetParameter(self.lpFilter.audioUnit,
+                          kDelayParam_DelayTime,
+                          kAudioUnitScope_Global,
+                          0,
+                          &value);
+    
+    return value;
 }
 
 // Global, Percent, -100->100, 50
@@ -195,6 +218,19 @@
                           0);
 }
 
+- (Float32)delayFeedback
+{
+    Float32 value;
+    
+    AudioUnitGetParameter(self.lpFilter.audioUnit,
+                          kDelayParam_Feedback,
+                          kAudioUnitScope_Global,
+                          0,
+                          &value);
+    
+    return value;
+}
+
 // Global, Hz, 10->(SampleRate/2), 15000
 - (void)setDelayCutoff:(Float32)level
 {
@@ -204,6 +240,19 @@
                           0,
                           level,
                           0);
+}
+
+- (Float32)delayCutoff
+{
+    Float32 value;
+    
+    AudioUnitGetParameter(self.lpFilter.audioUnit,
+                          kDelayParam_LopassCutoff,
+                          kAudioUnitScope_Global,
+                          0,
+                          &value);
+    
+    return value;
 }
 
 - (void)setCutoffLFOFrequency:(Float32)cutoffLFOFrequency
