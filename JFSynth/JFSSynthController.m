@@ -174,7 +174,7 @@
 {
     Float32 value;
     
-    AudioUnitGetParameter(self.lpFilter.audioUnit,
+    AudioUnitGetParameter(self.delay.audioUnit,
                           kDelayParam_WetDryMix,
                           kAudioUnitScope_Global,
                           0,
@@ -198,7 +198,7 @@
 {
     Float32 value;
     
-    AudioUnitGetParameter(self.lpFilter.audioUnit,
+    AudioUnitGetParameter(self.delay.audioUnit,
                           kDelayParam_DelayTime,
                           kAudioUnitScope_Global,
                           0,
@@ -222,7 +222,7 @@
 {
     Float32 value;
     
-    AudioUnitGetParameter(self.lpFilter.audioUnit,
+    AudioUnitGetParameter(self.delay.audioUnit,
                           kDelayParam_Feedback,
                           kAudioUnitScope_Global,
                           0,
@@ -246,7 +246,7 @@
 {
     Float32 value;
     
-    AudioUnitGetParameter(self.lpFilter.audioUnit,
+    AudioUnitGetParameter(self.delay.audioUnit,
                           kDelayParam_LopassCutoff,
                           kAudioUnitScope_Global,
                           0,
