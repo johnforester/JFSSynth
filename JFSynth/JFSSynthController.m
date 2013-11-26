@@ -27,6 +27,8 @@
 @implementation JFSSynthController
 
 #define SAMPLE_RATE 44100.0
+#define MINIMUM_CUTOFF 10.0f
+#define MAXIMUM_CUTOFF SAMPLE_RATE/2
 
 + (JFSSynthController *)sharedController
 {
@@ -252,9 +254,9 @@
             
             Float32 filterModAmount = 0.0f;
             
-            if (weakSelf.cutoffLFO.baseFrequency > 0) {
+            if (weakSelf.cutoffLFO.baseFrequency > 0.0f) {
                 
-                filterModAmount = ((Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX) * ([weakSelf minimumCutoff] + [weakSelf maximumCutoff]) + [weakSelf minimumCutoff];
+                filterModAmount = ((Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX) * (MINIMUM_CUTOFF + MAXIMUM_CUTOFF) + MINIMUM_CUTOFF;
                 
                 filterModAmount *= weakSelf.cuttoffLFOAmount;
             }
@@ -296,7 +298,7 @@
 
 - (Float32)minimumCutoff
 {
-    return 10.0f;
+    return MINIMUM_CUTOFF;
 }
 
 - (Float32)maximumCutoff
