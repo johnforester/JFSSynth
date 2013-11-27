@@ -74,7 +74,7 @@
             }
             break;
         case JFSEnvelopeStateRelease:
-            if (self.level > 0.0) {
+            if (self.level > 0.0f) {
                 self.level += self.releaseSlope;
             } else {
                 self.envelopeState = JFSEnvelopeStateNone;

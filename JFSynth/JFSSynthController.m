@@ -75,7 +75,7 @@
                                                             audioController:_audioController
                                                                       error:&error];
         
-        [self setCutoffLevel:6900];
+        [self setCutoffLevel:10000];
         
         if (error) {
             NSLog(@"filter initialization error %@", [error localizedDescription]);
@@ -300,7 +300,8 @@
     __weak JFSSynthController *weakSelf = self;
     
     AEBlockChannel *oscillatorChannel = [AEBlockChannel channelWithBlock:^(const AudioTimeStamp *time, UInt32 frames, AudioBufferList *audio) {
-        
+    //    if (weakSelf.ampEnvelopeGenerator.envelopeState != JFSEnvelopeStateNone) {
+
         for (int i = 0; i < frames; i++) {
             
             Float32 filterModAmount = 0.0f;
@@ -311,7 +312,7 @@
                 
                 filterModAmount *= weakSelf.cuttoffLFOAmount;
             }
-            
+                        
             AudioUnitSetParameter(weakSelf.lpFilter.audioUnit,
                                   kLowPassParam_CutoffFrequency,
                                   kAudioUnitScope_Global,
@@ -320,10 +321,11 @@
                                   0);
             
             SInt16 sample = [oscillator updateOscillator] * [weakSelf.ampEnvelopeGenerator updateState];
-            
-            ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
-            ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
-        }
+        
+                ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
+                ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
+            }
+    //    }
     }];
     
     oscillatorChannel.audioDescription = [AEAudioController nonInterleaved16BitStereoAudioDescription];
