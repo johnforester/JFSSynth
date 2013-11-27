@@ -109,9 +109,13 @@ typedef void(^KeyReleaseBlock)();
                     [self.delegate keyPressedWithMidiNote:note];
                 };
                 
+                __weak UIView *weakKeyView = keyView;
+                
                 keyView.keyReleaseBlock = ^{
                     self.scrollView.scrollEnabled = YES;
-                    [self.delegate keyReleasedWithMidiNote:note];
+                    if (self.keyboardView.currentKey == weakKeyView) {
+                        [self.delegate keyReleasedWithMidiNote:note];
+                    }
                 };
                 
                 [_keyboardView addSubview:keyView];
@@ -220,11 +224,18 @@ typedef void(^KeyReleaseBlock)();
 
 - (void)stop
 {
-    if (self.isPlaying) {
-        self.isPlaying = NO;
-        self.backgroundColor = self.originalBackgroundColor;
-        self.keyReleaseBlock();
-    }
+    //delayed so that some sound will play on a very quick release
+    //TODO figure out a way to do this without delay
+    
+    double delayInSeconds = 0.007;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if (self.isPlaying) {
+            self.isPlaying = NO;
+            self.backgroundColor = self.originalBackgroundColor;
+            self.keyReleaseBlock();
+        }
+    });
 }
 
 @end
