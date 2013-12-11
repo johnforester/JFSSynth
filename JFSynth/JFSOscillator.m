@@ -71,8 +71,8 @@
 
 - (void)updateFrequencyForDetune
 {
-    double frequencyWithSemitoneAdjustment = pow(pow(2, 1.0f/12), self.semitones) * self.baseFrequency;
-    self.adjustedFrequency = pow(pow(2, 1.0f/12), self.fine) * frequencyWithSemitoneAdjustment;
+    double frequencyWithSemitoneAdjustment = pow(pow(2, 1.0/12), self.semitones) * self.baseFrequency;
+    self.adjustedFrequency = pow(pow(2, 1.0/12), self.fine) * frequencyWithSemitoneAdjustment;
     
     self.waveLengthInSamples = self.sampleRate / [self frequency];
 }
