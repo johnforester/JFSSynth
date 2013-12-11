@@ -105,6 +105,7 @@
     
     CGFloat angle = MIN_ANGLE + (((value + abs(self.minimumValue)) / (self.maximumValue + abs(self.minimumValue))) * (MAX_ANGLE - MIN_ANGLE));
     
+    _currentAngle = angle;
     [self updateKnobWithAngle:angle];
 }
 
