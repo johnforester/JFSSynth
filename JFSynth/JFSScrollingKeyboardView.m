@@ -38,6 +38,7 @@ typedef void(^KeyReleaseBlock)();
 @property (nonatomic, assign) BOOL initialLayoutCompleted;
 @property (nonatomic, strong) UIView *indicator;
 @property (nonatomic, strong) UILabel *octaveLabel;
+@property (nonatomic, strong) UIView *miniKeyboardView;
 
 @end
 
@@ -79,10 +80,9 @@ typedef void(^KeyReleaseBlock)();
     
     if (_indicator == nil) {
         _indicator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-        _indicator.backgroundColor = [UIColor redColor];
-        _octaveLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-        _octaveLabel.textColor = [UIColor blackColor];
-        _octaveLabel.textAlignment = NSTextAlignmentCenter;
+        _indicator.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.7];
+        _indicator.userInteractionEnabled = NO;
+
         [_indicator addSubview:_octaveLabel];
         
         [self addSubview:_indicator];
@@ -160,6 +160,15 @@ typedef void(^KeyReleaseBlock)();
                                   0,
                                   (_scrollView.frame.size.width/_scrollView.contentSize.width) * _scrollView.frame.size.width,
                                   40);
+    
+    if (_miniKeyboardView == nil) {
+        _miniKeyboardView = [_keyboardView snapshotViewAfterScreenUpdates:YES];
+        _miniKeyboardView.userInteractionEnabled = NO;
+        [self insertSubview:_miniKeyboardView belowSubview:_indicator];
+    }
+    
+    _miniKeyboardView.transform = CGAffineTransformMakeScale(_scrollView.frame.size.width/_keyboardView.frame.size.width, 40 / _keyboardView.frame.size.height);
+    _miniKeyboardView.frame = CGRectMake(0, 0, _scrollView.frame.size.width, 40);
     
     if (!_initialLayoutCompleted) {
         _scrollView.contentOffset = CGPointMake(_scrollView.contentSize.width/2, 0);
