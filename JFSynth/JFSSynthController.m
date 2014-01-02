@@ -53,6 +53,7 @@
         
         _ampEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
         _filterEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
+        _filterEnvelopeGenerator.peak = 1.0;
         
         _oscillators = @[[[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE], [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE]];
         [_oscillators[1] updateFine:0.05];
@@ -75,7 +76,7 @@
                                                             audioController:_audioController
                                                                       error:&error];
         
-        [self setCutoffLevel:10000];
+        [self setCutoffKnobLevel:10000];
         
         if (error) {
             NSLog(@"filter initialization error %@", [error localizedDescription]);
@@ -121,7 +122,7 @@
                           cutoffLevel,
                           0);
     
-    self.filterEnvelopeGenerator.peak = cutoffLevel;
+   // self.filterEnvelopeGenerator.peak = cutoffLevel;
 }
 
 // Global, dB, -20->40, 0
@@ -147,6 +148,8 @@
     
     return value;
 }
+
+
 
 - (Float32)resonanceLevel
 {
@@ -310,12 +313,14 @@
                 
                 filterModAmount *= weakSelf.cuttoffLFOAmount;
             }
-                        
+            
+            Float32 cutoffLevel = [weakSelf.filterEnvelopeGenerator updateState] * (filterModAmount + [weakSelf cutoffKnobLevel]);
+            
             AudioUnitSetParameter(weakSelf.lpFilter.audioUnit,
                                   kLowPassParam_CutoffFrequency,
                                   kAudioUnitScope_Global,
                                   0,
-                                  [weakSelf.filterEnvelopeGenerator updateState] + filterModAmount,
+                                  cutoffLevel,
                                   0);
             
             SInt16 sample = [oscillator updateOscillator] * [weakSelf.ampEnvelopeGenerator updateState];

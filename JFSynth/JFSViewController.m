@@ -155,7 +155,7 @@
 
 - (IBAction)cutoffSliderChanged:(JFSKnob *)slider
 {
-    [[JFSSynthController sharedController] setCutoffLevel:slider.value];
+    [[JFSSynthController sharedController] setCutoffKnobLevel:slider.value];
 }
 
 - (IBAction)resonanceSliderChanged:(JFSKnob *)slider

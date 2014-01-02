@@ -23,6 +23,7 @@
 @property (nonatomic, assign) Float32 velocityPeak;
 
 @property (nonatomic, assign) Float32 cutoffLFOFrequency;
+@property (nonatomic, assign) Float32 cutoffKnobLevel;
 @property (nonatomic, readonly) Float32 cuttoffLFOAmount;
 
 + (JFSSynthController *) sharedController;
