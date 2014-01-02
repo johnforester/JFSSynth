@@ -36,6 +36,8 @@ typedef void(^KeyReleaseBlock)();
 @property (nonatomic, strong) JFSKeyBoardView *keyboardView;
 @property (nonatomic, strong) NSArray *keyViews;
 @property (nonatomic, assign) BOOL initialLayoutCompleted;
+@property (nonatomic, strong) UIView *indicator;
+@property (nonatomic, strong) UILabel *octaveLabel;
 
 @end
 
@@ -49,7 +51,11 @@ typedef void(^KeyReleaseBlock)();
     
     if (self.scrollView == nil) {
         _scrollView = [[UIScrollView alloc] initWithFrame:scrollViewFrame];
+        _scrollView.showsHorizontalScrollIndicator = YES;
+        _scrollView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
+        _scrollView.delegate = self;
         [self addSubview:_scrollView];
+        [_scrollView flashScrollIndicators];
     } else {
         _scrollView.frame = scrollViewFrame;
     }
@@ -69,6 +75,17 @@ typedef void(^KeyReleaseBlock)();
         [_scrollView addSubview:_keyboardView];
     } else {
         _keyboardView.frame = keyBoardFrame;
+    }
+    
+    if (_indicator == nil) {
+        _indicator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+        _indicator.backgroundColor = [UIColor redColor];
+        _octaveLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+        _octaveLabel.textColor = [UIColor blackColor];
+        _octaveLabel.textAlignment = NSTextAlignmentCenter;
+        [_indicator addSubview:_octaveLabel];
+        
+        [self addSubview:_indicator];
     }
     
     int currentWhiteKey = 0;
@@ -139,12 +156,26 @@ typedef void(^KeyReleaseBlock)();
     
     _scrollView.contentSize = CGSizeMake(_keyboardView.frame.size.width, 0);
     
+    _indicator.frame = CGRectMake((_scrollView.contentOffset.x/_scrollView.contentSize.width) * _scrollView.frame.size.width,
+                                  0,
+                                  (_scrollView.frame.size.width/_scrollView.contentSize.width) * _scrollView.frame.size.width,
+                                  40);
+    
     if (!_initialLayoutCompleted) {
         _scrollView.contentOffset = CGPointMake(_scrollView.contentSize.width/2, 0);
         _initialLayoutCompleted = YES;
     }
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    _indicator.frame = CGRectMake((_scrollView.contentOffset.x/_scrollView.contentSize.width) * _scrollView.frame.size.width,
+                                  0,
+                                  (_scrollView.frame.size.width/_scrollView.contentSize.width) * _scrollView.frame.size.width,
+                                  40);
+}
 
 @end
 

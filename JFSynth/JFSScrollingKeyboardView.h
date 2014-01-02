@@ -15,7 +15,7 @@
 
 @end
 
-@interface JFSScrollingKeyboardView : UIView
+@interface JFSScrollingKeyboardView : UIView <UIScrollViewDelegate>
 
 @property (nonatomic, assign) id<JFSKeyboardViewDelegate> delegate;
 
