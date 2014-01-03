@@ -37,7 +37,6 @@ typedef void(^KeyReleaseBlock)();
 @property (nonatomic, strong) NSArray *keyViews;
 @property (nonatomic, assign) BOOL initialLayoutCompleted;
 @property (nonatomic, strong) UIView *indicator;
-@property (nonatomic, strong) UILabel *octaveLabel;
 @property (nonatomic, strong) UIView *miniKeyboardView;
 
 @end
@@ -55,8 +54,8 @@ typedef void(^KeyReleaseBlock)();
         _scrollView.showsHorizontalScrollIndicator = YES;
         _scrollView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
         _scrollView.delegate = self;
+        _scrollView.scrollEnabled = NO;
         [self addSubview:_scrollView];
-        [_scrollView flashScrollIndicators];
     } else {
         _scrollView.frame = scrollViewFrame;
     }
@@ -81,11 +80,11 @@ typedef void(^KeyReleaseBlock)();
     if (_indicator == nil) {
         _indicator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
         _indicator.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.7];
-        _indicator.userInteractionEnabled = NO;
-
-        [_indicator addSubview:_octaveLabel];
         
         [self addSubview:_indicator];
+        
+        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanIndicator:)];
+        [_indicator addGestureRecognizer:pan];
     }
     
     int currentWhiteKey = 0;
@@ -122,14 +121,12 @@ typedef void(^KeyReleaseBlock)();
                 int note = currentKey;
                 
                 keyView.keyPressBlock = ^{
-                    self.scrollView.scrollEnabled = NO;
                     [self.delegate keyPressedWithMidiNote:note];
                 };
                 
                 __weak UIView *weakKeyView = keyView;
                 
                 keyView.keyReleaseBlock = ^{
-                    self.scrollView.scrollEnabled = YES;
                     if (self.keyboardView.currentKey == weakKeyView) {
                         [self.delegate keyReleasedWithMidiNote:note];
                     }
@@ -163,8 +160,9 @@ typedef void(^KeyReleaseBlock)();
     
     if (_miniKeyboardView == nil) {
         _miniKeyboardView = [_keyboardView snapshotViewAfterScreenUpdates:YES];
-        _miniKeyboardView.userInteractionEnabled = NO;
+        //_miniKeyboardView.userInteractionEnabled = NO;
         [self insertSubview:_miniKeyboardView belowSubview:_indicator];
+        
     }
     
     _miniKeyboardView.transform = CGAffineTransformMakeScale(_scrollView.frame.size.width/_keyboardView.frame.size.width, 40 / _keyboardView.frame.size.height);
@@ -173,17 +171,53 @@ typedef void(^KeyReleaseBlock)();
     if (!_initialLayoutCompleted) {
         _scrollView.contentOffset = CGPointMake(_scrollView.contentSize.width/2, 0);
         _initialLayoutCompleted = YES;
+        
+        _indicator.frame = CGRectMake((_scrollView.contentOffset.x/_scrollView.contentSize.width) * _scrollView.frame.size.width,
+                                      0,
+                                      (_scrollView.frame.size.width/_scrollView.contentSize.width) * _scrollView.frame.size.width,
+                                      40);
+        
     }
 }
 
-#pragma mark - UIScrollViewDelegate
+#pragma mark - Pan
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)didPanIndicator:(UIPanGestureRecognizer *)panGestureRecognizer
 {
-    _indicator.frame = CGRectMake((_scrollView.contentOffset.x/_scrollView.contentSize.width) * _scrollView.frame.size.width,
-                                  0,
-                                  (_scrollView.frame.size.width/_scrollView.contentSize.width) * _scrollView.frame.size.width,
-                                  40);
+    static BOOL moving;
+    static CGPoint startIndicatorCenter;
+    static CGPoint startingContentOffset;
+    
+    CGPoint translatedPoint = [panGestureRecognizer translationInView:self];
+    
+    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        moving = YES;
+        startIndicatorCenter = self.indicator.center;
+        startingContentOffset = self.scrollView.contentOffset;
+    }
+    
+    if (moving) {
+        if (panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+            moving = NO;
+        } else {
+            CGFloat newCenterX = startIndicatorCenter.x + translatedPoint.x;
+            CGFloat halfWidth = self.indicator.frame.size.width/2;
+            
+            if (newCenterX - halfWidth >= 0 &&
+                newCenterX + halfWidth <= self.scrollView.frame.size.width) {
+                
+                CGFloat newContentOffsetX = ((translatedPoint.x / self.scrollView.frame.size.width) * self.scrollView.contentSize.width) + startingContentOffset.x;
+                
+                CGPoint velocity = [panGestureRecognizer velocityInView:self];
+                NSTimeInterval duration = fabs(translatedPoint.x) / velocity.x;
+                
+                [UIView animateWithDuration:duration animations:^{
+                    self.indicator.center = CGPointMake(newCenterX, self.indicator.center.y);
+                    self.scrollView.contentOffset = CGPointMake(newContentOffsetX, self.scrollView.contentOffset.y);
+                }];
+            }
+        }
+    }
 }
 
 @end
