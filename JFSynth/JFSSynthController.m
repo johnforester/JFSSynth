@@ -27,7 +27,7 @@
 @implementation JFSSynthController
 
 #define SAMPLE_RATE 44100.0
-#define MINIMUM_CUTOFF 10.0f
+#define MINIMUM_CUTOFF 1000.0f
 #define MAXIMUM_CUTOFF SAMPLE_RATE/2
 
 + (JFSSynthController *)sharedController
@@ -121,8 +121,6 @@
                           0,
                           cutoffLevel,
                           0);
-    
-   // self.filterEnvelopeGenerator.peak = cutoffLevel;
 }
 
 // Global, dB, -20->40, 0
@@ -314,7 +312,10 @@
                 filterModAmount *= weakSelf.cuttoffLFOAmount;
             }
             
-            Float32 cutoffLevel = [weakSelf.filterEnvelopeGenerator updateState] * (filterModAmount + [weakSelf cutoffKnobLevel]);
+            Float32 cutoffLevel = ([weakSelf.filterEnvelopeGenerator updateState] * weakSelf.cutoffKnobLevel) + filterModAmount;
+            
+            cutoffLevel = MAX(MINIMUM_CUTOFF, cutoffLevel);
+            cutoffLevel = MIN(MAXIMUM_CUTOFF, cutoffLevel);
             
             AudioUnitSetParameter(weakSelf.lpFilter.audioUnit,
                                   kLowPassParam_CutoffFrequency,
@@ -378,7 +379,7 @@
 
 - (Float32)maximumCutoffLFO
 {
-    return 20.0f;
+    return 10.0f;
 }
 
 - (Float32)minimumEnvelopeTime
