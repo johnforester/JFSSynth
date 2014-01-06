@@ -84,7 +84,7 @@
     [self.layer addSublayer:_innerCircleLayer];
     
     _valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
-    _valueLabel.font = [UIFont systemFontOfSize:15];
+    _valueLabel.font = [UIFont boldSystemFontOfSize:12];
     _valueLabel.textColor = [UIColor whiteColor];
     _valueLabel.userInteractionEnabled = NO;
     [self addSubview:_valueLabel];
@@ -99,7 +99,7 @@
                                                      clockwise:YES];
     
     self.valueLabel.frame = CGRectMake(path.currentPoint.x, path.currentPoint.y, 40, 20);
-    self.valueLabel.text = [NSString stringWithFormat:@"%.2f", self.value];
+    self.valueLabel.text = [NSString stringWithFormat:@"%.2f", (self.value / self.maximumValue) * 100];
     
     [path addLineToPoint:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))];
     [path closePath];
