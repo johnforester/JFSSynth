@@ -20,6 +20,7 @@
 }
 
 @property (nonatomic, strong) CAShapeLayer *envelopeLayer;
+@property (nonatomic, strong) CALayer *borderLayer;
 @property (nonatomic, strong) NSDictionary *touchPointLayers;
 @property (nonatomic, strong) UIView *envelopeContainer;
 @property (nonatomic, strong) CALayer *currentStageLayer;
@@ -66,9 +67,14 @@
 {
     _touchPointsTransform = CGAffineTransformMakeRotation(2 * M_PI);
     _envelopeContainer = [[UIView alloc] initWithFrame:CGRectInset(self.bounds, 10, 10)];
-    _envelopeContainer.layer.borderColor = [UIColor redColor].CGColor;
     _envelopeContainer.backgroundColor = [UIColor blackColor];
-    _envelopeContainer.layer.borderWidth = 1.0f;
+    
+    _borderLayer = [CALayer layer];
+    _borderLayer.frame =CGRectMake(0, 0, _envelopeContainer.frame.size.width, _envelopeContainer.frame.size.height);
+    _borderLayer.borderColor = [UIColor redColor].CGColor;
+    _borderLayer.borderWidth = 1.0f;
+    [_envelopeContainer.layer addSublayer:_borderLayer];
+    
     _envelopeContainer.userInteractionEnabled = NO;
     
     [self addSubview:_envelopeContainer];
@@ -122,7 +128,7 @@
                                   };
         
         [self.touchPointLayers.allValues enumerateObjectsUsingBlock:^(CAShapeLayer *dotLayer, NSUInteger idx, BOOL *stop) {
-            [self.envelopeContainer.layer addSublayer:dotLayer];
+            [self.envelopeContainer.layer insertSublayer:dotLayer above:self.borderLayer];
         }];
     }
     
