@@ -9,6 +9,7 @@
 #import "JFSScrollingKeyboardView.h"
 
 #define KEYBOARD_HEIGHT 180
+#define MINI_KEYBOARD_HEIGHT 40
 
 typedef void(^KeyPressBlock)();
 typedef void(^KeyReleaseBlock)();
@@ -60,13 +61,19 @@ typedef void(^KeyReleaseBlock)();
         _scrollView.frame = scrollViewFrame;
     }
     
+    int whiteKeyCount = 77;
+
     CGFloat whiteKeyWidth = frame.size.width / 12;
     CGFloat whiteKeyHeight = KEYBOARD_HEIGHT;
+    
+    CGFloat miniWhiteKeyWidth = frame.size.width / 77;
+    CGFloat miniWhiteKeyHeight = MINI_KEYBOARD_HEIGHT;
     
     CGFloat blackKeyWidth = whiteKeyWidth/2;
     CGFloat blackKeyHeight = whiteKeyHeight/2;
     
-    int whiteKeyCount = 77;
+    CGFloat miniBlackKeyWidth = miniWhiteKeyWidth/2;
+    CGFloat miniBlackKeyHeight = miniWhiteKeyHeight/2;
     
     CGRect keyBoardFrame = CGRectMake(0, frame.size.height - KEYBOARD_HEIGHT, whiteKeyWidth * whiteKeyCount, KEYBOARD_HEIGHT);
     
@@ -77,14 +84,10 @@ typedef void(^KeyReleaseBlock)();
         _keyboardView.frame = keyBoardFrame;
     }
     
-    if (_indicator == nil) {
-        _indicator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-        _indicator.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.7];
-        
-        [self addSubview:_indicator];
-        
-        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanIndicator:)];
-        [_indicator addGestureRecognizer:pan];
+    if (_miniKeyboardView == nil) {
+        _miniKeyboardView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, MINI_KEYBOARD_HEIGHT)];
+        _miniKeyboardView.userInteractionEnabled = NO;
+        [self addSubview:_miniKeyboardView];
     }
     
     int currentWhiteKey = 0;
@@ -92,19 +95,31 @@ typedef void(^KeyReleaseBlock)();
     
     NSMutableArray *tempKeyLayers = nil;
     
+    [_miniKeyboardView.subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
+        [view removeFromSuperview];
+    }];
+    
     while (currentKey < 127) {
         for (int j = 0; j < 12; j++) {
             
             CGRect frame;
+            CGRect miniFrame;
             BOOL blackKey = NO;
+            
+            //calculate new frame
             
             if (j == 1 || j == 3 || j == 6 || j == 8 || j == 10) {
                 frame = CGRectMake((currentWhiteKey - 1) * whiteKeyWidth + (blackKeyWidth * 1.5), 0, blackKeyWidth, blackKeyHeight);
+                miniFrame = CGRectMake((currentWhiteKey - 1) * miniWhiteKeyWidth + (miniBlackKeyWidth * 1.5), 0, miniBlackKeyWidth, miniBlackKeyHeight);
+                
                 blackKey = YES;
             } else {
                 frame = CGRectMake(currentWhiteKey * whiteKeyWidth, 0, whiteKeyWidth, whiteKeyHeight);
+                miniFrame = CGRectMake(currentWhiteKey * miniWhiteKeyWidth, 0, miniWhiteKeyWidth, miniWhiteKeyHeight);
                 currentWhiteKey++;
             }
+            
+            //big playable keys
             
             JFSKeyView *keyView = _keyViews[currentKey];
             
@@ -141,6 +156,20 @@ typedef void(^KeyReleaseBlock)();
                 keyView.frame = frame;
             }
             
+            //mini key
+            if (blackKey) {
+                UIView *miniBlackKey = [[UIView alloc] initWithFrame:miniFrame];
+                miniBlackKey.backgroundColor = [UIColor blackColor];
+                [_miniKeyboardView addSubview:miniBlackKey];
+            } else {
+                UIView *miniWhiteKey = [[UIView alloc] initWithFrame:miniFrame];
+                miniWhiteKey.backgroundColor = [UIColor whiteColor];
+                miniWhiteKey.layer.borderWidth = 0.5;
+                miniWhiteKey.layer.borderColor = [UIColor blackColor].CGColor;
+                [_miniKeyboardView addSubview:miniWhiteKey];
+                [_miniKeyboardView sendSubviewToBack:miniWhiteKey];
+            }
+            
             currentKey++;
         }
     }
@@ -151,19 +180,20 @@ typedef void(^KeyReleaseBlock)();
     
     _scrollView.contentSize = CGSizeMake(_keyboardView.frame.size.width, 0);
     
+    if (_indicator == nil) {
+        _indicator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MINI_KEYBOARD_HEIGHT, MINI_KEYBOARD_HEIGHT)];
+        _indicator.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.7];
+        
+        [self insertSubview:_indicator aboveSubview:_miniKeyboardView];
+        
+        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanIndicator:)];
+        [_indicator addGestureRecognizer:pan];
+    }
+    
     _indicator.frame = CGRectMake((_scrollView.contentOffset.x/_scrollView.contentSize.width) * _scrollView.frame.size.width,
                                   0,
                                   (_scrollView.frame.size.width/_scrollView.contentSize.width) * _scrollView.frame.size.width,
                                   40);
-    
-    if (_miniKeyboardView == nil) {
-        _miniKeyboardView = [_keyboardView snapshotViewAfterScreenUpdates:YES];
-        [self insertSubview:_miniKeyboardView belowSubview:_indicator];
-        
-    }
-    
-    _miniKeyboardView.transform = CGAffineTransformMakeScale(_scrollView.frame.size.width/_keyboardView.frame.size.width, 40 / _keyboardView.frame.size.height);
-    _miniKeyboardView.frame = CGRectMake(0, 0, _scrollView.frame.size.width, 40);
     
     if (!_initialLayoutCompleted) {
         _scrollView.contentOffset = CGPointMake(_scrollView.contentSize.width/2, 0);

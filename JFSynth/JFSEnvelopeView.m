@@ -70,7 +70,7 @@
     _envelopeContainer.backgroundColor = [UIColor blackColor];
     
     _borderLayer = [CALayer layer];
-    _borderLayer.frame =CGRectMake(0, 0, _envelopeContainer.frame.size.width, _envelopeContainer.frame.size.height);
+    _borderLayer.frame = CGRectMake(0, 0, _envelopeContainer.frame.size.width, _envelopeContainer.frame.size.height);
     _borderLayer.borderColor = [UIColor redColor].CGColor;
     _borderLayer.borderWidth = 1.0f;
     [_envelopeContainer.layer addSublayer:_borderLayer];
