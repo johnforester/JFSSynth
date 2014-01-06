@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) CAShapeLayer *valueLayer;
 @property (nonatomic, strong) CAShapeLayer *innerCircleLayer;
+@property (nonatomic, strong) UILabel *valueLabel;
 
 @end
 
@@ -81,6 +82,12 @@
     _innerCircleLayer.path = path.CGPath;
     
     [self.layer addSublayer:_innerCircleLayer];
+    
+    _valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
+    _valueLabel.font = [UIFont systemFontOfSize:15];
+    _valueLabel.textColor = [UIColor whiteColor];
+    _valueLabel.userInteractionEnabled = NO;
+    [self addSubview:_valueLabel];
 }
 
 - (void)updateKnobWithAngle:(CGFloat)angle
@@ -90,6 +97,9 @@
                                                     startAngle:MIN_ANGLE
                                                       endAngle:angle
                                                      clockwise:YES];
+    
+    self.valueLabel.frame = CGRectMake(path.currentPoint.x, path.currentPoint.y, 40, 20);
+    self.valueLabel.text = [NSString stringWithFormat:@"%.2f", self.value];
     
     [path addLineToPoint:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))];
     [path closePath];
@@ -122,22 +132,16 @@
 {
     CGPoint nextPoint = [touch locationInView:self];
     
-    if (nextPoint.x != _curentPoint.x) {
-        CGFloat diff = nextPoint.x - _curentPoint.x;
-        CGFloat endAngle = MIN(((diff / self.bounds.size.width) * (MAX_ANGLE - MIN_ANGLE)) + _currentAngle, MAX_ANGLE);
-        _currentAngle = MAX(endAngle, MIN_ANGLE);
-    } else {
-        CGFloat diff = _curentPoint.y - nextPoint.y;
-        CGFloat endAngle = MIN(((diff / self.bounds.size.height) * (MAX_ANGLE - MIN_ANGLE)) + _currentAngle, MAX_ANGLE);
-        _currentAngle = MAX(endAngle, MIN_ANGLE);
-    }
+    CGFloat diff = _curentPoint.y - nextPoint.y;
+    CGFloat endAngle = MIN(((diff / self.bounds.size.height) * (MAX_ANGLE - MIN_ANGLE)) + _currentAngle, MAX_ANGLE);
+    _currentAngle = MAX(endAngle, MIN_ANGLE);
     
     [self updateKnobWithAngle:_currentAngle];
     
     _curentPoint = nextPoint;
-
+    
     _value = self.minimumValue + ((_currentAngle - MIN_ANGLE) / (MAX_ANGLE - MIN_ANGLE) * (self.maximumValue - self.minimumValue));
-        
+    
     [self sendActionsForControlEvents:UIControlEventValueChanged];
     
     return YES;
@@ -150,7 +154,7 @@
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-
+    
 }
 
 @end

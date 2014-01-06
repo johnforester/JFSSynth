@@ -106,7 +106,7 @@ typedef void(^KeyReleaseBlock)();
                 currentWhiteKey++;
             }
             
-            JFSKeyView *keyView = self.keyViews[currentKey];
+            JFSKeyView *keyView = _keyViews[currentKey];
             
             if (keyView == nil) {
                 if (tempKeyLayers == nil) {
@@ -115,8 +115,6 @@ typedef void(^KeyReleaseBlock)();
                 
                 keyView = [[JFSKeyView alloc] initWithFrame:frame blackKey:blackKey];
                 [tempKeyLayers addObject:keyView];
-                keyView.layer.borderColor = [UIColor blackColor].CGColor;
-                keyView.layer.borderWidth = 1.0;
                 
                 int note = currentKey;
                 
@@ -148,7 +146,7 @@ typedef void(^KeyReleaseBlock)();
     }
     
     if (tempKeyLayers) {
-        self.keyViews = [NSArray arrayWithArray:tempKeyLayers];
+        _keyViews = [NSArray arrayWithArray:tempKeyLayers];
     }
     
     _scrollView.contentSize = CGSizeMake(_keyboardView.frame.size.width, 0);
@@ -160,7 +158,6 @@ typedef void(^KeyReleaseBlock)();
     
     if (_miniKeyboardView == nil) {
         _miniKeyboardView = [_keyboardView snapshotViewAfterScreenUpdates:YES];
-        //_miniKeyboardView.userInteractionEnabled = NO;
         [self insertSubview:_miniKeyboardView belowSubview:_indicator];
         
     }
@@ -185,26 +182,27 @@ typedef void(^KeyReleaseBlock)();
 - (void)didPanIndicator:(UIPanGestureRecognizer *)panGestureRecognizer
 {
     static BOOL moving;
-    static CGPoint startIndicatorCenter;
+    static CGPoint startingPoint;
     static CGPoint startingContentOffset;
     
     CGPoint translatedPoint = [panGestureRecognizer translationInView:self];
     
     if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
         moving = YES;
-        startIndicatorCenter = self.indicator.center;
+        startingPoint = self.indicator.frame.origin;
         startingContentOffset = self.scrollView.contentOffset;
     }
     
     if (moving) {
-        if (panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        if (panGestureRecognizer.state == UIGestureRecognizerStateEnded ||
+            panGestureRecognizer.state == UIGestureRecognizerStateCancelled ||
+            panGestureRecognizer.state == UIGestureRecognizerStateFailed) {
             moving = NO;
         } else {
-            CGFloat newCenterX = startIndicatorCenter.x + translatedPoint.x;
-            CGFloat halfWidth = self.indicator.frame.size.width/2;
+            CGFloat newCenterX = startingPoint.x + translatedPoint.x;
             
-            if (newCenterX - halfWidth >= 0 &&
-                newCenterX + halfWidth <= self.scrollView.frame.size.width) {
+            if (newCenterX >= 0 &&
+                newCenterX <= self.scrollView.frame.size.width - self.indicator.frame.size.width) {
                 
                 CGFloat newContentOffsetX = ((translatedPoint.x / self.scrollView.frame.size.width) * self.scrollView.contentSize.width) + startingContentOffset.x;
                 
@@ -212,7 +210,7 @@ typedef void(^KeyReleaseBlock)();
                 NSTimeInterval duration = fabs(translatedPoint.x) / velocity.x;
                 
                 [UIView animateWithDuration:duration animations:^{
-                    self.indicator.center = CGPointMake(newCenterX, self.indicator.center.y);
+                    self.indicator.frame = CGRectMake(newCenterX, 0, self.indicator.frame.size.width, self.indicator.frame.size.height);
                     self.scrollView.contentOffset = CGPointMake(newContentOffsetX, self.scrollView.contentOffset.y);
                 }];
             }
@@ -282,6 +280,8 @@ typedef void(^KeyReleaseBlock)();
     if (self) {
         _originalBackgroundColor = blackKey ? [UIColor blackColor] : [UIColor whiteColor];
         self.backgroundColor = _originalBackgroundColor;
+        self.layer.borderColor = [UIColor blackColor].CGColor;
+        self.layer.borderWidth = 1.0;
     }
     
     return self;
