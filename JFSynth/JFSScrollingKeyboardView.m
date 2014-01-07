@@ -48,6 +48,25 @@ typedef void(^KeyReleaseBlock)();
 {
     CGRect frame = self.frame;
     
+    [self setUpScrollViewWithFrame:frame];
+    [self setUpKeyboardWithFrame:frame];
+    [self setUpKeyboardIndicator];
+    
+    if (!_initialLayoutCompleted) {
+        _initialLayoutCompleted = YES;
+        _scrollView.contentOffset = CGPointMake(_scrollView.contentSize.width/2, 0);
+        _indicator.frame = CGRectMake((_scrollView.contentOffset.x/_scrollView.contentSize.width) * _scrollView.frame.size.width,
+                                      0,
+                                      (_scrollView.frame.size.width/_scrollView.contentSize.width) * _scrollView.frame.size.width,
+                                      40);
+        
+    }
+}
+
+#pragma mark - UI setup
+
+- (void)setUpScrollViewWithFrame:(CGRect)frame
+{
     CGRect scrollViewFrame = CGRectMake(0, 0, frame.size.width, frame.size.height);
     
     if (self.scrollView == nil) {
@@ -60,9 +79,12 @@ typedef void(^KeyReleaseBlock)();
     } else {
         _scrollView.frame = scrollViewFrame;
     }
-    
-    int whiteKeyCount = 77;
+}
 
+- (void)setUpKeyboardWithFrame:(CGRect)frame
+{
+    int whiteKeyCount = 77;
+    
     CGFloat whiteKeyWidth = frame.size.width / 12;
     CGFloat whiteKeyHeight = KEYBOARD_HEIGHT;
     
@@ -118,9 +140,7 @@ typedef void(^KeyReleaseBlock)();
                 miniFrame = CGRectMake(currentWhiteKey * miniWhiteKeyWidth, 0, miniWhiteKeyWidth, miniWhiteKeyHeight);
                 currentWhiteKey++;
             }
-            
-            //big playable keys
-            
+                        
             JFSKeyView *keyView = _keyViews[currentKey];
             
             if (keyView == nil) {
@@ -128,47 +148,12 @@ typedef void(^KeyReleaseBlock)();
                     tempKeyLayers = [[NSMutableArray alloc] init];
                 }
                 
-                keyView = [[JFSKeyView alloc] initWithFrame:frame blackKey:blackKey];
-                [tempKeyLayers addObject:keyView];
-                
-                int note = currentKey;
-                
-                keyView.keyPressBlock = ^{
-                    [self.delegate keyPressedWithMidiNote:note];
-                };
-                
-                __weak UIView *weakKeyView = keyView;
-                
-                keyView.keyReleaseBlock = ^{
-                    if (self.keyboardView.currentKey == weakKeyView) {
-                        [self.delegate keyReleasedWithMidiNote:note];
-                    }
-                };
-                
-                [_keyboardView addSubview:keyView];
-                
-                if (blackKey) {
-                    [_keyboardView bringSubviewToFront:keyView];
-                } else {
-                    [_keyboardView sendSubviewToBack:keyView];
-                }
+                [tempKeyLayers addObject:[self keyViewWithBlackKey:blackKey frame:frame currentKey:currentKey]];
             } else {
                 keyView.frame = frame;
             }
             
-            //mini key
-            if (blackKey) {
-                UIView *miniBlackKey = [[UIView alloc] initWithFrame:miniFrame];
-                miniBlackKey.backgroundColor = [UIColor blackColor];
-                [_miniKeyboardView addSubview:miniBlackKey];
-            } else {
-                UIView *miniWhiteKey = [[UIView alloc] initWithFrame:miniFrame];
-                miniWhiteKey.backgroundColor = [UIColor whiteColor];
-                miniWhiteKey.layer.borderWidth = 0.5;
-                miniWhiteKey.layer.borderColor = [UIColor blackColor].CGColor;
-                [_miniKeyboardView addSubview:miniWhiteKey];
-                [_miniKeyboardView sendSubviewToBack:miniWhiteKey];
-            }
+            [self addMiniKeyWithFrame:miniFrame blackKey:blackKey];
             
             currentKey++;
         }
@@ -179,9 +164,58 @@ typedef void(^KeyReleaseBlock)();
     }
     
     _scrollView.contentSize = CGSizeMake(_keyboardView.frame.size.width, 0);
+}
+
+- (JFSKeyView *)keyViewWithBlackKey:(BOOL)blackKey frame:(CGRect)frame currentKey:(int)currentKey
+{
+    JFSKeyView *keyView=_keyViews[currentKey];
+    keyView = [[JFSKeyView alloc] initWithFrame:frame blackKey:blackKey];
     
+    int note = currentKey;
+    
+    keyView.keyPressBlock = ^{
+        [self.delegate keyPressedWithMidiNote:note];
+    };
+    
+    __weak UIView *weakKeyView = keyView;
+    
+    keyView.keyReleaseBlock = ^{
+        if (self.keyboardView.currentKey == weakKeyView) {
+            [self.delegate keyReleasedWithMidiNote:note];
+        }
+    };
+    
+    [_keyboardView addSubview:keyView];
+    
+    if (blackKey) {
+        [_keyboardView bringSubviewToFront:keyView];
+    } else {
+        [_keyboardView sendSubviewToBack:keyView];
+    }
+    return keyView;
+}
+
+- (void)addMiniKeyWithFrame:(CGRect)miniFrame blackKey:(BOOL)blackKey
+{
+    //mini key
+    if (blackKey) {
+        UIView *miniBlackKey = [[UIView alloc] initWithFrame:miniFrame];
+        miniBlackKey.backgroundColor = [UIColor blackColor];
+        [_miniKeyboardView addSubview:miniBlackKey];
+    } else {
+        UIView *miniWhiteKey = [[UIView alloc] initWithFrame:miniFrame];
+        miniWhiteKey.backgroundColor = [UIColor whiteColor];
+        miniWhiteKey.layer.borderWidth = 0.5;
+        miniWhiteKey.layer.borderColor = [UIColor blackColor].CGColor;
+        [_miniKeyboardView addSubview:miniWhiteKey];
+        [_miniKeyboardView sendSubviewToBack:miniWhiteKey];
+    }
+}
+
+- (void)setUpKeyboardIndicator
+{
     if (_indicator == nil) {
-        _indicator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MINI_KEYBOARD_HEIGHT, MINI_KEYBOARD_HEIGHT)];
+        _indicator = [[UIView alloc] init];
         _indicator.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.7];
         
         [self insertSubview:_indicator aboveSubview:_miniKeyboardView];
@@ -194,17 +228,6 @@ typedef void(^KeyReleaseBlock)();
                                   0,
                                   (_scrollView.frame.size.width/_scrollView.contentSize.width) * _scrollView.frame.size.width,
                                   40);
-    
-    if (!_initialLayoutCompleted) {
-        _scrollView.contentOffset = CGPointMake(_scrollView.contentSize.width/2, 0);
-        _initialLayoutCompleted = YES;
-        
-        _indicator.frame = CGRectMake((_scrollView.contentOffset.x/_scrollView.contentSize.width) * _scrollView.frame.size.width,
-                                      0,
-                                      (_scrollView.frame.size.width/_scrollView.contentSize.width) * _scrollView.frame.size.width,
-                                      40);
-        
-    }
 }
 
 #pragma mark - Pan
