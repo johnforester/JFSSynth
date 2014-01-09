@@ -106,14 +106,18 @@ typedef void(^KeyReleaseBlock)();
         _keyboardView.frame = keyBoardFrame;
     }
     
+    CGRect miniKeyoardFrame = CGRectMake(0, 0, frame.size.width, MINI_KEYBOARD_HEIGHT);
+    
     if (_miniKeyboardView == nil) {
-        _miniKeyboardView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, MINI_KEYBOARD_HEIGHT)];
+        _miniKeyboardView = [[UIView alloc] initWithFrame:miniKeyoardFrame];
         _miniKeyboardView.userInteractionEnabled = YES;
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapMiniKeyboard:)];
         [_miniKeyboardView addGestureRecognizer:tap];
         
         [self addSubview:_miniKeyboardView];
+    } else {
+        _miniKeyboardView.frame = miniKeyoardFrame;
     }
     
     int currentWhiteKey = 0;
@@ -205,12 +209,14 @@ typedef void(^KeyReleaseBlock)();
     if (blackKey) {
         UIView *miniBlackKey = [[UIView alloc] initWithFrame:miniFrame];
         miniBlackKey.backgroundColor = [UIColor blackColor];
+        miniBlackKey.userInteractionEnabled = NO;
         [_miniKeyboardView addSubview:miniBlackKey];
     } else {
         UIView *miniWhiteKey = [[UIView alloc] initWithFrame:miniFrame];
         miniWhiteKey.backgroundColor = [UIColor whiteColor];
         miniWhiteKey.layer.borderWidth = 0.5;
         miniWhiteKey.layer.borderColor = [UIColor blackColor].CGColor;
+        miniWhiteKey.userInteractionEnabled = NO;
         [_miniKeyboardView addSubview:miniWhiteKey];
         [_miniKeyboardView sendSubviewToBack:miniWhiteKey];
     }
@@ -284,8 +290,8 @@ typedef void(^KeyReleaseBlock)();
         
         CGFloat halfIndicatorWidth = self.indicator.frame.size.width/2;
         
-        CGFloat xCoord = MAX(halfIndicatorWidth, location.x);
-        xCoord = MIN(self.miniKeyboardView.frame.size.width - (halfIndicatorWidth/2), location.x);
+        CGFloat xCoord = MIN(self.miniKeyboardView.frame.size.width - (halfIndicatorWidth/2), location.x);
+        xCoord = MAX(halfIndicatorWidth, xCoord);
         
         CGFloat newContentOffsetX = (((location.x - halfIndicatorWidth) / self.scrollView.frame.size.width) * self.scrollView.contentSize.width);
         newContentOffsetX = MIN(self.scrollView.contentSize.width - self.scrollView.frame.size.width, newContentOffsetX);
