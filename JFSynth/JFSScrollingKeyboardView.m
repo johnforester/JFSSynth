@@ -108,7 +108,11 @@ typedef void(^KeyReleaseBlock)();
     
     if (_miniKeyboardView == nil) {
         _miniKeyboardView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, MINI_KEYBOARD_HEIGHT)];
-        _miniKeyboardView.userInteractionEnabled = NO;
+        _miniKeyboardView.userInteractionEnabled = YES;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapMiniKeyboard:)];
+        [_miniKeyboardView addGestureRecognizer:tap];
+        
         [self addSubview:_miniKeyboardView];
     }
     
@@ -257,17 +261,40 @@ typedef void(^KeyReleaseBlock)();
             if (newCenterX >= 0 &&
                 newCenterX <= self.scrollView.frame.size.width - self.indicator.frame.size.width) {
                 
-                CGFloat newContentOffsetX = ((translatedPoint.x / self.scrollView.frame.size.width) * self.scrollView.contentSize.width) + startingContentOffset.x;
-                
                 CGPoint velocity = [panGestureRecognizer velocityInView:self];
                 NSTimeInterval duration = fabs(translatedPoint.x) / velocity.x;
                 
+                CGFloat newContentOffsetX = ((translatedPoint.x / self.scrollView.frame.size.width) * self.scrollView.contentSize.width) + startingContentOffset.x;
+
                 [UIView animateWithDuration:duration animations:^{
                     self.indicator.frame = CGRectMake(newCenterX, 0, self.indicator.frame.size.width, self.indicator.frame.size.height);
                     self.scrollView.contentOffset = CGPointMake(newContentOffsetX, self.scrollView.contentOffset.y);
                 }];
             }
         }
+    }
+}
+
+#pragma mark - Tap
+
+- (void)didTapMiniKeyboard:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    if (tapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        CGPoint location = [tapGestureRecognizer locationInView:self.miniKeyboardView];
+        
+        CGFloat halfIndicatorWidth = self.indicator.frame.size.width/2;
+        
+        CGFloat xCoord = MAX(halfIndicatorWidth, location.x);
+        xCoord = MIN(self.miniKeyboardView.frame.size.width - (halfIndicatorWidth/2), location.x);
+        
+        CGFloat newContentOffsetX = (((location.x - halfIndicatorWidth) / self.scrollView.frame.size.width) * self.scrollView.contentSize.width);
+        newContentOffsetX = MIN(self.scrollView.contentSize.width - self.scrollView.frame.size.width, newContentOffsetX);
+        newContentOffsetX = MAX(0, newContentOffsetX);
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            self.indicator.center = CGPointMake(xCoord, self.indicator.center.y);
+            self.scrollView.contentOffset = CGPointMake(newContentOffsetX, self.scrollView.contentOffset.y);
+        }];
     }
 }
 
