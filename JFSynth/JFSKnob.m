@@ -98,8 +98,8 @@
                                                       endAngle:angle
                                                      clockwise:YES];
     
-    self.valueLabel.frame = CGRectMake(path.currentPoint.x, path.currentPoint.y, 40, 20);
-    self.valueLabel.text = [NSString stringWithFormat:@"%.2f", (self.value / self.maximumValue) * 100];
+    self.valueLabel.frame = CGRectMake(path.currentPoint.x, path.currentPoint.y, 100, 20);
+    self.valueLabel.text = [NSString stringWithFormat:@"%.0f", roundf(self.value)];
     
     [path addLineToPoint:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))];
     [path closePath];

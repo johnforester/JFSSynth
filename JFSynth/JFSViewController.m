@@ -44,9 +44,6 @@
 
 @property (nonatomic, strong) NSTimer *refreshTimer;
 
-@property (weak, nonatomic) IBOutlet UILabel *oscOneSemitoneLabel;
-@property (weak, nonatomic) IBOutlet UILabel *oscTwoSemitoneLabel;
-
 @end
 
 @implementation JFSViewController
@@ -112,8 +109,6 @@
         
         self.oscOneSemitoneSlider.value = [synthController.oscillators[0] semitones];
         self.oscTwoSemitoneSlider.value = [synthController.oscillators[1] semitones];
-        self.oscOneSemitoneLabel.text = [NSString stringWithFormat:@"%+d",(int)self.oscOneSemitoneSlider.value];
-        self.oscTwoSemitoneLabel.text = [NSString stringWithFormat:@"%+d",(int)self.oscTwoSemitoneSlider.value];
         
         self.oscOneFineSlider.value = [synthController.oscillators[0] fine];
         self.oscTwoFineSlider.value = [synthController.oscillators[1] fine];
@@ -198,19 +193,7 @@
 
 - (IBAction)semiToneSliderChanged:(JFSKnob *)slider
 {
-    int tag = slider.tag;
-    
-    UILabel *semitoneLabel;
-    
-    if (tag == 0) {
-        semitoneLabel = self.oscOneSemitoneLabel;
-    } else {
-        semitoneLabel = self.oscTwoSemitoneLabel;
-    }
-    
     int semitone = (int)round(slider.value);
-    semitoneLabel.text = [NSString stringWithFormat:@"%+d",semitone];
-    
     [[JFSSynthController sharedController] setSemitonesForOscillatorAtIndex:slider.tag value:semitone];
 }
 
