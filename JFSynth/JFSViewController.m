@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet JFSKnob *cutoffLFOSlider;
 @property (weak, nonatomic) IBOutlet JFSKnob *lfoAmountSlider;
 
+@property (weak, nonatomic) IBOutlet JFSKnob *oscOneVolumeSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *oscTwoVolumeSlider;
 @property (weak, nonatomic) IBOutlet JFSKnob *oscOneSemitoneSlider;
 @property (weak, nonatomic) IBOutlet JFSKnob *oscTwoSemitoneSlider;
 @property (weak, nonatomic) IBOutlet JFSKnob *oscOneFineSlider;
@@ -34,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *ampEnvelopeView;
 @property (weak, nonatomic) IBOutlet JFSEnvelopeView *filterEnvelopeView;
 @property (weak, nonatomic) IBOutlet JFSScrollingKeyboardView *keyBoardView;
+
 
 @property (nonatomic, strong) NSTimer *refreshTimer;
 
@@ -56,61 +59,69 @@
     self.filterEnvelopeView.dataSource = self;
     self.filterEnvelopeView.delegate = self;
     
-    JFSSynthController *audioManager = [JFSSynthController sharedController];
+    JFSSynthController *synthController = [JFSSynthController sharedController];
     
-    self.velocityPeakSlider.minimumValue = 0.001;
-    self.velocityPeakSlider.maximumValue = 127.0;
-    self.velocityPeakSlider.value = 60;
+    self.velocityPeakSlider.minimumValue = [synthController minimumVelocity];
+    self.velocityPeakSlider.maximumValue = [synthController maximumVelocity];
+    self.velocityPeakSlider.value = synthController.ampEnvelopeGenerator.peak;
     
-    self.cutoffSlider.minimumValue = [audioManager minimumCutoff];
-    self.cutoffSlider.maximumValue = [audioManager maximumCutoff];
-    self.cutoffSlider.value = [audioManager cutoffLevel];
+    self.cutoffSlider.minimumValue = [synthController minimumCutoff];
+    self.cutoffSlider.maximumValue = [synthController maximumCutoff];
+    self.cutoffSlider.value = [synthController cutoffLevel];
     
-    self.resonanceSlider.minimumValue = [audioManager minimumResonance];
-    self.resonanceSlider.maximumValue = [audioManager maximumResonance];
-    self.resonanceSlider.value = [audioManager resonanceLevel];
+    self.resonanceSlider.minimumValue = [synthController minimumResonance];
+    self.resonanceSlider.maximumValue = [synthController maximumResonance];
+    self.resonanceSlider.value = [synthController resonanceLevel];
     
-    self.cutoffLFOSlider.minimumValue = [audioManager minimumCutoffLFO];
-    self.cutoffLFOSlider.maximumValue = [audioManager maximumCutoffLFO];
+    self.cutoffLFOSlider.minimumValue = [synthController minimumCutoffLFO];
+    self.cutoffLFOSlider.maximumValue = [synthController maximumCutoffLFO];
     self.cutoffLFOSlider.value = 0;
     
     self.lfoAmountSlider.minimumValue = 0;
     self.lfoAmountSlider.maximumValue = 1;
-    self.lfoAmountSlider.value = [audioManager cuttoffLFOAmount];
+    self.lfoAmountSlider.value = [synthController cuttoffLFOAmount];
     
-    self.oscOneSemitoneSlider.minimumValue = -24;
-    self.oscOneSemitoneSlider.maximumValue = 24;
-    self.oscTwoSemitoneSlider.minimumValue = -24;
-    self.oscTwoSemitoneSlider.maximumValue = 24;
+    self.oscOneSemitoneSlider.minimumValue = [synthController minimumSemitones];
+    self.oscOneSemitoneSlider.maximumValue = [synthController maximumSemitones];
+    self.oscTwoSemitoneSlider.minimumValue = [synthController minimumSemitones];
+    self.oscTwoSemitoneSlider.maximumValue = [synthController maximumSemitones];
     
-    self.oscOneFineSlider.minimumValue = 0;
-    self.oscOneFineSlider.maximumValue = 1;
-    self.oscTwoFineSlider.minimumValue = 0;
-    self.oscTwoFineSlider.maximumValue = 1;
+    self.oscOneFineSlider.minimumValue = [synthController minimumFine];
+    self.oscOneFineSlider.maximumValue = [synthController maximumFine];
+    self.oscTwoFineSlider.minimumValue = [synthController minimumFine];
+    self.oscTwoFineSlider.maximumValue = [synthController maximumFine];
     
-    self.oscOneSemitoneSlider.value = [audioManager.oscillators[0] semitones];
-    self.oscTwoSemitoneSlider.value = [audioManager.oscillators[1] semitones];
+    self.oscOneVolumeSlider.minimumValue = 0;
+    self.oscOneVolumeSlider.maximumValue = 1;
+    self.oscOneVolumeSlider.value = 0.7;
+    
+    self.oscTwoVolumeSlider.minimumValue = 0;
+    self.oscTwoVolumeSlider.maximumValue = 1;
+    self.oscTwoVolumeSlider.value = 0.7;
+    
+    self.oscOneSemitoneSlider.value = [synthController.oscillators[0] semitones];
+    self.oscTwoSemitoneSlider.value = [synthController.oscillators[1] semitones];
     self.oscOneSemitoneLabel.text = [NSString stringWithFormat:@"%+d",(int)self.oscOneSemitoneSlider.value];
     self.oscTwoSemitoneLabel.text = [NSString stringWithFormat:@"%+d",(int)self.oscTwoSemitoneSlider.value];
     
-    self.oscOneFineSlider.value = [audioManager.oscillators[0] fine];
-    self.oscTwoFineSlider.value = [audioManager.oscillators[1] fine];
+    self.oscOneFineSlider.value = [synthController.oscillators[0] fine];
+    self.oscTwoFineSlider.value = [synthController.oscillators[1] fine];
     
-    self.delayDryWetSlider.minimumValue = [audioManager minimumDelayDryWet];
-    self.delayDryWetSlider.maximumValue = [audioManager maximumDelayDryWet];
-    self.delayDryWetSlider.value = [audioManager delayDryWet];
+    self.delayDryWetSlider.minimumValue = [synthController minimumDelayDryWet];
+    self.delayDryWetSlider.maximumValue = [synthController maximumDelayDryWet];
+    self.delayDryWetSlider.value = [synthController delayDryWet];
     
-    self.delayFeedbackSlider.minimumValue = [audioManager minimumDelayFeedback];
-    self.delayFeedbackSlider.maximumValue = [audioManager maximumDelayFeedback];
-    self.delayFeedbackSlider.value = [audioManager delayFeedback];
+    self.delayFeedbackSlider.minimumValue = [synthController minimumDelayFeedback];
+    self.delayFeedbackSlider.maximumValue = [synthController maximumDelayFeedback];
+    self.delayFeedbackSlider.value = [synthController delayFeedback];
     
-    self.delayCutoffSlider.minimumValue = [audioManager minimumDelayCutoff];
-    self.delayCutoffSlider.maximumValue = [audioManager maximumDelayCutoff];
-    self.delayCutoffSlider.value = [audioManager delayCutoff];
+    self.delayCutoffSlider.minimumValue = [synthController minimumDelayCutoff];
+    self.delayCutoffSlider.maximumValue = [synthController maximumDelayCutoff];
+    self.delayCutoffSlider.value = [synthController delayCutoff];
     
-    self.delayTimeSlider.minimumValue = [audioManager minimumDelayTime];
-    self.delayTimeSlider.maximumValue = [audioManager maximumDelayTime];
-    self.delayTimeSlider.value = [audioManager delayTime];
+    self.delayTimeSlider.minimumValue = [synthController minimumDelayTime];
+    self.delayTimeSlider.maximumValue = [synthController maximumDelayTime];
+    self.delayTimeSlider.value = [synthController delayTime];
     
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(refreshViews) userInfo:nil repeats:YES];
     
@@ -150,7 +161,7 @@
 
 - (IBAction)velocitySliderChanged:(UISlider *)slider
 {
-    [[JFSSynthController sharedController].ampEnvelopeGenerator updatePeakWithMidiVelocity:slider.value];
+    [[JFSSynthController sharedController].ampEnvelopeGenerator setMidiVelocity:slider.value];
 }
 
 - (IBAction)cutoffSliderChanged:(JFSKnob *)slider
@@ -298,9 +309,7 @@
 
 - (void)keyPressedWithMidiNote:(int)midiNote
 {
-    double frequency = pow(2, (double)(midiNote - 69) / 12) * 440;
-    
-    [[JFSSynthController sharedController] playFrequency:frequency];
+    [[JFSSynthController sharedController] playMidiNote:midiNote];
 }
 
 - (void)keyReleasedWithMidiNote:(int)midiNote

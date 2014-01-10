@@ -52,6 +52,8 @@
                             inputEnabled:NO];
         
         _ampEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
+        [_ampEnvelopeGenerator setMidiVelocity:60];
+        
         _filterEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
         _filterEnvelopeGenerator.peak = 1.0;
         
@@ -344,6 +346,12 @@
     [self.filterEnvelopeGenerator start];
 }
 
+- (void)playMidiNote:(int)midiNote
+{
+    double frequency = pow(2, (double)(midiNote - 69) / 12) * 440;
+    [self playFrequency:frequency];
+}
+
 - (void)stopPlaying
 {
     [self.ampEnvelopeGenerator stop];
@@ -430,6 +438,36 @@
 - (Float32)maximumDelayCutoff
 {
     return SAMPLE_RATE/2;
+}
+
+- (Float32)minimumVelocity
+{
+    return 0.001;
+}
+
+- (Float32)maximumVelocity
+{
+    return 127.0;
+}
+
+- (NSInteger)minimumSemitones
+{
+    return -24;
+}
+
+- (NSInteger)maximumSemitones
+{
+    return 24;
+}
+
+- (Float32)minimumFine
+{
+    return 0;
+}
+
+- (Float32)maximumFine
+{
+    return 1;
 }
 
 @end

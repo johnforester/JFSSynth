@@ -508,9 +508,11 @@
                         <outlet property="oscOneFineSlider" destination="XGC-R2-6im" id="Uoe-eC-dxW"/>
                         <outlet property="oscOneSemitoneLabel" destination="8FX-Zb-PyL" id="BzS-xn-n8D"/>
                         <outlet property="oscOneSemitoneSlider" destination="cOO-6m-rdf" id="USC-9Q-DjB"/>
+                        <outlet property="oscOneVolumeSlider" destination="IZi-xo-uTA" id="2Xe-IF-Bg4"/>
                         <outlet property="oscTwoFineSlider" destination="7if-qA-I9N" id="A2e-K1-7TM"/>
                         <outlet property="oscTwoSemitoneLabel" destination="UPE-hr-kU7" id="aKn-o2-jaL"/>
                         <outlet property="oscTwoSemitoneSlider" destination="Nfh-Yh-owY" id="gY2-bF-s3H"/>
+                        <outlet property="oscTwoVolumeSlider" destination="JCs-Vx-fYx" id="qUQ-Dk-Sqe"/>
                         <outlet property="resonanceSlider" destination="6xl-CG-Ov5" id="CCo-4b-wUh"/>
                         <outlet property="velocityPeakSlider" destination="YsY-V1-Kri" id="aL4-eE-oeo"/>
                     </connections>

@@ -87,6 +87,14 @@
     return self.level;
 }
 
+- (void)setMidiVelocity:(short)midiVelocity
+{
+    _midiVelocity = midiVelocity;
+    self.peak = 0.4 * pow(midiVelocity/127., 3.);
+}
+
+#pragma mark - Accessor
+
 - (void)setAttackTime:(Float32)attackTime
 {
     _attackTime = attackTime;
@@ -110,11 +118,6 @@
     
     [self updateDecaySlope];
     [self updateReleaseSlope];
-}
-
-- (void)updatePeakWithMidiVelocity:(short)midiVelocity
-{
-    self.peak = 0.4 * pow(midiVelocity/127., 3.);
 }
 
 - (void)setPeak:(Float32)peak

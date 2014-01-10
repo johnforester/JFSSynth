@@ -29,6 +29,8 @@
 + (JFSSynthController *) sharedController;
 
 - (void)playFrequency:(double)frequency;
+- (void)playMidiNote:(int)midiNote;
+
 - (void)setBaseFrequency:(double)frequency;
 - (void)stopPlaying;
 
@@ -47,13 +49,10 @@
 - (Float32)maximumCutoff;
 - (Float32)minimumResonance;
 - (Float32)maximumResonance;
-
 - (Float32)minimumCutoffLFO;
 - (Float32)maximumCutoffLFO;
-
 - (Float32)minimumEnvelopeTime;
 - (Float32)maximumEnvelopeTime;
-
 - (Float32)minimumDelayDryWet;
 - (Float32)maximumDelayDryWet;
 - (Float32)delayDryWet;
@@ -66,6 +65,12 @@
 - (Float32)minimumDelayCutoff;
 - (Float32)maximumDelayCutoff;
 - (Float32)delayCutoff;
+- (Float32)minimumVelocity;
+- (Float32)maximumVelocity;
+- (NSInteger)minimumSemitones;
+- (NSInteger)maximumSemitones;
+- (Float32)minimumFine;
+- (Float32)maximumFine;
 
 - (void)setDelayWetDry:(Float32)level;
 - (void)setDelayTime:(Float32)level;
