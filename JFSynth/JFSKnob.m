@@ -99,7 +99,7 @@
                                                      clockwise:YES];
     
     self.valueLabel.frame = CGRectMake(path.currentPoint.x, path.currentPoint.y, 100, 20);
-    self.valueLabel.text = [NSString stringWithFormat:@"%.0f", roundf(self.value)];
+    self.valueLabel.text = [NSString stringWithFormat:@"%.2f", self.value];
     
     [path addLineToPoint:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))];
     [path closePath];
