@@ -10,6 +10,6 @@
 #import "JFSEnvelopeView.h"
 #import "JFSScrollingKeyboardView.h"
 
-@interface JFSViewController : UIViewController <JFSEnvelopeViewDataSource, JFSEnvelopeViewDelegate, JFSKeyboardViewDelegate>
+@interface JFSViewController : UIViewController <JFSKeyboardViewDelegate>
 
 @end

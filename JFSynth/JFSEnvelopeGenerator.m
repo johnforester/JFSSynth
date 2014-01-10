@@ -107,7 +107,7 @@
     [self updateDecaySlope];
 }
 
-- (void)updateSustainWithMidiVelocity:(short)midiVelocity
+- (void)updateSustainWithMidiValue:(short)midiVelocity
 {
     self.sustainLevel = (midiVelocity/127. * self.peak);
 }

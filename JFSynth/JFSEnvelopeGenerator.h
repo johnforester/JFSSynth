@@ -38,6 +38,6 @@ typedef NS_ENUM(NSInteger, JFSEnvelopeState) {
 - (void)stop;
 - (Float32)updateState;
 
-- (void)updateSustainWithMidiVelocity:(short)midiVelocity;
+- (void)updateSustainWithMidiValue:(short)midiVelocity;
 
 @end
