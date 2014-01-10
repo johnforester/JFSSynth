@@ -163,7 +163,11 @@
 
 - (IBAction)waveTypeControlChanged:(UISegmentedControl *)segmentedControl
 {
-    [[JFSSynthController sharedController].oscillators[segmentedControl.tag] setWaveType:segmentedControl.selectedSegmentIndex];
+    if (segmentedControl.tag < [[[JFSSynthController sharedController] oscillators] count]) {
+        [[JFSSynthController sharedController].oscillators[segmentedControl.tag] setWaveType:segmentedControl.selectedSegmentIndex];
+    } else {
+        [[JFSSynthController sharedController].cutoffLFO setWaveType:segmentedControl.selectedSegmentIndex];
+    }
 }
 
 - (IBAction)velocitySliderChanged:(UISlider *)slider

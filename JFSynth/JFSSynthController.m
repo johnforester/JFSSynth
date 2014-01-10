@@ -67,7 +67,6 @@
         [_audioController addChannels:@[_oscillatorChannel]];
         
         _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
-        [_cutoffLFO setWaveType:JFSSineWave];
         [_cutoffLFO updateBaseFrequency:0.0f];
         _cuttoffLFOAmount = 0.0f;
         
