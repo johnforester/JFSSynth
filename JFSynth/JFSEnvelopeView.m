@@ -67,7 +67,7 @@
 {
     _touchPointsTransform = CGAffineTransformMakeRotation(2 * M_PI);
     _envelopeContainer = [[UIView alloc] initWithFrame:CGRectInset(self.bounds, 10, 10)];
-    _envelopeContainer.backgroundColor = [UIColor blackColor];
+    _envelopeContainer.backgroundColor = [UIColor clearColor];
     
     _borderLayer = [CALayer layer];
     _borderLayer.frame = CGRectMake(0, 0, _envelopeContainer.frame.size.width, _envelopeContainer.frame.size.height);

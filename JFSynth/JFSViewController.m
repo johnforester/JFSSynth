@@ -64,12 +64,12 @@
         self.ampEnvelopeViewController = [[JFSEnvelopeViewController alloc] initWithEnvelope:synthController.ampEnvelopeGenerator];
         self.filterEnvelopeViewController = [[JFSEnvelopeViewController alloc] initWithEnvelope:synthController.filterEnvelopeGenerator];
         
-        [self.ampEnvelopeContainerView addSubview:self.ampEnvelopeViewController.view];
         self.ampEnvelopeViewController.view.frame = self.ampEnvelopeContainerView.bounds;
+        [self.ampEnvelopeContainerView addSubview:self.ampEnvelopeViewController.view];
         [self addChildViewController:self.ampEnvelopeViewController];
         
-        [self.filterEnvelopeContainerView addSubview:self.filterEnvelopeViewController.view];
         self.filterEnvelopeViewController.view.frame = self.filterEnvelopeContainerView.bounds;
+        [self.filterEnvelopeContainerView addSubview:self.filterEnvelopeViewController.view];
         [self addChildViewController:self.filterEnvelopeViewController];
         
         self.velocityPeakSlider.minimumValue = [synthController minimumVelocity];

@@ -29,23 +29,11 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor clearColor];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    self.view.backgroundColor = [UIColor clearColor];
+
     if (self.envelopeView == nil) {
         self.envelopeView = [[JFSEnvelopeView alloc]initWithFrame:self.view.bounds];
         self.envelopeView.delegate = self;
