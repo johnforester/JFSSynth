@@ -78,11 +78,10 @@
                                                             audioController:_audioController
                                                                       error:&error];
         
-        [self setCutoffKnobLevel:10000];
-        
         if (error) {
             NSLog(@"filter initialization error %@", [error localizedDescription]);
         } else {
+            [self setCutoffKnobLevel:10000];
             [_audioController addFilter:_lpFilter];
         }
         
@@ -148,8 +147,6 @@
     
     return value;
 }
-
-
 
 - (Float32)resonanceLevel
 {
