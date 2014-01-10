@@ -19,7 +19,6 @@
 @property (nonatomic, strong) AEAudioUnitFilter *delay;
 
 @property (nonatomic, assign) Float32 cuttoffLFOAmount;
-@property (nonatomic, strong) NSArray *oscillatorChannels;
 @property (nonatomic, strong) NSArray *oscillators;
 
 @end
@@ -29,6 +28,7 @@
 #define SAMPLE_RATE 44100.0
 #define MINIMUM_CUTOFF 1000.0f
 #define MAXIMUM_CUTOFF SAMPLE_RATE/2
+#define OSC_MIX 0.5 //TODO add control for this
 
 + (JFSSynthController *)sharedController
 {
@@ -58,10 +58,13 @@
         _filterEnvelopeGenerator.peak = 1.0;
         
         _oscillators = @[[[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE], [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE]];
+        
+        [_oscillators[0] updateVolume:0.7];
+        [_oscillators[1] updateVolume:0.7];
         [_oscillators[1] updateFine:0.05];
         
-        _oscillatorChannels = @[[self oscillatorChannelWithOscillator:_oscillators[0]], [self oscillatorChannelWithOscillator:_oscillators[1]]];
-        [_audioController addChannels:_oscillatorChannels];
+        _oscillatorChannel = [self oscillatorChannel];
+        [_audioController addChannels:@[_oscillatorChannel]];
         
         _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
         [_cutoffLFO setWaveType:JFSSineWave];
@@ -278,9 +281,8 @@
 
 - (void)setVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value
 {
-    if ([self.oscillatorChannels count] > oscillatorIdx) {
-        AEBlockChannel *channel = self.oscillatorChannels[oscillatorIdx];
-        channel.volume = value;
+    if ([self.oscillators count] > oscillatorIdx) {
+        [self.oscillators[oscillatorIdx] updateVolume:value];
     }
 }
 - (void)setSemitonesForOscillatorAtIndex:(int)oscillatorIdx value:(int)semitones
@@ -295,7 +297,7 @@
 
 #pragma setup methods
 
-- (AEBlockChannel *)oscillatorChannelWithOscillator:(JFSOscillator *)oscillator
+- (AEBlockChannel *)oscillatorChannel
 {
     __weak JFSSynthController *weakSelf = self;
     
@@ -323,11 +325,13 @@
                                   cutoffLevel,
                                   0);
             
-            SInt16 sample = [oscillator updateOscillator] * [weakSelf.ampEnvelopeGenerator updateState];
-        
-                ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
-                ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
-            }
+            SInt16 oscSampleSum = (([weakSelf.oscillators[0] volume]) * [weakSelf.oscillators[0] updateOscillator]) + ([weakSelf.oscillators[1] volume] * [weakSelf.oscillators[1] updateOscillator]);
+                        
+            SInt16 sample = oscSampleSum * [weakSelf.ampEnvelopeGenerator updateState];
+            
+            ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
+            ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
+        }
     }];
     
     oscillatorChannel.audioDescription = [AEAudioController nonInterleaved16BitStereoAudioDescription];

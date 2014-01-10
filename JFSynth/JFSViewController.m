@@ -71,7 +71,7 @@
         
         self.velocityPeakSlider.minimumValue = [synthController minimumVelocity];
         self.velocityPeakSlider.maximumValue = [synthController maximumVelocity];
-        self.velocityPeakSlider.value = synthController.ampEnvelopeGenerator.peak;
+        self.velocityPeakSlider.value = synthController.ampEnvelopeGenerator.midiVelocity;
         
         self.cutoffSlider.minimumValue = [synthController minimumCutoff];
         self.cutoffSlider.maximumValue = [synthController maximumCutoff];

@@ -18,6 +18,7 @@
 @property (nonatomic, assign) double adjustedFrequency;
 @property (nonatomic, assign) Float32 semitones;
 @property (nonatomic, assign) Float32 fine;
+@property (nonatomic, assign) Float32 volume;
 
 @end
 
@@ -98,6 +99,12 @@
 - (double)frequency
 {
     return self.adjustedFrequency;
+}
+
+- (void)updateVolume:(Float32)volume
+{
+    _volume = MAX(0, volume);
+    _volume = MIN(1.0, volume);
 }
 
 @end
