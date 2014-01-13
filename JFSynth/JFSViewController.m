@@ -208,6 +208,16 @@
     [[JFSSynthController sharedController] setVolumeForOscillatorAtIndex:slider.tag value:slider.value];
 }
 
+- (IBAction)delaySwitchChanged:(UISwitch *)sender
+{
+    [[JFSSynthController sharedController] toggleDelay:sender.isOn];
+}
+
+- (IBAction)distortionSwitchChanged:(UISwitch *)sender
+{
+    [[JFSSynthController sharedController] toggleDistortion:sender.isOn];
+}
+
 #pragma mark - JFSKeyboardViewDelegate
 
 - (void)keyPressedWithMidiNote:(int)midiNote

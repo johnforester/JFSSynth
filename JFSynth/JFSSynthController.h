@@ -88,5 +88,7 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
 - (NSNumber *)minimumValueForParameter:(JFSSynthParam)parameter;
 - (NSNumber *)maximumValueForParameter:(JFSSynthParam)parameter;
 
+- (void)toggleDelay:(BOOL)on;
+- (void)toggleDistortion:(BOOL)on;
 
 @end

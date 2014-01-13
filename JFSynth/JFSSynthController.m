@@ -172,6 +172,24 @@
     return self;
 }
 
+- (void)toggleDelay:(BOOL)on
+{
+    if (on) {
+        [self.audioController addFilter:self.delay];
+    } else {
+        [self.audioController removeFilter:self.delay];
+    }
+}
+
+- (void)toggleDistortion:(BOOL)on
+{
+    if (on) {
+        [self.audioController addFilter:self.distortion];
+    } else {
+        [self.audioController removeFilter:self.distortion];
+    }
+}
+
 #pragma accessor methods
 
 - (void)setValue:(Float32)value forParameter:(JFSSynthParam)parameter
