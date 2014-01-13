@@ -132,6 +132,7 @@
         if (error) {
             NSLog(@"filter initialization error %@", [error localizedDescription]);
         } else {
+            [self setCutoffLevel:10000];
             [self setCutoffKnobLevel:10000];
             [_audioController addFilter:_lpFilter];
         }
@@ -320,6 +321,8 @@
                           0,
                           cutoffLevel,
                           0);
+    
+    self.filterEnvelopeGenerator.peak = (cutoffLevel - 10) / ([[self maximumValueForParameter:JFSSynthParamCutoff] floatValue] - 10);
 }
 
 // Global, dB, -20->40, 0
@@ -555,6 +558,8 @@
             }
             
             Float32 cutoffLevel = ([weakSelf.filterEnvelopeGenerator updateState] * weakSelf.cutoffKnobLevel) + filterModAmount;
+            
+            printf("cutofflevel %f\n", cutoffLevel);
             
             cutoffLevel = MAX(MINIMUM_CUTOFF, cutoffLevel);
             cutoffLevel = MIN(MAXIMUM_CUTOFF, cutoffLevel);

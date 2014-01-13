@@ -44,7 +44,7 @@
 
 - (void)refresh
 {
-    [self.envelopeView updateStageViewWithStage:[JFSSynthController sharedController].ampEnvelopeGenerator.envelopeState - 1];
+    [self.envelopeView updateStageViewWithStage:self.envelopeGenerator.envelopeState - 1];
 }
 
 #pragma mark - JFSEnvelopeViewDataSource
