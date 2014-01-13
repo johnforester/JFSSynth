@@ -182,29 +182,14 @@
     }
 }
 
+- (IBAction)knobValueChanged:(JFSKnob *)knob
+{
+    [[JFSSynthController sharedController] setValue:knob.value forParameter:knob.tag];
+}
+
 - (IBAction)velocitySliderChanged:(UISlider *)slider
 {
     [[JFSSynthController sharedController].ampEnvelopeGenerator setMidiVelocity:slider.value];
-}
-
-- (IBAction)cutoffSliderChanged:(JFSKnob *)slider
-{
-    [[JFSSynthController sharedController] setCutoffKnobLevel:slider.value];
-}
-
-- (IBAction)resonanceSliderChanged:(JFSKnob *)slider
-{
-    [[JFSSynthController sharedController]setResonanceLevel:slider.value];
-}
-
-- (IBAction)cutoffLFOSliderChanged:(JFSKnob *)slider
-{
-    [JFSSynthController sharedController].cutoffLFOFrequency = slider.value;
-}
-
-- (IBAction)filterLFOAmountSliderChanged:(JFSKnob *)slider
-{
-    [[JFSSynthController sharedController] setCutoffLFOAmount:slider.value];
 }
 
 - (IBAction)semiToneSliderChanged:(JFSKnob *)slider
@@ -221,36 +206,6 @@
 - (IBAction)oscillatorVolumeSliderChanged:(JFSKnob *)slider
 {
     [[JFSSynthController sharedController] setVolumeForOscillatorAtIndex:slider.tag value:slider.value];
-}
-
-- (IBAction)delayWetDrySliderChanged:(JFSKnob *)slider
-{
-    [[JFSSynthController sharedController] setDelayWetDry:slider.value];
-}
-
-- (IBAction)delayFeedbackSliderChanged:(JFSKnob *)slider
-{
-    [[JFSSynthController sharedController] setDelayFeedback:slider.value];
-}
-
-- (IBAction)delayTimeSliderChanged:(JFSKnob *)slider
-{
-    [[JFSSynthController sharedController] setDelayTime:slider.value];
-}
-
-- (IBAction)delayCutoffSliderChanged:(JFSKnob *)slider
-{
-    [[JFSSynthController sharedController] setDelayCutoff:slider.value];
-}
-
-- (IBAction)distortionMixSliderChanged:(JFSKnob *)sender
-{
-    [[JFSSynthController sharedController] setDistortionMix:sender.value];
-}
-
-- (IBAction)distortionGainSliderChanged:(JFSKnob *)sender
-{
-    [[JFSSynthController sharedController] setDistortionGain:sender.value];
 }
 
 #pragma mark - JFSKeyboardViewDelegate

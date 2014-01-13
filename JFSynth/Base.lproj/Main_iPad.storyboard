@@ -216,31 +216,31 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
-                                                    <action selector="cutoffSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="CU0-9S-3YU"/>
+                                                    <action selector="knobValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="vp4-IZ-EcC"/>
                                                 </connections>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6xl-CG-Ov5" customClass="JFSKnob">
+                                            <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6xl-CG-Ov5" customClass="JFSKnob">
                                                 <rect key="frame" x="699" y="298" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
-                                                    <action selector="resonanceSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="R10-bX-bD1"/>
+                                                    <action selector="knobValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="03m-sg-EZv"/>
                                                 </connections>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5T8-nR-5Ru" customClass="JFSKnob">
+                                            <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5T8-nR-5Ru" customClass="JFSKnob">
                                                 <rect key="frame" x="489" y="457" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
-                                                    <action selector="cutoffLFOSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="KYq-do-t34"/>
+                                                    <action selector="knobValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="0Nf-NX-cq6"/>
                                                 </connections>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FdT-oc-qqT" customClass="JFSKnob">
+                                            <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FdT-oc-qqT" customClass="JFSKnob">
                                                 <rect key="frame" x="699" y="457" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
-                                                    <action selector="filterLFOAmountSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Wo8-qj-E6p"/>
+                                                    <action selector="knobValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="epw-SV-hfD"/>
                                                 </connections>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IZi-xo-uTA" customClass="JFSKnob">
@@ -291,36 +291,36 @@
                                                     <action selector="oscOneFineSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Ox5-Ip-0ll"/>
                                                 </connections>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J8Y-TH-KsY" customClass="JFSKnob">
+                                            <view tag="4" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J8Y-TH-KsY" customClass="JFSKnob">
                                                 <rect key="frame" x="95" y="558" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
-                                                    <action selector="delayWetDrySliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Z5D-6n-pB7"/>
+                                                    <action selector="knobValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="XeO-FD-x56"/>
                                                 </connections>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ab-ba-6SP" customClass="JFSKnob">
+                                            <view tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ab-ba-6SP" customClass="JFSKnob">
                                                 <rect key="frame" x="281" y="557" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
-                                                    <action selector="delayFeedbackSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="txJ-qf-SiH"/>
+                                                    <action selector="knobValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="hPL-oe-7TD"/>
                                                 </connections>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Je7-Qk-TLQ" customClass="JFSKnob">
+                                            <view tag="6" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Je7-Qk-TLQ" customClass="JFSKnob">
                                                 <rect key="frame" x="95" y="631" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
-                                                    <action selector="delayTimeSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="vzk-DL-dbY"/>
+                                                    <action selector="knobValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="j9G-cq-Zv7"/>
                                                 </connections>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cVL-bV-UzT" customClass="JFSKnob">
+                                            <view tag="7" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cVL-bV-UzT" customClass="JFSKnob">
                                                 <rect key="frame" x="281" y="625" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
-                                                    <action selector="delayCutoffSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="G7e-IV-Cb4"/>
+                                                    <action selector="knobValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Rub-nb-Mhn"/>
                                                 </connections>
                                             </view>
                                             <segmentedControl opaque="NO" tag="2" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gyQ-66-6Oe">
@@ -371,20 +371,20 @@
                                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yd9-fb-0ZE" customClass="JFSKnob">
+                                            <view tag="12" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yd9-fb-0ZE" customClass="JFSKnob">
                                                 <rect key="frame" x="475" y="558" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
-                                                    <action selector="distortionMixSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="07x-h4-qdD"/>
+                                                    <action selector="knobValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="ysO-5P-rL5"/>
                                                 </connections>
                                             </view>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="toH-qM-2Ao" customClass="JFSKnob">
+                                            <view tag="13" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="toH-qM-2Ao" customClass="JFSKnob">
                                                 <rect key="frame" x="664" y="558" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
-                                                    <action selector="distortionGainSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="BZ3-K1-e0e"/>
+                                                    <action selector="knobValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="WsP-cb-EyB"/>
                                                 </connections>
                                             </view>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Filter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9N0-U5-7tW">

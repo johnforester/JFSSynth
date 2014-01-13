@@ -62,7 +62,7 @@
                            @(JFSSynthParamDelayFeedback) : @(-100),
                            @(JFSSynthParamDelayTime) : @(0),
                            @(JFSSynthParamDelayCutoff) : @(10),
-        
+                           
                            @(JFSSynthParamSemitones) : @(-24),
                            @(JFSSynthParamFine) : @(0),
                            
@@ -173,6 +173,56 @@
 }
 
 #pragma accessor methods
+
+- (void)setValue:(Float32)value forParameter:(JFSSynthParam)parameter
+{
+    switch (parameter) {
+        case JFSSynthParamCutoff:
+            [self setCutoffLevel:value];
+            break;
+        case JFSSynthParamCutoffLFOAmount:
+            [self setCutoffLFOAmount:value];
+            break;
+        case JFSSynthParamCutoffLFORate:
+            [self setCutoffLFOFrequency:value];
+            break;
+        case JFSSynthParamDelayCutoff:
+            [self setDelayCutoff:value];
+            break;
+        case JFSSynthParamDelayDryWet:
+            [self setDelayWetDry:value];
+            break;
+        case JFSSynthParamDelayFeedback:
+            [self setDelayFeedback:value];
+            break;
+        case JFSSynthParamDelayTime:
+            [self setDelayTime:value];
+            break;
+        case JFSSynthParamDistortionGain:
+            [self setDistortionGain:value];
+            break;
+        case JFSSynthParamDistortionMix:
+            [self setDistortionMix:value];
+            break;
+        case JFSSynthParamFine:
+           //TODO
+        break;
+        case JFSSynthParamSemitones:
+            //TODO
+            break;
+        case JFSSynthParamResonance:
+            [self setResonanceLevel:value];
+            break;
+        case JFSSynthParamFrequency:
+            //TODO
+            break;
+        case JFSSynthParamVelocity:
+            [self setVelocityPeak:value];
+            break;
+        default:
+            break;
+    }
+}
 
 // Global, Hz, 10->(SampleRate/2), 6900
 - (void)setCutoffLevel:(Float32)cutoffLevel

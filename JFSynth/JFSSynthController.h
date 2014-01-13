@@ -56,6 +56,8 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
 - (void)setBaseFrequency:(double)frequency;
 - (void)stopPlaying;
 
+- (void)setValue:(Float32)value forParameter:(JFSSynthParam)parameter;
+
 - (void)setSemitonesForOscillatorAtIndex:(int)oscillatorIdx value:(int)semitones;
 - (void)setFineForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)fine;
 - (void)setVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value;
