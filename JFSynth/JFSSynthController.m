@@ -558,9 +558,7 @@
             }
             
             Float32 cutoffLevel = ([weakSelf.filterEnvelopeGenerator updateState] * weakSelf.cutoffKnobLevel) + filterModAmount;
-            
-            printf("cutofflevel %f\n", cutoffLevel);
-            
+                        
             cutoffLevel = MAX(MINIMUM_CUTOFF, cutoffLevel);
             cutoffLevel = MIN(MAXIMUM_CUTOFF, cutoffLevel);
             
