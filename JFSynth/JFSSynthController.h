@@ -71,10 +71,18 @@
 - (NSInteger)maximumSemitones;
 - (Float32)minimumFine;
 - (Float32)maximumFine;
+- (Float32)distortionGain;
+- (Float32)distortionMix;
+- (Float32)maximumDistortionMix;
+- (Float32)minimumDistortionMix;
+- (Float32)maximumDistortionGain;
+- (Float32)minimumDistortionGain;
 
 - (void)setDelayWetDry:(Float32)level;
 - (void)setDelayTime:(Float32)level;
 - (void)setDelayFeedback:(Float32)level;
 - (void)setDelayCutoff:(Float32)level;
+- (void)setDistortionGain:(Float32)value;
+- (void)setDistortionMix:(Float32)value;
 
 @end

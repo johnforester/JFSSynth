@@ -34,6 +34,9 @@
 @property (weak, nonatomic) IBOutlet JFSKnob *delayTimeSlider;
 @property (weak, nonatomic) IBOutlet JFSKnob *delayCutoffSlider;
 
+@property (weak, nonatomic) IBOutlet JFSKnob *distortionMixKnob;
+@property (weak, nonatomic) IBOutlet JFSKnob *distortionGainKnob;
+
 @property (weak, nonatomic) IBOutlet UIView *ampEnvelopeContainerView;
 @property (weak, nonatomic) IBOutlet UIView *filterEnvelopeContainerView;
 
@@ -43,6 +46,7 @@
 @property (weak, nonatomic) IBOutlet JFSScrollingKeyboardView *keyBoardView;
 
 @property (nonatomic, strong) NSTimer *refreshTimer;
+
 
 @end
 
@@ -128,6 +132,14 @@
         self.delayTimeSlider.minimumValue = [synthController minimumDelayTime];
         self.delayTimeSlider.maximumValue = [synthController maximumDelayTime];
         self.delayTimeSlider.value = [synthController delayTime];
+        
+        self.distortionGainKnob.minimumValue = [synthController minimumDistortionGain];
+        self.distortionGainKnob.maximumValue = [synthController maximumDistortionGain];
+        self.distortionGainKnob.value = [synthController distortionGain];
+        
+        self.distortionMixKnob.minimumValue = [synthController minimumDistortionMix];
+        self.distortionMixKnob.maximumValue = [synthController maximumDistortionMix];
+        self.distortionMixKnob.value = [synthController distortionMix];
         
         self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(refreshViews) userInfo:nil repeats:YES];
         
@@ -229,6 +241,16 @@
 - (IBAction)delayCutoffSliderChanged:(JFSKnob *)slider
 {
     [[JFSSynthController sharedController] setDelayCutoff:slider.value];
+}
+
+- (IBAction)distortionMixSliderChanged:(JFSKnob *)sender
+{
+    [[JFSSynthController sharedController] setDistortionMix:sender.value];
+}
+
+- (IBAction)distortionGainSliderChanged:(JFSKnob *)sender
+{
+    [[JFSSynthController sharedController] setDistortionGain:sender.value];
 }
 
 #pragma mark - JFSKeyboardViewDelegate

@@ -17,6 +17,7 @@
 @property (nonatomic, strong) AEBlockChannel *oscillatorChannel;
 @property (nonatomic, strong) AEAudioUnitFilter *lpFilter;
 @property (nonatomic, strong) AEAudioUnitFilter *delay;
+@property (nonatomic, strong) AEAudioUnitFilter *distortion;
 
 @property (nonatomic, assign) Float32 cuttoffLFOAmount;
 @property (nonatomic, strong) NSArray *oscillators;
@@ -101,6 +102,24 @@
             NSLog(@"filter initialization error %@", [error localizedDescription]);
         } else {
             [_audioController addFilter:_delay];
+        }
+        
+        error = nil;
+        
+        AudioComponentDescription distortionComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
+                                                                                        kAudioUnitType_Effect,
+                                                                                        kAudioUnitSubType_Distortion);
+        
+        _distortion = [[AEAudioUnitFilter alloc] initWithComponentDescription:distortionComponent
+                                                              audioController:_audioController
+                                                                        error:&error];
+        
+        
+        if (error) {
+            NSLog(@"filter initialization error %@", [error localizedDescription]);
+        } else {
+            
+            [_audioController addFilter:_distortion];
         }
         
         error = nil;
@@ -259,6 +278,52 @@
     return value;
 }
 
+- (Float32)distortionMix
+{
+    Float32 value;
+    
+    AudioUnitGetParameter(self.distortion.audioUnit,
+                          kDistortionParam_FinalMix,
+                          kAudioUnitScope_Global,
+                          0,
+                          &value);
+    
+    return value;
+}
+
+- (void)setDistortionMix:(Float32)value
+{
+    AudioUnitSetParameter(self.distortion.audioUnit,
+                          kDistortionParam_FinalMix,
+                          kAudioUnitScope_Global,
+                          0,
+                          value,
+                          0);
+}
+
+- (Float32)distortionGain
+{
+    Float32 value;
+    
+    AudioUnitGetParameter(self.distortion.audioUnit,
+                          kDistortionParam_SoftClipGain,
+                          kAudioUnitScope_Global,
+                          0,
+                          &value);
+    
+    return value;
+}
+
+- (void)setDistortionGain:(Float32)value
+{
+    AudioUnitSetParameter(self.distortion.audioUnit,
+                          kDistortionParam_SoftClipGain,
+                          kAudioUnitScope_Global,
+                          0,
+                          value,
+                          0);
+}
+
 - (void)setCutoffLFOFrequency:(Float32)cutoffLFOFrequency
 {
     _cutoffLFOFrequency = cutoffLFOFrequency;
@@ -325,7 +390,7 @@
                                   0);
             
             SInt16 oscSampleSum = (([weakSelf.oscillators[0] volume]) * [weakSelf.oscillators[0] updateOscillator]) + ([weakSelf.oscillators[1] volume] * [weakSelf.oscillators[1] updateOscillator]);
-                        
+            
             SInt16 sample = oscSampleSum * [weakSelf.ampEnvelopeGenerator updateState];
             
             ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
@@ -468,6 +533,26 @@
 - (Float32)maximumFine
 {
     return 1;
+}
+
+- (Float32)minimumDistortionGain
+{
+    return -80;
+}
+
+- (Float32)maximumDistortionGain
+{
+    return 20;
+}
+
+- (Float32)minimumDistortionMix
+{
+    return 0;
+}
+
+- (Float32)maximumDistortionMix
+{
+    return 100;
 }
 
 @end
