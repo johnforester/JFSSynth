@@ -22,12 +22,15 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
     
     JFSSynthParamFrequency,
     JFSSynthParamVelocity,
-    JFSSynthParamSemitones,
-    JFSSynthParamFine,
+    JFSSynthParamOscillator1Semitones,
+    JFSSynthParamOscillator1Fine,
+    JFSSynthParamOscillator2Semitones,
+    JFSSynthParamOscillator2Fine,
+    JFSSynthControllerOscillator1Volume,
+    JFSSynthControllerOscillator2Volume,
     
     JFSSynthParamDistortionGain,
     JFSSynthParamDistortionMix,
-    
 };
 
 @class JFSEnvelopeGenerator;
@@ -50,26 +53,12 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
 
 + (JFSSynthController *) sharedController;
 
-- (void)playFrequency:(double)frequency;
 - (void)playMidiNote:(int)midiNote;
 
 - (void)setBaseFrequency:(double)frequency;
 - (void)stopPlaying;
 
 - (void)setValue:(Float32)value forParameter:(JFSSynthParam)parameter;
-
-- (void)setSemitonesForOscillatorAtIndex:(int)oscillatorIdx value:(int)semitones;
-- (void)setFineForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)fine;
-- (void)setVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value;
-- (void)setCutoffLFOAmount:(Float32)lfoAmount;
-- (void)setCutoffLevel:(Float32)cutoffLevel;
-- (void)setResonanceLevel:(Float32)resonanceLevel;
-- (void)setDelayWetDry:(Float32)level;
-- (void)setDelayTime:(Float32)level;
-- (void)setDelayFeedback:(Float32)level;
-- (void)setDelayCutoff:(Float32)level;
-- (void)setDistortionGain:(Float32)value;
-- (void)setDistortionMix:(Float32)value;
 
 - (Float32)cutoffLevel;
 - (Float32)resonanceLevel;

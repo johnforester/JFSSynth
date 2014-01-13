@@ -93,22 +93,22 @@
         self.lfoAmountSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamCutoffLFOAmount] floatValue];
         self.lfoAmountSlider.value = [synthController cuttoffLFOAmount];
         
-        self.oscOneSemitoneSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamSemitones] floatValue];
-        self.oscOneSemitoneSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamSemitones] floatValue];
-        self.oscTwoSemitoneSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamSemitones] floatValue];
-        self.oscTwoSemitoneSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamSemitones] floatValue];
+        self.oscOneSemitoneSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamOscillator1Semitones] floatValue];
+        self.oscOneSemitoneSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamOscillator1Semitones] floatValue];
+        self.oscTwoSemitoneSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamOscillator2Semitones] floatValue];
+        self.oscTwoSemitoneSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamOscillator2Semitones] floatValue];
         
-        self.oscOneFineSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamFine] floatValue];
-        self.oscOneFineSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamFine] floatValue];
-        self.oscTwoFineSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamFine] floatValue];
-        self.oscTwoFineSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamFine] floatValue];
+        self.oscOneFineSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamOscillator1Fine] floatValue];
+        self.oscOneFineSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamOscillator1Fine] floatValue];
+        self.oscTwoFineSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamOscillator2Fine] floatValue];
+        self.oscTwoFineSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamOscillator2Fine] floatValue];
         
-        self.oscOneVolumeSlider.minimumValue = 0;
-        self.oscOneVolumeSlider.maximumValue = 1;
+        self.oscOneVolumeSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthControllerOscillator1Volume] floatValue];
+        self.oscOneVolumeSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthControllerOscillator1Volume] floatValue];
         self.oscOneVolumeSlider.value = 0.7;
         
-        self.oscTwoVolumeSlider.minimumValue = 0;
-        self.oscTwoVolumeSlider.maximumValue = 1;
+        self.oscTwoVolumeSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthControllerOscillator2Volume] floatValue];;
+        self.oscTwoVolumeSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthControllerOscillator2Volume] floatValue];;
         self.oscTwoVolumeSlider.value = 0.7;
         
         self.oscOneSemitoneSlider.value = [synthController.oscillators[0] semitones];
@@ -190,22 +190,6 @@
 - (IBAction)velocitySliderChanged:(UISlider *)slider
 {
     [[JFSSynthController sharedController].ampEnvelopeGenerator setMidiVelocity:slider.value];
-}
-
-- (IBAction)semiToneSliderChanged:(JFSKnob *)slider
-{
-    int semitone = (int)round(slider.value);
-    [[JFSSynthController sharedController] setSemitonesForOscillatorAtIndex:slider.tag value:semitone];
-}
-
-- (IBAction)oscOneFineSliderChanged:(JFSKnob *)slider
-{
-    [[JFSSynthController sharedController] setFineForOscillatorAtIndex:slider.tag value:slider.value];
-}
-
-- (IBAction)oscillatorVolumeSliderChanged:(JFSKnob *)slider
-{
-    [[JFSSynthController sharedController] setVolumeForOscillatorAtIndex:slider.tag value:slider.value];
 }
 
 - (IBAction)delaySwitchChanged:(UISwitch *)sender

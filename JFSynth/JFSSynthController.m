@@ -63,11 +63,15 @@
                            @(JFSSynthParamDelayTime) : @(0),
                            @(JFSSynthParamDelayCutoff) : @(10),
                            
-                           @(JFSSynthParamSemitones) : @(-24),
-                           @(JFSSynthParamFine) : @(0),
+                           @(JFSSynthParamOscillator1Semitones) : @(-24),
+                           @(JFSSynthParamOscillator1Fine) : @(0),
+                           @(JFSSynthParamOscillator2Semitones) : @(-24),
+                           @(JFSSynthParamOscillator2Fine) : @(0),
+                           @(JFSSynthControllerOscillator1Volume) : @(0),
+                           @(JFSSynthControllerOscillator2Volume) : @(0),
                            
                            @(JFSSynthParamDistortionGain) : @(-80),
-                           @(JFSSynthParamDistortionMix) : @(0)
+                           @(JFSSynthParamDistortionMix) : @(0),
                            };
         
         _maximumValues = @{@(JFSSynthParamCutoff) : @(SAMPLE_RATE/2.0f),
@@ -81,8 +85,12 @@
                            @(JFSSynthParamDelayTime) : @(2),
                            @(JFSSynthParamDelayCutoff) : @(SAMPLE_RATE/2),
                            
-                           @(JFSSynthParamSemitones) : @(24),
-                           @(JFSSynthParamFine) : @(1),
+                           @(JFSSynthParamOscillator1Semitones) : @(24),
+                           @(JFSSynthParamOscillator1Fine) : @(1),
+                           @(JFSSynthParamOscillator2Semitones) : @(24),
+                           @(JFSSynthParamOscillator2Fine) : @(1),
+                           @(JFSSynthControllerOscillator1Volume) : @(1),
+                           @(JFSSynthControllerOscillator2Volume) : @(1),
                            
                            @(JFSSynthParamDistortionGain) : @(20),
                            @(JFSSynthParamDistortionMix) : @(100)
@@ -222,11 +230,17 @@
         case JFSSynthParamDistortionMix:
             [self setDistortionMix:value];
             break;
-        case JFSSynthParamFine:
-           //TODO
+        case JFSSynthParamOscillator1Fine:
+            [self setFineForOscillatorAtIndex:0 value:value];
         break;
-        case JFSSynthParamSemitones:
-            //TODO
+        case JFSSynthParamOscillator2Fine:
+            [self setFineForOscillatorAtIndex:1 value:value];
+            break;
+        case JFSSynthParamOscillator1Semitones:
+            [self setSemitonesForOscillatorAtIndex:0 value:value];
+            break;
+        case JFSSynthParamOscillator2Semitones:
+            [self setSemitonesForOscillatorAtIndex:1 value:value];
             break;
         case JFSSynthParamResonance:
             [self setResonanceLevel:value];
@@ -236,6 +250,12 @@
             break;
         case JFSSynthParamVelocity:
             [self setVelocityPeak:value];
+            break;
+        case JFSSynthControllerOscillator1Volume:
+            [self setVolumeForOscillatorAtIndex:0 value:value];
+            break;
+        case JFSSynthControllerOscillator2Volume:
+            [self setVolumeForOscillatorAtIndex:1 value:value];
             break;
         default:
             break;
