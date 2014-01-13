@@ -200,11 +200,60 @@
 
 #pragma accessor methods
 
+- (Float32)valueForParameter:(JFSSynthParam)parameter
+{
+    switch (parameter) {
+        case JFSSynthParamCutoff:
+            return [self cutoffLevel];
+        case JFSSynthParamCutoffLFOAmount:
+            return [self cuttoffLFOAmount];
+        case JFSSynthParamCutoffLFORate:
+            return [self cutoffLFOFrequency];
+        case JFSSynthParamDelayCutoff:
+            return [self delayCutoff];
+        case JFSSynthParamDelayDryWet:
+            return [self delayDryWet];
+        case JFSSynthParamDelayFeedback:
+            return [self delayFeedback];
+        case JFSSynthParamDelayTime:
+            return [self delayTime];
+        case JFSSynthParamDistortionGain:
+            return [self distortionGain];
+        case JFSSynthParamDistortionMix:
+            return [self distortionMix];
+        case JFSSynthParamOscillator1Fine:
+            return [self.oscillators[0] fine];
+        case JFSSynthParamOscillator2Fine:
+            return [self.oscillators[1] fine];
+        case JFSSynthParamOscillator1Semitones:
+            return [self.oscillators[0] semitones];
+        case JFSSynthParamOscillator2Semitones:
+            return [self.oscillators[1] semitones];
+        case JFSSynthParamResonance:
+            return [self resonanceLevel];
+        case JFSSynthParamFrequency:
+            //TODO
+            break;
+        case JFSSynthParamVelocity:
+            return self.velocityPeak;
+            break;
+        case JFSSynthControllerOscillator1Volume:
+            return [self.oscillators[0] volume];
+        case JFSSynthControllerOscillator2Volume:
+            return [self.oscillators[1] volume];
+        default:
+            break;
+    }
+    
+    return 0;
+}
+
 - (void)setValue:(Float32)value forParameter:(JFSSynthParam)parameter
 {
     switch (parameter) {
         case JFSSynthParamCutoff:
             [self setCutoffLevel:value];
+            [self setCutoffKnobLevel:value];
             break;
         case JFSSynthParamCutoffLFOAmount:
             [self setCutoffLFOAmount:value];
@@ -232,7 +281,7 @@
             break;
         case JFSSynthParamOscillator1Fine:
             [self setFineForOscillatorAtIndex:0 value:value];
-        break;
+            break;
         case JFSSynthParamOscillator2Fine:
             [self setFineForOscillatorAtIndex:1 value:value];
             break;

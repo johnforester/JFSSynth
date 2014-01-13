@@ -30,6 +30,7 @@
     
     if (self) {
         _sampleRate = sampleRate;
+        _volume = 0.7;
     }
     
     return self;

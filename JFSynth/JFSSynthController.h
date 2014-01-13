@@ -59,15 +59,7 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
 - (void)stopPlaying;
 
 - (void)setValue:(Float32)value forParameter:(JFSSynthParam)parameter;
-
-- (Float32)cutoffLevel;
-- (Float32)resonanceLevel;
-- (Float32)delayDryWet;
-- (Float32)delayFeedback;
-- (Float32)delayTime;
-- (Float32)delayCutoff;
-- (Float32)distortionGain;
-- (Float32)distortionMix;
+- (Float32)valueForParameter:(JFSSynthParam)parameter;
 
 - (Float32)minimumEnvelopeTime;
 - (Float32)maximumEnvelopeTime;
