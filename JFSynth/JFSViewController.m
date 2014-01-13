@@ -77,31 +77,31 @@
         self.velocityPeakSlider.maximumValue = [synthController maximumVelocity];
         self.velocityPeakSlider.value = synthController.ampEnvelopeGenerator.midiVelocity;
         
-        self.cutoffSlider.minimumValue = [synthController minimumCutoff];
-        self.cutoffSlider.maximumValue = [synthController maximumCutoff];
+        self.cutoffSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamCutoff] floatValue];
+        self.cutoffSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamCutoff] floatValue];
         self.cutoffSlider.value = [synthController cutoffLevel];
         
-        self.resonanceSlider.minimumValue = [synthController minimumResonance];
-        self.resonanceSlider.maximumValue = [synthController maximumResonance];
+        self.resonanceSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamResonance] floatValue];
+        self.resonanceSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamResonance] floatValue];
         self.resonanceSlider.value = [synthController resonanceLevel];
         
-        self.cutoffLFOSlider.minimumValue = [synthController minimumCutoffLFO];
-        self.cutoffLFOSlider.maximumValue = [synthController maximumCutoffLFO];
+        self.cutoffLFOSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamCutoffLFORate] floatValue];
+        self.cutoffLFOSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamCutoffLFORate] floatValue];
         self.cutoffLFOSlider.value = 0;
         
-        self.lfoAmountSlider.minimumValue = 0;
-        self.lfoAmountSlider.maximumValue = 1;
+        self.lfoAmountSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamCutoffLFOAmount] floatValue];
+        self.lfoAmountSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamCutoffLFOAmount] floatValue];
         self.lfoAmountSlider.value = [synthController cuttoffLFOAmount];
         
-        self.oscOneSemitoneSlider.minimumValue = [synthController minimumSemitones];
-        self.oscOneSemitoneSlider.maximumValue = [synthController maximumSemitones];
-        self.oscTwoSemitoneSlider.minimumValue = [synthController minimumSemitones];
-        self.oscTwoSemitoneSlider.maximumValue = [synthController maximumSemitones];
+        self.oscOneSemitoneSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamSemitones] floatValue];
+        self.oscOneSemitoneSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamSemitones] floatValue];
+        self.oscTwoSemitoneSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamSemitones] floatValue];
+        self.oscTwoSemitoneSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamSemitones] floatValue];
         
-        self.oscOneFineSlider.minimumValue = [synthController minimumFine];
-        self.oscOneFineSlider.maximumValue = [synthController maximumFine];
-        self.oscTwoFineSlider.minimumValue = [synthController minimumFine];
-        self.oscTwoFineSlider.maximumValue = [synthController maximumFine];
+        self.oscOneFineSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamFine] floatValue];
+        self.oscOneFineSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamFine] floatValue];
+        self.oscTwoFineSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamFine] floatValue];
+        self.oscTwoFineSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamFine] floatValue];
         
         self.oscOneVolumeSlider.minimumValue = 0;
         self.oscOneVolumeSlider.maximumValue = 1;
@@ -117,28 +117,28 @@
         self.oscOneFineSlider.value = [synthController.oscillators[0] fine];
         self.oscTwoFineSlider.value = [synthController.oscillators[1] fine];
         
-        self.delayDryWetSlider.minimumValue = [synthController minimumDelayDryWet];
-        self.delayDryWetSlider.maximumValue = [synthController maximumDelayDryWet];
+        self.delayDryWetSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayDryWet] floatValue];
+        self.delayDryWetSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDelayDryWet] floatValue];
         self.delayDryWetSlider.value = [synthController delayDryWet];
         
-        self.delayFeedbackSlider.minimumValue = [synthController minimumDelayFeedback];
-        self.delayFeedbackSlider.maximumValue = [synthController maximumDelayFeedback];
+        self.delayFeedbackSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayFeedback] floatValue];
+        self.delayFeedbackSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDelayFeedback] floatValue];
         self.delayFeedbackSlider.value = [synthController delayFeedback];
         
-        self.delayCutoffSlider.minimumValue = [synthController minimumDelayCutoff];
-        self.delayCutoffSlider.maximumValue = [synthController maximumDelayCutoff];
+        self.delayCutoffSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayCutoff] floatValue];
+        self.delayCutoffSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDelayCutoff] floatValue];
         self.delayCutoffSlider.value = [synthController delayCutoff];
         
-        self.delayTimeSlider.minimumValue = [synthController minimumDelayTime];
-        self.delayTimeSlider.maximumValue = [synthController maximumDelayTime];
+        self.delayTimeSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayTime] floatValue];
+        self.delayTimeSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDelayTime] floatValue];
         self.delayTimeSlider.value = [synthController delayTime];
         
-        self.distortionGainKnob.minimumValue = [synthController minimumDistortionGain];
-        self.distortionGainKnob.maximumValue = [synthController maximumDistortionGain];
+        self.distortionGainKnob.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDistortionGain] floatValue];
+        self.distortionGainKnob.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDistortionGain] floatValue];
         self.distortionGainKnob.value = [synthController distortionGain];
         
-        self.distortionMixKnob.minimumValue = [synthController minimumDistortionMix];
-        self.distortionMixKnob.maximumValue = [synthController maximumDistortionMix];
+        self.distortionMixKnob.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDistortionMix] floatValue];
+        self.distortionMixKnob.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDistortionMix] floatValue];
         self.distortionMixKnob.value = [synthController distortionMix];
         
         self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(refreshViews) userInfo:nil repeats:YES];

@@ -22,6 +22,9 @@
 @property (nonatomic, assign) Float32 cuttoffLFOAmount;
 @property (nonatomic, strong) NSArray *oscillators;
 
+@property (nonatomic, strong) NSDictionary *minimumValues;
+@property (nonatomic, strong) NSDictionary *maximumValues;
+
 @end
 
 @implementation JFSSynthController
@@ -48,6 +51,43 @@
     self = [super init];
     
     if (self) {
+        
+        _minimumValues = @{@(JFSSynthParamCutoff) : @(MINIMUM_CUTOFF),
+                           @(JFSSynthParamResonance) : @(-20.0f),
+                           
+                           @(JFSSynthParamCutoffLFORate) : @(0),
+                           @(JFSSynthParamCutoffLFOAmount) : @(0),
+                           
+                           @(JFSSynthParamDelayDryWet) : @(0),
+                           @(JFSSynthParamDelayFeedback) : @(-100),
+                           @(JFSSynthParamDelayTime) : @(0),
+                           @(JFSSynthParamDelayCutoff) : @(10),
+        
+                           @(JFSSynthParamSemitones) : @(-24),
+                           @(JFSSynthParamFine) : @(0),
+                           
+                           @(JFSSynthParamDistortionGain) : @(-80),
+                           @(JFSSynthParamDistortionMix) : @(0)
+                           };
+        
+        _maximumValues = @{@(JFSSynthParamCutoff) : @(SAMPLE_RATE/2.0f),
+                           @(JFSSynthParamResonance) : @(40.0f),
+                           
+                           @(JFSSynthParamCutoffLFORate) : @(10.0f),
+                           @(JFSSynthParamCutoffLFOAmount) : @(1),
+                           
+                           @(JFSSynthParamDelayDryWet) : @(100),
+                           @(JFSSynthParamDelayFeedback) : @(100),
+                           @(JFSSynthParamDelayTime) : @(2),
+                           @(JFSSynthParamDelayCutoff) : @(SAMPLE_RATE/2),
+                           
+                           @(JFSSynthParamSemitones) : @(24),
+                           @(JFSSynthParamFine) : @(1),
+                           
+                           @(JFSSynthParamDistortionGain) : @(20),
+                           @(JFSSynthParamDistortionMix) : @(100)
+                           };
+        
         _audioController = [[AEAudioController alloc]
                             initWithAudioDescription:[AEAudioController nonInterleavedFloatStereoAudioDescription]
                             inputEnabled:NO];
@@ -425,36 +465,6 @@
 
 #pragma mark - min/max values
 
-- (Float32)minimumCutoff
-{
-    return MINIMUM_CUTOFF;
-}
-
-- (Float32)maximumCutoff
-{
-    return SAMPLE_RATE/2.0f;
-}
-
-- (Float32)minimumResonance
-{
-    return -20.0f;
-}
-
-- (Float32)maximumResonance
-{
-    return 40.0f;
-}
-
-- (Float32)minimumCutoffLFO
-{
-    return 0.0f;
-}
-
-- (Float32)maximumCutoffLFO
-{
-    return 10.0f;
-}
-
 - (Float32)minimumEnvelopeTime
 {
     return 0.0001f;
@@ -463,46 +473,6 @@
 - (Float32)maximumEnvelopeTime
 {
     return 8.0f;
-}
-
-- (Float32)minimumDelayDryWet
-{
-    return 0;
-}
-
-- (Float32)maximumDelayDryWet
-{
-    return 100;
-}
-
-- (Float32)minimumDelayFeedback
-{
-    return -100;
-}
-
-- (Float32)maximumDelayFeedback
-{
-    return 100;
-}
-
-- (Float32)minimumDelayTime
-{
-    return 0;
-}
-
-- (Float32)maximumDelayTime
-{
-    return 2;
-}
-
-- (Float32)minimumDelayCutoff
-{
-    return 10;
-}
-
-- (Float32)maximumDelayCutoff
-{
-    return SAMPLE_RATE/2;
 }
 
 - (Float32)minimumVelocity
@@ -515,44 +485,14 @@
     return 127.0;
 }
 
-- (NSInteger)minimumSemitones
+- (NSNumber *)minimumValueForParameter:(JFSSynthParam)parameter
 {
-    return -24;
+    return self.minimumValues[@(parameter)];
 }
 
-- (NSInteger)maximumSemitones
+- (NSNumber *)maximumValueForParameter:(JFSSynthParam)parameter
 {
-    return 24;
-}
-
-- (Float32)minimumFine
-{
-    return 0;
-}
-
-- (Float32)maximumFine
-{
-    return 1;
-}
-
-- (Float32)minimumDistortionGain
-{
-    return -80;
-}
-
-- (Float32)maximumDistortionGain
-{
-    return 20;
-}
-
-- (Float32)minimumDistortionMix
-{
-    return 0;
-}
-
-- (Float32)maximumDistortionMix
-{
-    return 100;
+    return self.maximumValues[@(parameter)];
 }
 
 @end
