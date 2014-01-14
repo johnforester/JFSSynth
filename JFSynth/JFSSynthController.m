@@ -569,9 +569,10 @@
                                   cutoffLevel,
                                   0);
             
-            SInt16 oscSampleSum = (([weakSelf.oscillators[0] volume]) * [weakSelf.oscillators[0] updateOscillator]) + ([weakSelf.oscillators[1] volume] * [weakSelf.oscillators[1] updateOscillator]);
+            SInt16 osc1Sample = [weakSelf.oscillators[0] volume] * [weakSelf.oscillators[0] updateOscillator];
+            SInt16 osc2Sample = [weakSelf.oscillators[1] volume] * [weakSelf.oscillators[1] updateOscillator];
             
-            SInt16 sample = oscSampleSum * [weakSelf.ampEnvelopeGenerator updateState];
+            SInt16 sample = (osc1Sample + osc2Sample) * [weakSelf.ampEnvelopeGenerator updateState];
             
             ((SInt16 *)audio->mBuffers[0].mData)[i] = sample;
             ((SInt16 *)audio->mBuffers[1].mData)[i] = sample;
