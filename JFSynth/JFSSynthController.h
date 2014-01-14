@@ -61,6 +61,8 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
 - (void)setValue:(Float32)value forParameter:(JFSSynthParam)parameter;
 - (Float32)valueForParameter:(JFSSynthParam)parameter;
 
+- (Float32)outputLevel;
+
 - (Float32)minimumEnvelopeTime;
 - (Float32)maximumEnvelopeTime;
 - (Float32)minimumVelocity;

@@ -199,6 +199,15 @@
     }
 }
 
+- (Float32)outputLevel
+{
+    Float32 outputLevel;
+    Float32 peakLevel;
+    [self.audioController outputAveragePowerLevel:&outputLevel peakHoldLevel:&peakLevel];
+    
+    return outputLevel;
+}
+
 #pragma accessor methods
 
 - (Float32)valueForParameter:(JFSSynthParam)parameter

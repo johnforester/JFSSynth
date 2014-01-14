@@ -15,6 +15,8 @@
 
 @interface JFSViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *levelLabel;
+
 @property (weak, nonatomic) IBOutlet UISlider *velocityPeakSlider;
 
 @property (weak, nonatomic) IBOutlet JFSKnob *cutoffSlider;
@@ -144,8 +146,7 @@
         self.distortionMixKnob.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDistortionMix] floatValue];
         self.distortionMixKnob.value = [synthController valueForParameter:JFSSynthParamDistortionMix];
         
-        self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(refreshViews) userInfo:nil repeats:YES];
-        
+        self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(refreshViews) userInfo:nil repeats:YES];
         [self.refreshTimer fire];
     });
 }
@@ -172,6 +173,8 @@
 {
     [self.ampEnvelopeViewController refresh];
     [self.filterEnvelopeViewController refresh];
+    
+    self.levelLabel.text = [NSString stringWithFormat:@"%.2f dB", [[JFSSynthController sharedController] outputLevel]];
 }
 
 #pragma mark - IBAction

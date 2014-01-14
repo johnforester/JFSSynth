@@ -38,15 +38,15 @@
                                                     <action selector="waveTypeControlChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Q2f-Cz-LXw"/>
                                                 </connections>
                                             </segmentedControl>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqH-hI-lS9">
-                                                <rect key="frame" x="460" y="13" width="36" height="21"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Amp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqH-hI-lS9">
+                                                <rect key="frame" x="433" y="13" width="36" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="127" translatesAutoresizingMaskIntoConstraints="NO" id="YsY-V1-Kri">
-                                                <rect key="frame" x="523" y="7" width="112" height="34"/>
+                                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="127" translatesAutoresizingMaskIntoConstraints="NO" id="YsY-V1-Kri">
+                                                <rect key="frame" x="494" y="7" width="112" height="34"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" red="1" green="0.0" blue="0.01085100634" alpha="1" colorSpace="calibratedRGB"/>
@@ -412,6 +412,13 @@
                                                     <action selector="distortionSwitchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="bb0-3g-cHu"/>
                                                 </connections>
                                             </switch>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="dB" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dr5-Pw-NBq">
+                                                <rect key="frame" x="626" y="13" width="122" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -576,6 +583,7 @@
                         <outlet property="distortionMixKnob" destination="yd9-fb-0ZE" id="bpM-s3-EU9"/>
                         <outlet property="filterEnvelopeContainerView" destination="dOD-As-VJG" id="ir5-Dc-DkT"/>
                         <outlet property="keyBoardView" destination="H7L-JE-lcd" id="TA0-iZ-edH"/>
+                        <outlet property="levelLabel" destination="dr5-Pw-NBq" id="Ezh-tD-fDh"/>
                         <outlet property="lfoAmountSlider" destination="FdT-oc-qqT" id="jHr-dT-ddB"/>
                         <outlet property="oscOneFineSlider" destination="XGC-R2-6im" id="Uoe-eC-dxW"/>
                         <outlet property="oscOneSemitoneSlider" destination="cOO-6m-rdf" id="USC-9Q-DjB"/>
