@@ -188,7 +188,7 @@ typedef void(^KeyReleaseBlock)();
     __weak UIView *weakKeyView = keyView;
     
     keyView.keyReleaseBlock = ^{
-        if (self.keyboardView.currentKey == weakKeyView) {
+        if (self.keyboardView.currentKey == weakKeyView || self.keyboardView.currentKey == nil) {
             [self.delegate keyReleasedWithMidiNote:note];
         }
     };

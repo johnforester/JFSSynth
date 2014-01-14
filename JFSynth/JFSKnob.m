@@ -99,7 +99,12 @@
                                                      clockwise:YES];
     
     self.valueLabel.frame = CGRectMake(path.currentPoint.x, path.currentPoint.y, 100, 20);
-    self.valueLabel.text = [NSString stringWithFormat:@"%.2f", self.value];
+    
+    if (self.displayType == JFSKnobDisplayTypeFloat) {
+        self.valueLabel.text = [NSString stringWithFormat:@"%.2f", self.value];
+    } else {
+        self.valueLabel.text = [NSString stringWithFormat:@"%d", (int)roundf(self.value)];
+    }
     
     [path addLineToPoint:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))];
     [path closePath];
@@ -136,12 +141,12 @@
     CGFloat endAngle = MIN(((diff / self.bounds.size.height) * (MAX_ANGLE - MIN_ANGLE)) + _currentAngle, MAX_ANGLE);
     _currentAngle = MAX(endAngle, MIN_ANGLE);
     
-    [self updateKnobWithAngle:_currentAngle];
-    
     _curentPoint = nextPoint;
     
     _value = self.minimumValue + ((_currentAngle - MIN_ANGLE) / (MAX_ANGLE - MIN_ANGLE) * (self.maximumValue - self.minimumValue));
     
+    [self updateKnobWithAngle:_currentAngle];
+
     [self sendActionsForControlEvents:UIControlEventValueChanged];
     
     return YES;
@@ -149,12 +154,12 @@
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event
 {
-    
+
 }
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    
+   
 }
 
 @end

@@ -287,10 +287,10 @@
             [self setFineForOscillatorAtIndex:1 value:value];
             break;
         case JFSSynthParamOscillator1Semitones:
-            [self setSemitonesForOscillatorAtIndex:0 value:value];
+            [self setSemitonesForOscillatorAtIndex:0 value:roundf(value)];
             break;
         case JFSSynthParamOscillator2Semitones:
-            [self setSemitonesForOscillatorAtIndex:1 value:value];
+            [self setSemitonesForOscillatorAtIndex:1 value:roundf(value)];
             break;
         case JFSSynthParamResonance:
             [self setResonanceLevel:value];
@@ -529,7 +529,7 @@
         [self.oscillators[oscillatorIdx] updateVolume:value];
     }
 }
-- (void)setSemitonesForOscillatorAtIndex:(int)oscillatorIdx value:(int)semitones
+- (void)setSemitonesForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)semitones
 {
     [self.oscillators[oscillatorIdx] updateSemitone:semitones];
 }

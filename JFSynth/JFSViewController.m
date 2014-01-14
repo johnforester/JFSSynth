@@ -111,6 +111,9 @@
         self.oscTwoVolumeSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthControllerOscillator2Volume] floatValue];;
         self.oscTwoVolumeSlider.value = [synthController valueForParameter:JFSSynthControllerOscillator2Volume];
         
+        self.oscOneSemitoneSlider.displayType = JFSKnobDisplayTypeInteger;
+        self.oscTwoSemitoneSlider.displayType = JFSKnobDisplayTypeInteger;
+        
         self.oscOneSemitoneSlider.value = [synthController.oscillators[0] semitones];
         self.oscTwoSemitoneSlider.value = [synthController.oscillators[1] semitones];
         

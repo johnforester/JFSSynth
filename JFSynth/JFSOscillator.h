@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 
 @property (nonatomic, assign) JFSWaveType waveType;
 @property (nonatomic, readonly) double baseFrequency;
-@property (nonatomic, readonly) Float32 semitones;
+@property (nonatomic, readonly) int semitones;
 @property (nonatomic, readonly) Float32 fine;
 @property (nonatomic, readonly) Float32 volume;
 

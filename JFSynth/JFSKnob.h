@@ -8,10 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, JFSKnobDisplayType) {
+    JFSKnobDisplayTypeFloat,
+    JFSKnobDisplayTypeInteger
+};
+
 @interface JFSKnob : UIControl
 
 @property (nonatomic, assign) Float32 minimumValue;
 @property (nonatomic, assign) Float32 maximumValue;
 @property (nonatomic, assign) Float32 value;
+@property (nonatomic, assign) JFSKnobDisplayType displayType;
 
 @end

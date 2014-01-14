@@ -16,7 +16,7 @@
 
 @property (nonatomic, assign) double baseFrequency;
 @property (nonatomic, assign) double adjustedFrequency;
-@property (nonatomic, assign) Float32 semitones;
+@property (nonatomic, assign) int semitones;
 @property (nonatomic, assign) Float32 fine;
 @property (nonatomic, assign) Float32 volume;
 
@@ -88,6 +88,9 @@
 - (void)updateSemitone:(int)semitones
 {
     self.semitones = semitones;
+    
+    NSLog(@"semi %d", self.semitones);
+
     [self updateFrequencyForDetune];
 }
 
