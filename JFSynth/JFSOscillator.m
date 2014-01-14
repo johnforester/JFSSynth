@@ -88,9 +88,6 @@
 - (void)updateSemitone:(int)semitones
 {
     self.semitones = semitones;
-    
-    NSLog(@"semi %d", self.semitones);
-
     [self updateFrequencyForDetune];
 }
 
