@@ -12,6 +12,8 @@
 #import "JFSOscillator.h"
 #import "JFSKnob.h"
 #import "JFSEnvelopeViewController.h"
+#import "JFSDelayViewController.h"
+#import "JFSDistortionViewController.h"
 
 @interface JFSViewController ()
 
@@ -33,15 +35,20 @@
 
 @property (weak, nonatomic) IBOutlet UIView *ampEnvelopeContainerView;
 @property (weak, nonatomic) IBOutlet UIView *filterEnvelopeContainerView;
+@property (weak, nonatomic) IBOutlet UIProgressView *dbProgressView;
+
+@property (weak, nonatomic) IBOutlet JFSScrollingKeyboardView *keyBoardView;
+
+@property (weak, nonatomic) IBOutlet UIView *effectsContainerView;
 
 @property (strong, nonatomic) JFSEnvelopeViewController *ampEnvelopeViewController;
 @property (strong, nonatomic) JFSEnvelopeViewController *filterEnvelopeViewController;
 
-@property (weak, nonatomic) IBOutlet JFSScrollingKeyboardView *keyBoardView;
-
 @property (nonatomic, strong) NSTimer *refreshTimer;
 
-@property (weak, nonatomic) IBOutlet UIProgressView *dbProgressView;
+@property (nonatomic, strong) JFSDelayViewController *delayViewController;
+@property (nonatomic, strong) JFSDistortionViewController *distortionViewController;
+@property (nonatomic, strong) UIViewController *currentEffectViewController;
 
 @end
 
@@ -53,6 +60,15 @@
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        
+        self.delayViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DelayViewController"];
+        self.distortionViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DistortionViewController"];
+        
+        [self displayEffectViewControllerWithIndex:0];
+        
+        self.effectsContainerView.layer.borderColor = [UIColor redColor].CGColor;
+        self.effectsContainerView.layer.borderWidth = 1.0;
+        
         self.keyBoardView.delegate = self;
         
         JFSSynthController *synthController = [JFSSynthController sharedController];
@@ -149,7 +165,7 @@
     outputlevel = MIN(0, outputlevel);
     self.levelLabel.text = [NSString stringWithFormat:@"%.2f dB", outputlevel];
 
-    self.dbProgressView.progress = (outputlevel + 20)/ 20;
+    self.dbProgressView.progress = (outputlevel + 20) / 20;
 }
 
 #pragma mark - IBAction
@@ -171,6 +187,29 @@
 - (IBAction)velocitySliderChanged:(UISlider *)slider
 {
     [[JFSSynthController sharedController].ampEnvelopeGenerator setMidiVelocity:slider.value];
+}
+
+- (IBAction)effectSwitchChanged:(UISegmentedControl *)sender
+{
+    [self displayEffectViewControllerWithIndex:sender.selectedSegmentIndex];
+}
+
+- (void)displayEffectViewControllerWithIndex:(int)idx
+{
+    UIViewController *nextEffectVC;
+    
+    if (idx == 0) {
+        nextEffectVC = self.distortionViewController;
+    } else {
+        nextEffectVC = self.delayViewController;
+    }
+    
+    [self.currentEffectViewController removeFromParentViewController];
+    [self.currentEffectViewController.view removeFromSuperview];
+    
+    [self.effectsContainerView addSubview:nextEffectVC.view];
+    [self addChildViewController:nextEffectVC];
+    self.currentEffectViewController = nextEffectVC;
 }
 
 #pragma mark - JFSKeyboardViewDelegate
