@@ -323,7 +323,7 @@
 {
     CAShapeLayer *dotLayer = [CAShapeLayer layer];
     
-    dotLayer.strokeColor = [UIColor redColor].CGColor;
+    dotLayer.strokeColor = [UIColor orangeColor].CGColor;
     CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(CGPointZero.x,
                                                               CGPointZero.y,
                                                               TOUCH_POINTS_RADIUS * 2,
@@ -333,7 +333,7 @@
     
     CGPathRelease(path);
     
-    dotLayer.fillColor = [UIColor colorWithRed:0.0 green:1.0 blue:0.5 alpha:0.8].CGColor;
+    dotLayer.fillColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.5].CGColor;
     dotLayer.zPosition = 2;
     
     return dotLayer;
