@@ -31,14 +31,6 @@
 @property (weak, nonatomic) IBOutlet JFSKnob *oscOneFineSlider;
 @property (weak, nonatomic) IBOutlet JFSKnob *oscTwoFineSlider;
 
-@property (weak, nonatomic) IBOutlet JFSKnob *delayDryWetSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *delayFeedbackSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *delayTimeSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *delayCutoffSlider;
-
-@property (weak, nonatomic) IBOutlet JFSKnob *distortionMixKnob;
-@property (weak, nonatomic) IBOutlet JFSKnob *distortionGainKnob;
-
 @property (weak, nonatomic) IBOutlet UIView *ampEnvelopeContainerView;
 @property (weak, nonatomic) IBOutlet UIView *filterEnvelopeContainerView;
 
@@ -123,30 +115,6 @@
         self.oscOneFineSlider.value = [synthController.oscillators[0] fine];
         self.oscTwoFineSlider.value = [synthController.oscillators[1] fine];
         
-        self.delayDryWetSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayDryWet] floatValue];
-        self.delayDryWetSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDelayDryWet] floatValue];
-        self.delayDryWetSlider.value = [synthController valueForParameter:JFSSynthParamDelayDryWet];
-        
-        self.delayFeedbackSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayFeedback] floatValue];
-        self.delayFeedbackSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDelayFeedback] floatValue];
-        self.delayFeedbackSlider.value = [synthController valueForParameter:JFSSynthParamDelayFeedback];
-        
-        self.delayCutoffSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayCutoff] floatValue];
-        self.delayCutoffSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDelayCutoff] floatValue];
-        self.delayCutoffSlider.value = [synthController valueForParameter:JFSSynthParamDelayCutoff];
-        
-        self.delayTimeSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayTime] floatValue];
-        self.delayTimeSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDelayTime] floatValue];
-        self.delayTimeSlider.value = [synthController valueForParameter:JFSSynthParamDelayTime];
-        
-        self.distortionGainKnob.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDistortionGain] floatValue];
-        self.distortionGainKnob.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDistortionGain] floatValue];
-        self.distortionGainKnob.value = [synthController valueForParameter:JFSSynthParamDistortionGain];
-        
-        self.distortionMixKnob.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDistortionMix] floatValue];
-        self.distortionMixKnob.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDistortionMix] floatValue];
-        self.distortionMixKnob.value = [synthController valueForParameter:JFSSynthParamDistortionMix];
-        
         self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(refreshViews) userInfo:nil repeats:YES];
         [self.refreshTimer fire];
     });
@@ -203,16 +171,6 @@
 - (IBAction)velocitySliderChanged:(UISlider *)slider
 {
     [[JFSSynthController sharedController].ampEnvelopeGenerator setMidiVelocity:slider.value];
-}
-
-- (IBAction)delaySwitchChanged:(UISwitch *)sender
-{
-    [[JFSSynthController sharedController] toggleDelay:sender.isOn];
-}
-
-- (IBAction)distortionSwitchChanged:(UISwitch *)sender
-{
-    [[JFSSynthController sharedController] toggleDistortion:sender.isOn];
 }
 
 #pragma mark - JFSKeyboardViewDelegate

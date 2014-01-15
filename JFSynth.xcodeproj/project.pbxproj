@@ -30,6 +30,8 @@
 		881ABA97183FEF9C0099FF79 /* JFSKnob.m in Sources */ = {isa = PBXBuildFile; fileRef = 881ABA96183FEF9C0099FF79 /* JFSKnob.m */; };
 		8887D905188078310059F842 /* JFSEnvelopeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8887D904188078310059F842 /* JFSEnvelopeViewController.m */; };
 		88CDDD93183BC3BF0000FD5F /* JFSScrollingKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CDDD92183BC3BF0000FD5F /* JFSScrollingKeyboardView.m */; };
+		88FACCB9188729F0007B44BF /* JFSDistortionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FACCB8188729F0007B44BF /* JFSDistortionViewController.m */; };
+		88FACCBC18872A16007B44BF /* JFSDelayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FACCBB18872A16007B44BF /* JFSDelayViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,10 @@
 		8887D904188078310059F842 /* JFSEnvelopeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSEnvelopeViewController.m; sourceTree = "<group>"; };
 		88CDDD91183BC3BF0000FD5F /* JFSScrollingKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSScrollingKeyboardView.h; sourceTree = "<group>"; };
 		88CDDD92183BC3BF0000FD5F /* JFSScrollingKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSScrollingKeyboardView.m; sourceTree = "<group>"; };
+		88FACCB7188729F0007B44BF /* JFSDistortionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSDistortionViewController.h; sourceTree = "<group>"; };
+		88FACCB8188729F0007B44BF /* JFSDistortionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSDistortionViewController.m; sourceTree = "<group>"; };
+		88FACCBA18872A16007B44BF /* JFSDelayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSDelayViewController.h; sourceTree = "<group>"; };
+		88FACCBB18872A16007B44BF /* JFSDelayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSDelayViewController.m; sourceTree = "<group>"; };
 		DEB310698CEA446691085808 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -216,6 +222,10 @@
 				7A6C688B181D833E009F4A83 /* JFSViewController.m */,
 				8887D903188078310059F842 /* JFSEnvelopeViewController.h */,
 				8887D904188078310059F842 /* JFSEnvelopeViewController.m */,
+				88FACCB7188729F0007B44BF /* JFSDistortionViewController.h */,
+				88FACCB8188729F0007B44BF /* JFSDistortionViewController.m */,
+				88FACCBA18872A16007B44BF /* JFSDelayViewController.h */,
+				88FACCBB18872A16007B44BF /* JFSDelayViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -352,6 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88FACCB9188729F0007B44BF /* JFSDistortionViewController.m in Sources */,
 				8887D905188078310059F842 /* JFSEnvelopeViewController.m in Sources */,
 				7A6C68AD181D84DA009F4A83 /* JFSSynthController.m in Sources */,
 				7A20C5D01824898500634B09 /* JFSEnvelopeView.m in Sources */,
@@ -359,6 +370,7 @@
 				7A6C688C181D833E009F4A83 /* JFSViewController.m in Sources */,
 				88CDDD93183BC3BF0000FD5F /* JFSScrollingKeyboardView.m in Sources */,
 				7AD42CC01835AB25009DBEBF /* JFSEnvelopeGenerator.m in Sources */,
+				88FACCBC18872A16007B44BF /* JFSDelayViewController.m in Sources */,
 				7A6C6883181D833E009F4A83 /* JFSAppDelegate.m in Sources */,
 				7A6C687F181D833E009F4A83 /* main.m in Sources */,
 				7AD42CC31835C9BD009DBEBF /* JFSOscillator.m in Sources */,
