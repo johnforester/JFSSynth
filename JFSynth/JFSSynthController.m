@@ -205,7 +205,7 @@
     Float32 peakLevel;
     [self.audioController outputAveragePowerLevel:&outputLevel peakHoldLevel:&peakLevel];
     
-    return outputLevel;
+    return peakLevel;
 }
 
 #pragma accessor methods

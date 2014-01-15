@@ -49,6 +49,7 @@
 
 @property (nonatomic, strong) NSTimer *refreshTimer;
 
+@property (weak, nonatomic) IBOutlet UIProgressView *dbProgressView;
 
 @end
 
@@ -174,7 +175,13 @@
     [self.ampEnvelopeViewController refresh];
     [self.filterEnvelopeViewController refresh];
     
-    self.levelLabel.text = [NSString stringWithFormat:@"%.2f dB", [[JFSSynthController sharedController] outputLevel]];
+    Float32 outputlevel = [[JFSSynthController sharedController] outputLevel];
+    
+    outputlevel = MAX(-20, outputlevel);
+    outputlevel = MIN(0, outputlevel);
+    self.levelLabel.text = [NSString stringWithFormat:@"%.2f dB", outputlevel];
+
+    self.dbProgressView.progress = (outputlevel + 20)/ 20;
 }
 
 #pragma mark - IBAction
