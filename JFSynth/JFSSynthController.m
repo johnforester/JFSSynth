@@ -105,12 +105,16 @@
         
         _filterEnvelopeGenerator = [[JFSEnvelopeGenerator alloc] initWithSampleRate:SAMPLE_RATE];
         _filterEnvelopeGenerator.peak = 1.0;
+        _filterEnvelopeGenerator.attackTime = 1.0;
+        _filterEnvelopeGenerator.decayTime = 3.0;
+        _filterEnvelopeGenerator.sustainLevel = 0.6;
+        _filterEnvelopeGenerator.releaseTime = 3.0;
         
         _oscillators = @[[[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE], [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE]];
         
         [_oscillators[0] updateVolume:0.7];
         [_oscillators[1] updateVolume:0.7];
-        [_oscillators[1] updateFine:0.05];
+        [_oscillators[1] updateFine:0.09];
         
         _oscillatorChannel = [self oscillatorChannel];
         [_audioController addChannels:@[_oscillatorChannel]];
