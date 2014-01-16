@@ -33,8 +33,8 @@
 @property (weak, nonatomic) IBOutlet JFSKnob *oscOneFineSlider;
 @property (weak, nonatomic) IBOutlet JFSKnob *oscTwoFineSlider;
 
-@property (weak, nonatomic) IBOutlet UIView *ampEnvelopeContainerView;
-@property (weak, nonatomic) IBOutlet UIView *filterEnvelopeContainerView;
+@property (weak, nonatomic) IBOutlet UIView *envelopeContainerView;
+
 @property (weak, nonatomic) IBOutlet UIProgressView *dbProgressView;
 
 @property (weak, nonatomic) IBOutlet JFSScrollingKeyboardView *keyBoardView;
@@ -43,6 +43,7 @@
 
 @property (strong, nonatomic) JFSEnvelopeViewController *ampEnvelopeViewController;
 @property (strong, nonatomic) JFSEnvelopeViewController *filterEnvelopeViewController;
+@property (nonatomic, strong) UIViewController *currentEnvelopeViewController;
 
 @property (nonatomic, strong) NSTimer *refreshTimer;
 
@@ -76,13 +77,10 @@
         self.ampEnvelopeViewController = [[JFSEnvelopeViewController alloc] initWithEnvelope:synthController.ampEnvelopeGenerator];
         self.filterEnvelopeViewController = [[JFSEnvelopeViewController alloc] initWithEnvelope:synthController.filterEnvelopeGenerator];
         
-        self.ampEnvelopeViewController.view.frame = self.ampEnvelopeContainerView.bounds;
-        [self.ampEnvelopeContainerView addSubview:self.ampEnvelopeViewController.view];
-        [self addChildViewController:self.ampEnvelopeViewController];
+        self.ampEnvelopeViewController.view.frame = self.envelopeContainerView.bounds;
+        self.filterEnvelopeViewController.view.frame = self.envelopeContainerView.bounds;
         
-        self.filterEnvelopeViewController.view.frame = self.filterEnvelopeContainerView.bounds;
-        [self.filterEnvelopeContainerView addSubview:self.filterEnvelopeViewController.view];
-        [self addChildViewController:self.filterEnvelopeViewController];
+        [self displayEnvelopeViewControllerWithIndex:0];
         
         self.velocityPeakSlider.minimumValue = [synthController minimumVelocity];
         self.velocityPeakSlider.maximumValue = [synthController maximumVelocity];
@@ -194,6 +192,11 @@
     [self displayEffectViewControllerWithIndex:sender.selectedSegmentIndex];
 }
 
+- (IBAction)envelopeSwitchChanged:(UISegmentedControl *)sender
+{
+    [self displayEnvelopeViewControllerWithIndex:sender.selectedSegmentIndex];
+}
+
 - (void)displayEffectViewControllerWithIndex:(int)idx
 {
     UIViewController *nextEffectVC;
@@ -210,6 +213,24 @@
     [self.effectsContainerView addSubview:nextEffectVC.view];
     [self addChildViewController:nextEffectVC];
     self.currentEffectViewController = nextEffectVC;
+}
+
+- (void)displayEnvelopeViewControllerWithIndex:(int)idx
+{
+    UIViewController *nextEnvelopeVC;
+    
+    if (idx == 0) {
+        nextEnvelopeVC = self.ampEnvelopeViewController;
+    } else {
+        nextEnvelopeVC = self.filterEnvelopeViewController;
+    }
+    
+    [self.currentEnvelopeViewController removeFromParentViewController];
+    [self.currentEnvelopeViewController.view removeFromSuperview];
+    
+    [self.envelopeContainerView addSubview:nextEnvelopeVC.view];
+    [self addChildViewController:nextEnvelopeVC];
+    self.currentEnvelopeViewController = nextEnvelopeVC;
 }
 
 #pragma mark - JFSKeyboardViewDelegate
