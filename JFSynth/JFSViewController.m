@@ -66,9 +66,6 @@
     
     [self displayEffectViewControllerWithIndex:0];
     
-    self.effectsContainerView.layer.borderColor = [UIColor redColor].CGColor;
-    self.effectsContainerView.layer.borderWidth = 1.0;
-    
     self.keyBoardView.delegate = self;
     
     self.ampEnvelopeViewController = [[JFSEnvelopeViewController alloc] initWithEnvelope:synthController.ampEnvelopeGenerator];
@@ -206,6 +203,24 @@
     [self.effectsContainerView addSubview:nextEffectVC.view];
     [self addChildViewController:nextEffectVC];
     self.currentEffectViewController = nextEffectVC;
+    
+    //update autolayout
+    UIView *container = self.effectsContainerView;
+    UIView *dist = self.distortionViewController.view;
+    UIView *delay = self.delayViewController.view;
+    NSDictionary *views = NSDictionaryOfVariableBindings(dist, delay);
+    
+    if (idx == 0) {
+        [dist setTranslatesAutoresizingMaskIntoConstraints:NO];
+        
+        [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[dist]-20-|" options:0 metrics:nil views:views]];
+        [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[dist]-20-|" options:0 metrics:nil views:views]];
+    } else {
+        [delay setTranslatesAutoresizingMaskIntoConstraints:NO];
+        
+        [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[delay]-20-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+        [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[delay]-20-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
+    }
 }
 
 - (void)displayEnvelopeViewControllerWithIndex:(int)idx
@@ -234,13 +249,13 @@
     if (idx == 0) {
         [amp setTranslatesAutoresizingMaskIntoConstraints:NO];
         
-        [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[amp]|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
-        [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[amp]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
+        [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[amp]-20-|" options:0 metrics:nil views:views]];
+        [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[amp]-20-|" options:0 metrics:nil views:views]];
     } else {
         [filter setTranslatesAutoresizingMaskIntoConstraints:NO];
         
-        [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[filter]|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
-        [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[filter]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
+        [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[filter]-20-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+        [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[filter]-20-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
     }
 }
 

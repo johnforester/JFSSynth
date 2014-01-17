@@ -34,6 +34,9 @@
 {
     [super viewDidLoad];
 
+    self.view.layer.borderColor = [UIColor redColor].CGColor;
+    self.view.layer.borderWidth = 1.0;
+    
     JFSSynthController *synthController = [JFSSynthController sharedController];
     
     self.delayDryWetSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayDryWet] floatValue];

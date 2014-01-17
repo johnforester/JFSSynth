@@ -94,7 +94,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dOD-As-VJG">
-                                                <rect key="frame" x="20" y="368" width="400" height="220"/>
+                                                <rect key="frame" x="10" y="368" width="420" height="240"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </containerView>
@@ -305,7 +305,7 @@
                                                 </constraints>
                                             </progressView>
                                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uzI-6m-sSd">
-                                                <rect key="frame" x="436" y="368" width="312" height="220"/>
+                                                <rect key="frame" x="430" y="368" width="326" height="240"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </containerView>
@@ -367,10 +367,10 @@
                                             <constraint firstItem="JKv-Ai-Aul" firstAttribute="width" secondItem="OuA-au-2M3" secondAttribute="width" id="C2T-Qm-Xck"/>
                                             <constraint firstItem="YsY-V1-Kri" firstAttribute="leading" secondItem="cqH-hI-lS9" secondAttribute="trailing" constant="-112" id="Cux-EK-Td8"/>
                                             <constraint firstAttribute="trailing" secondItem="6xl-CG-Ov5" secondAttribute="trailing" constant="60" id="DAC-4J-EX4"/>
-                                            <constraint firstItem="dOD-As-VJG" firstAttribute="leading" secondItem="1M6-7X-zPX" secondAttribute="leading" constant="20" id="E3e-8y-Hmu"/>
-                                            <constraint firstAttribute="trailing" secondItem="dOD-As-VJG" secondAttribute="trailing" constant="348" id="EmC-7R-lPV"/>
+                                            <constraint firstItem="dOD-As-VJG" firstAttribute="leading" secondItem="1M6-7X-zPX" secondAttribute="leading" constant="10" id="E3e-8y-Hmu"/>
+                                            <constraint firstAttribute="trailing" secondItem="dOD-As-VJG" secondAttribute="trailing" constant="338" id="EmC-7R-lPV"/>
                                             <constraint firstItem="dOD-As-VJG" firstAttribute="bottom" secondItem="uzI-6m-sSd" secondAttribute="bottom" id="GgC-nc-yCM"/>
-                                            <constraint firstItem="uzI-6m-sSd" firstAttribute="leading" secondItem="dOD-As-VJG" secondAttribute="trailing" constant="16" id="HPY-I6-mpl"/>
+                                            <constraint firstItem="uzI-6m-sSd" firstAttribute="leading" secondItem="dOD-As-VJG" secondAttribute="trailing" id="HPY-I6-mpl"/>
                                             <constraint firstItem="Nfh-Yh-owY" firstAttribute="top" secondItem="W5g-ax-Yg3" secondAttribute="top" id="I1M-d5-ehE"/>
                                             <constraint firstItem="JKv-Ai-Aul" firstAttribute="top" secondItem="zlF-G5-8E4" secondAttribute="bottom" constant="8" symbolic="YES" id="IGR-lU-9X0"/>
                                             <constraint firstItem="JCs-Vx-fYx" firstAttribute="trailing" secondItem="7if-qA-I9N" secondAttribute="trailing" id="IiE-hj-OHm"/>
@@ -414,7 +414,7 @@
                                             <constraint firstItem="dr5-Pw-NBq" firstAttribute="leading" secondItem="cqH-hI-lS9" secondAttribute="trailing" constant="84" id="gec-0x-8Z6"/>
                                             <constraint firstItem="HBy-wE-goD" firstAttribute="leading" secondItem="OuA-au-2M3" secondAttribute="leading" id="gpt-Vj-PnU"/>
                                             <constraint firstItem="OuA-au-2M3" firstAttribute="baseline" secondItem="JKv-Ai-Aul" secondAttribute="baseline" id="gsL-2W-zJG"/>
-                                            <constraint firstItem="NLo-AH-SKi" firstAttribute="centerX" secondItem="uzI-6m-sSd" secondAttribute="centerX" constant="0.5" id="j8d-CK-I68"/>
+                                            <constraint firstItem="NLo-AH-SKi" firstAttribute="centerX" secondItem="uzI-6m-sSd" secondAttribute="centerX" constant="-0.5" id="j8d-CK-I68"/>
                                             <constraint firstItem="EVb-xV-uGN" firstAttribute="top" secondItem="YsY-V1-Kri" secondAttribute="bottom" constant="20" id="jbd-tL-NOU"/>
                                             <constraint firstItem="cOO-6m-rdf" firstAttribute="top" secondItem="IZi-xo-uTA" secondAttribute="bottom" constant="9" id="kWJ-4Z-pFG"/>
                                             <constraint firstItem="Wdy-xd-eBI" firstAttribute="leading" secondItem="XGC-R2-6im" secondAttribute="trailing" constant="28" id="kwC-D3-vLd"/>
@@ -436,10 +436,10 @@
                                             <constraint firstItem="gyQ-66-6Oe" firstAttribute="trailing" secondItem="cqH-hI-lS9" secondAttribute="trailing" id="vHe-qn-CcB"/>
                                             <constraint firstItem="jhT-JL-TOf" firstAttribute="leading" secondItem="cOO-6m-rdf" secondAttribute="trailing" constant="27" id="vHn-Jr-GNf"/>
                                             <constraint firstItem="XGC-R2-6im" firstAttribute="leading" secondItem="7eP-ef-X7b" secondAttribute="trailing" constant="40" id="w9k-tG-7ef"/>
-                                            <constraint firstAttribute="trailing" secondItem="uzI-6m-sSd" secondAttribute="trailing" constant="20" id="wCZ-8c-0bR"/>
+                                            <constraint firstAttribute="trailing" secondItem="uzI-6m-sSd" secondAttribute="trailing" constant="12" id="wCZ-8c-0bR"/>
                                             <constraint firstItem="5T8-nR-5Ru" firstAttribute="centerX" secondItem="gyQ-66-6Oe" secondAttribute="centerX" id="wSz-oo-Lmn"/>
                                             <constraint firstItem="7if-qA-I9N" firstAttribute="top" secondItem="Nfh-Yh-owY" secondAttribute="bottom" constant="-6" id="weC-xf-cnw"/>
-                                            <constraint firstAttribute="bottom" secondItem="uzI-6m-sSd" secondAttribute="bottom" constant="436" id="weR-Gf-Jde"/>
+                                            <constraint firstAttribute="bottom" secondItem="uzI-6m-sSd" secondAttribute="bottom" constant="416" id="weR-Gf-Jde"/>
                                             <constraint firstAttribute="trailing" secondItem="dr5-Pw-NBq" secondAttribute="trailing" constant="14" id="xAc-LM-Hs8"/>
                                             <constraint firstItem="B3X-gh-TLz" firstAttribute="leading" secondItem="5T8-nR-5Ru" secondAttribute="trailing" constant="54" id="yAZ-my-uOe"/>
                                             <constraint firstItem="dr5-Pw-NBq" firstAttribute="top" secondItem="1M6-7X-zPX" secondAttribute="top" id="yQW-Wr-k56"/>
