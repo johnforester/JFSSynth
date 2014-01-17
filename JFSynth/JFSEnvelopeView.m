@@ -68,7 +68,9 @@
     _touchPointsTransform = CGAffineTransformMakeRotation(2 * M_PI);
     _envelopeContainer = [[UIView alloc] initWithFrame:CGRectInset(self.bounds, 10, 10)];
     _envelopeContainer.backgroundColor = [UIColor clearColor];
-    
+    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [_envelopeContainer setTranslatesAutoresizingMaskIntoConstraints:NO];
+
     _borderLayer = [CALayer layer];
     _borderLayer.frame = CGRectMake(0, 0, _envelopeContainer.frame.size.width, _envelopeContainer.frame.size.height);
     _borderLayer.borderColor = [UIColor redColor].CGColor;
@@ -78,10 +80,20 @@
     _envelopeContainer.userInteractionEnabled = NO;
     
     [self addSubview:_envelopeContainer];
+    
+    UIView *envelopeContainer = _envelopeContainer;
+    NSDictionary *views = NSDictionaryOfVariableBindings(envelopeContainer);
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[envelopeContainer]|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[envelopeContainer]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
+    
+    [self updateConstraintsIfNeeded];
 }
 
 - (void)refreshView
 {
+    self.borderLayer.frame = CGRectMake(0, 0, _envelopeContainer.frame.size.width, _envelopeContainer.frame.size.height);
+    
     CGRect envelopeFrame = self.envelopeContainer.frame;
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(0, CGRectGetHeight(envelopeFrame))];
@@ -135,6 +147,8 @@
     [self.touchPointLayers enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, CAShapeLayer *touchPointLayer, BOOL *stop) {
         [self moveTouchPointAtIndex:[key integerValue] toPoint:_points[[key integerValue]]];
     }];
+    
+    self.envelopeLayer.path = [self pathForCurrentStagePoints].CGPath;
 }
 
 - (void)updateStageViewWithStage:(JFSEnvelopeViewStagePoint)stage

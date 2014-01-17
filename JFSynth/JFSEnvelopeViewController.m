@@ -36,10 +36,33 @@
 
     if (self.envelopeView == nil) {
         self.envelopeView = [[JFSEnvelopeView alloc]initWithFrame:self.view.bounds];
-        self.envelopeView.delegate = self;
-        self.envelopeView.dataSource = self;
+
         [self.view addSubview:_envelopeView];
+        
+        UIView *envelopeView = self.envelopeView;
+        NSDictionary *views = NSDictionaryOfVariableBindings(envelopeView);
+        
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[envelopeView]|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[envelopeView]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
+        
+        [self.view updateConstraintsIfNeeded];
+        
+        self.envelopeView.delegate = self;
+        self.envelopeView.dataSource = self;        
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self.envelopeView refreshView];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [self.envelopeView refreshView];
 }
 
 - (void)refresh
