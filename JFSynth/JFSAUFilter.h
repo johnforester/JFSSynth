@@ -13,7 +13,7 @@
 
 @interface JFSAUFilter : NSObject<JFSSynthComponent>
 
-@property (nonatomic, readonly) AEAudioUnitFilter *auFilter;
+@property (nonatomic, strong) AEAudioUnitFilter *auFilter;
 
 - (instancetype)initWithAudioController:(AEAudioController *)audioController;
 

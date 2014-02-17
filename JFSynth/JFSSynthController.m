@@ -11,6 +11,7 @@
 #import "JFSEnvelopeGenerator.h"
 #import "JFSOscillator.h"
 #import "JFSLowPassFilter.h"
+#import "JFSLFO.h"
 
 #define MINIMUM_CUTOFF 1000.0f
 #define MAXIMUM_CUTOFF SAMPLE_RATE/2
@@ -54,9 +55,6 @@
     if (self) {
         
         _minimumValues = @{
-                           @(JFSSynthParamCutoffLFORate) : @(0),
-                           @(JFSSynthParamCutoffLFOAmount) : @(0),
-                           
                            @(JFSSynthParamDelayDryWet) : @(0),
                            @(JFSSynthParamDelayFeedback) : @(-100),
                            @(JFSSynthParamDelayTime) : @(0),
@@ -68,9 +66,6 @@
                            };
         
         _maximumValues = @{
-                           @(JFSSynthParamCutoffLFORate) : @(10.0f),
-                           @(JFSSynthParamCutoffLFOAmount) : @(1),
-                           
                            @(JFSSynthParamDelayDryWet) : @(100),
                            @(JFSSynthParamDelayFeedback) : @(100),
                            @(JFSSynthParamDelayTime) : @(2),
@@ -103,7 +98,7 @@
         _oscillatorChannel = [self oscillatorChannel];
         [_audioController addChannels:@[_oscillatorChannel]];
         
-        _cutoffLFO = [[JFSOscillator alloc] initWithSampleRate:SAMPLE_RATE];
+        _cutoffLFO = [[JFSLFO alloc] initWithSampleRate:SAMPLE_RATE];
         [_cutoffLFO updateBaseFrequency:0.0f];
         _cuttoffLFOAmount = 0.0f;
         

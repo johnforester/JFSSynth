@@ -15,7 +15,6 @@
 
 @interface JFSLowPassFilter ()
 
-@property (nonatomic, strong) AEAudioUnitFilter *auFilter;
 @property (nonatomic, strong) NSDictionary *minimumValues;
 @property (nonatomic, strong) NSDictionary *maximumValues;
 
@@ -122,8 +121,8 @@
 
 - (void)setValue:(Float32)value forParameter:(JFSSynthParameter)parameter
 {
-    switch (parameter) {
-            
+    switch (parameter)
+    {
         case JFSLowPassFilterParamCutoff:
             [self setCutoffLevel:value];
             [self setCutoffKnobLevel:value];

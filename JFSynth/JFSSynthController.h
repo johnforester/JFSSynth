@@ -24,8 +24,7 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
     JFSSynthParamDistortionMix,
 };
 
-@class JFSEnvelopeGenerator;
-@class JFSOscillator;
+@class JFSEnvelopeGenerator, JFSOscillator, JFSLowPassFilter;
 
 @interface JFSSynthController : NSObject
 
@@ -33,6 +32,7 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
 @property (nonatomic, strong) JFSEnvelopeGenerator *filterEnvelopeGenerator;
 
 @property (nonatomic, readonly) NSArray *oscillators;
+@property (nonatomic, readonly) JFSLowPassFilter *lpFilter;
 
 @property (nonatomic, strong) JFSOscillator *cutoffLFO;
 

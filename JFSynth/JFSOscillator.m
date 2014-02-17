@@ -34,13 +34,27 @@
     if (self) {
         _sampleRate = sampleRate;
         _volume = 0.7;
-        
+    }
+    
+    return self;
+}
+
+- (NSDictionary *)minimumValues
+{
+    if (_minimumValues == nil) {
         _minimumValues = @{
                            @(JFSOscillatorParamSemitones) : @(-24),
                            @(JFSOscillatorParamFine) : @(0),
                            @(JFSOscillatorParamVolume) : @(0),
                            };
-        
+    }
+    
+    return _minimumValues;
+}
+
+- (NSDictionary *)maximumValues
+{
+    if (_maximumValues == nil) {
         _maximumValues = @{
                            @(JFSOscillatorParamSemitones) : @(24),
                            @(JFSOscillatorParamFine) : @(1),
@@ -48,7 +62,7 @@
                            };
     }
     
-    return self;
+    return _maximumValues;
 }
 
 - (SInt16)updateOscillator

@@ -130,7 +130,7 @@
                                             <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H1A-0h-4iG">
                                                 <rect key="frame" x="382" y="54" width="380" height="260"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </containerView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -252,28 +252,37 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RSx-gq-qQc" customClass="JFSKnob">
+                            <view tag="1" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RSx-gq-qQc" customClass="JFSKnob">
                                 <rect key="frame" x="81" y="15" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="knobValueChanged:" destination="VHh-dA-UVs" eventType="valueChanged" id="lhI-B4-VWL"/>
+                                </connections>
                             </view>
                             <view tag="1" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V41-jU-L68" customClass="JFSKnob">
                                 <rect key="frame" x="279" y="15" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="knobValueChanged:" destination="VHh-dA-UVs" eventType="valueChanged" id="9qi-bR-NXj"/>
+                                </connections>
                             </view>
-                            <view tag="2" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fT5-m1-eLH" customClass="JFSKnob">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fT5-m1-eLH" customClass="JFSKnob">
                                 <rect key="frame" x="69" y="164" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="val:" destination="VHh-dA-UVs" eventType="valueChanged" id="yFg-1M-EJK"/>
+                                    <action selector="knobValueChanged:" destination="VHh-dA-UVs" eventType="valueChanged" id="S5L-7h-Cua"/>
                                 </connections>
                             </view>
-                            <view tag="3" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aqq-eV-tVs" customClass="JFSKnob">
+                            <view tag="1" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aqq-eV-tVs" customClass="JFSKnob">
                                 <rect key="frame" x="279" y="164" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="knobValueChanged:" destination="VHh-dA-UVs" eventType="valueChanged" id="ukI-ds-Dl2"/>
+                                </connections>
                             </view>
                             <segmentedControl opaque="NO" tag="2" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pmF-lx-B9h">
                                 <rect key="frame" x="19" y="116" width="150" height="29"/>
@@ -304,7 +313,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Qq9-eP-WLB" firstAttribute="top" secondItem="RSx-gq-qQc" secondAttribute="bottom" constant="21" id="14l-jG-uaw"/>
                             <constraint firstItem="V41-jU-L68" firstAttribute="top" secondItem="RSx-gq-qQc" secondAttribute="top" id="8pf-x3-XpV"/>

@@ -14,6 +14,7 @@
 #import "JFSDelayViewController.h"
 #import "JFSDistortionViewController.h"
 #import "JFSOscillatorViewController.h"
+#import "JFSFilterViewController.h"
 
 @interface JFSViewController ()
 
@@ -35,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet JFSScrollingKeyboardView *keyBoardView;
 
 @property (weak, nonatomic) IBOutlet UIView *effectsContainerView;
+
+@property (strong, nonatomic) JFSFilterViewController *filterViewController;
 
 @property (strong, nonatomic) JFSEnvelopeViewController *ampEnvelopeViewController;
 @property (strong, nonatomic) JFSEnvelopeViewController *filterEnvelopeViewController;
@@ -69,6 +72,20 @@
         
         [self displayOscillatorViewController:self.oscillatorViewControllers[0]];
     }
+    
+    self.filterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FilterViewController"];
+    self.filterViewController.filter = synthController.lpFilter;
+    
+    [self.filterContainerView addSubview:self.filterViewController.view];
+    [self addChildViewController:self.filterViewController];
+    
+    UIView *filterView = self.filterViewController.view;
+    NSDictionary *views = NSDictionaryOfVariableBindings(filterView);
+    
+    [filterView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [self.filterContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[filterView]|" options:0 metrics:nil views:views]];
+    [self.filterContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[filterView]|" options:0 metrics:nil views:views]];
     
     self.delayViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DelayViewController"];
     self.distortionViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DistortionViewController"];
