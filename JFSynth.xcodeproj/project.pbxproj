@@ -11,6 +11,7 @@
 		7A1A62D218B26F9100DEFF78 /* JFSOscillatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62D118B26F9100DEFF78 /* JFSOscillatorViewController.m */; };
 		7A1A62D618B2A5AC00DEFF78 /* JFSAUFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62D518B2A5AC00DEFF78 /* JFSAUFilter.m */; };
 		7A1A62D918B2A66800DEFF78 /* JFSLowPassFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62D818B2A66800DEFF78 /* JFSLowPassFilter.m */; };
+		7A1A62DC18B2AE4C00DEFF78 /* JFSFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62DB18B2AE4C00DEFF78 /* JFSFilterViewController.m */; };
 		7A20C5D01824898500634B09 /* JFSEnvelopeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A20C5CF1824898500634B09 /* JFSEnvelopeView.m */; };
 		7A6C6873181D833E009F4A83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6872181D833E009F4A83 /* Foundation.framework */; };
 		7A6C6875181D833E009F4A83 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6874181D833E009F4A83 /* CoreGraphics.framework */; };
@@ -55,6 +56,8 @@
 		7A1A62D518B2A5AC00DEFF78 /* JFSAUFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSAUFilter.m; sourceTree = "<group>"; };
 		7A1A62D718B2A66800DEFF78 /* JFSLowPassFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSLowPassFilter.h; sourceTree = "<group>"; };
 		7A1A62D818B2A66800DEFF78 /* JFSLowPassFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSLowPassFilter.m; sourceTree = "<group>"; };
+		7A1A62DA18B2AE4C00DEFF78 /* JFSFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSFilterViewController.h; sourceTree = "<group>"; };
+		7A1A62DB18B2AE4C00DEFF78 /* JFSFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSFilterViewController.m; sourceTree = "<group>"; };
 		7A20C5CE1824898500634B09 /* JFSEnvelopeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSEnvelopeView.h; sourceTree = "<group>"; };
 		7A20C5CF1824898500634B09 /* JFSEnvelopeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSEnvelopeView.m; sourceTree = "<group>"; };
 		7A6C686F181D833E009F4A83 /* JFSynth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JFSynth.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -240,6 +243,8 @@
 				88FACCBB18872A16007B44BF /* JFSDelayViewController.m */,
 				7A1A62D018B26F9100DEFF78 /* JFSOscillatorViewController.h */,
 				7A1A62D118B26F9100DEFF78 /* JFSOscillatorViewController.m */,
+				7A1A62DA18B2AE4C00DEFF78 /* JFSFilterViewController.h */,
+				7A1A62DB18B2AE4C00DEFF78 /* JFSFilterViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -387,6 +392,7 @@
 				7AD42CC01835AB25009DBEBF /* JFSEnvelopeGenerator.m in Sources */,
 				7A1A62D218B26F9100DEFF78 /* JFSOscillatorViewController.m in Sources */,
 				88FACCBC18872A16007B44BF /* JFSDelayViewController.m in Sources */,
+				7A1A62DC18B2AE4C00DEFF78 /* JFSFilterViewController.m in Sources */,
 				7A6C6883181D833E009F4A83 /* JFSAppDelegate.m in Sources */,
 				7A6C687F181D833E009F4A83 /* main.m in Sources */,
 				7AD42CC31835C9BD009DBEBF /* JFSOscillator.m in Sources */,

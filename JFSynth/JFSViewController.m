@@ -10,7 +10,6 @@
 #import "JFSSynthController.h"
 #import "JFSEnvelopeGenerator.h"
 #import "JFSOscillator.h"
-#import "JFSKnob.h"
 #import "JFSEnvelopeViewController.h"
 #import "JFSDelayViewController.h"
 #import "JFSDistortionViewController.h"
@@ -22,10 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UISlider *velocityPeakSlider;
 
-@property (weak, nonatomic) IBOutlet JFSKnob *cutoffSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *resonanceSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *cutoffLFOSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *lfoAmountSlider;
+@property (weak, nonatomic) IBOutlet UIView *filterContainerView;
 
 @property (strong, nonatomic) NSArray *oscillatorViewControllers;
 @property (strong, nonatomic) JFSOscillatorViewController *currentOscillatorViewController;
@@ -90,22 +86,6 @@
     self.velocityPeakSlider.maximumValue = [synthController maximumVelocity];
     self.velocityPeakSlider.value = synthController.ampEnvelopeGenerator.midiVelocity;
     
-    self.cutoffSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamCutoff] floatValue];
-    self.cutoffSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamCutoff] floatValue];
-    self.cutoffSlider.value = [synthController valueForParameter:JFSSynthParamCutoff];
-    
-    self.resonanceSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamResonance] floatValue];
-    self.resonanceSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamResonance] floatValue];
-    self.resonanceSlider.value = [synthController valueForParameter:JFSSynthParamResonance];
-    
-    self.cutoffLFOSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamCutoffLFORate] floatValue];
-    self.cutoffLFOSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamCutoffLFORate] floatValue];
-    self.cutoffLFOSlider.value = [synthController valueForParameter:JFSSynthParamCutoffLFORate];
-    
-    self.lfoAmountSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamCutoffLFOAmount] floatValue];
-    self.lfoAmountSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamCutoffLFOAmount] floatValue];
-    self.lfoAmountSlider.value = [synthController valueForParameter:JFSSynthParamCutoffLFOAmount];
-    
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(refreshViews) userInfo:nil repeats:YES];
     [self.refreshTimer fire];
 }
@@ -154,11 +134,6 @@
     if ([self.oscillatorViewControllers count] > segmentedControl.selectedSegmentIndex) {
         [self displayOscillatorViewController:self.oscillatorViewControllers[segmentedControl.selectedSegmentIndex]];
     }
-}
-
-- (IBAction)knobValueChanged:(JFSKnob *)knob
-{
-    [[JFSSynthController sharedController] setValue:knob.value forParameter:knob.tag];
 }
 
 - (IBAction)velocitySliderChanged:(UISlider *)slider

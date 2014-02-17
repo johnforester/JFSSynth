@@ -133,7 +133,7 @@
     return self.maximumValues[@(parameter)];
 }
 
-- (Float32)valueForParameter:(JFSOscillatorParam)parameter
+- (Float32)valueForParameter:(JFSSynthParameter)parameter
 {
     switch (parameter)
     {
@@ -150,7 +150,7 @@
     return 0;
 }
 
-- (void)setValue:(Float32)value forParameter:(JFSOscillatorParam)parameter
+- (void)setValue:(Float32)value forParameter:(JFSSynthParameter)parameter
 {
     switch (parameter)
     {
