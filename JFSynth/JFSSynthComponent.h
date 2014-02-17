@@ -15,5 +15,7 @@ typedef NSInteger JFSSynthParameter;
 @required
 - (NSNumber *)minimumValueForParameter:(JFSSynthParameter)parameter;
 - (NSNumber *)maximumValueForParameter:(JFSSynthParameter)parameter;
+- (void)setValue:(Float32)value forParameter:(JFSSynthParameter)parameter;
+- (Float32)valueForParameter:(JFSSynthParameter)parameter;
 
 @end

@@ -10,12 +10,18 @@
 #import "TheAmazingAudioEngine.h"
 #import "JFSEnvelopeGenerator.h"
 #import "JFSOscillator.h"
+#import "JFSLowPassFilter.h"
+
+#define MINIMUM_CUTOFF 1000.0f
+#define MAXIMUM_CUTOFF SAMPLE_RATE/2
+#define SAMPLE_RATE 44100.0
+#define OSC_MIX 0.5 //TODO add control for this
 
 @interface JFSSynthController ()
 
 @property (nonatomic, strong) AEAudioController *audioController;
 @property (nonatomic, strong) AEBlockChannel *oscillatorChannel;
-@property (nonatomic, strong) AEAudioUnitFilter *lpFilter;
+@property (nonatomic, strong) JFSLowPassFilter *lpFilter;
 @property (nonatomic, strong) AEAudioUnitFilter *delay;
 @property (nonatomic, strong) AEAudioUnitFilter *distortion;
 
@@ -28,11 +34,6 @@
 @end
 
 @implementation JFSSynthController
-
-#define SAMPLE_RATE 44100.0
-#define MINIMUM_CUTOFF 1000.0f
-#define MAXIMUM_CUTOFF SAMPLE_RATE/2
-#define OSC_MIX 0.5 //TODO add control for this
 
 + (JFSSynthController *)sharedController
 {
@@ -52,9 +53,7 @@
     
     if (self) {
         
-        _minimumValues = @{@(JFSSynthParamCutoff) : @(MINIMUM_CUTOFF),
-                           @(JFSSynthParamResonance) : @(-20.0f),
-                           
+        _minimumValues = @{
                            @(JFSSynthParamCutoffLFORate) : @(0),
                            @(JFSSynthParamCutoffLFOAmount) : @(0),
                            
@@ -68,9 +67,7 @@
                            @(JFSSynthParamDistortionMix) : @(0),
                            };
         
-        _maximumValues = @{@(JFSSynthParamCutoff) : @(SAMPLE_RATE/2.0f),
-                           @(JFSSynthParamResonance) : @(40.0f),
-                           
+        _maximumValues = @{
                            @(JFSSynthParamCutoffLFORate) : @(10.0f),
                            @(JFSSynthParamCutoffLFOAmount) : @(1),
                            
@@ -110,29 +107,14 @@
         [_cutoffLFO updateBaseFrequency:0.0f];
         _cuttoffLFOAmount = 0.0f;
         
-        AudioComponentDescription lpFilterComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
-                                                                                      kAudioUnitType_Effect,
-                                                                                      kAudioUnitSubType_LowPassFilter);
-        
-        NSError *error = nil;
-        
-        _lpFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:lpFilterComponent
-                                                            audioController:_audioController
-                                                                      error:&error];
-        
-        if (error) {
-            NSLog(@"filter initialization error %@", [error localizedDescription]);
-        } else {
-            [self setCutoffLevel:10000];
-            [self setCutoffKnobLevel:10000];
-            [_audioController addFilter:_lpFilter];
-        }
-        
+        _lpFilter = [[JFSLowPassFilter alloc] initWithAudioController:_audioController];
+       
+
         AudioComponentDescription delayComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
                                                                                    kAudioUnitType_Effect,
                                                                                    kAudioUnitSubType_Delay);
         
-        error = nil;
+        NSError *error = nil;
         
         _delay = [[AEAudioUnitFilter alloc] initWithComponentDescription:delayComponent
                                                          audioController:_audioController
@@ -204,8 +186,6 @@
 - (Float32)valueForParameter:(JFSSynthParam)parameter
 {
     switch (parameter) {
-        case JFSSynthParamCutoff:
-            return [self cutoffLevel];
         case JFSSynthParamCutoffLFOAmount:
             return [self cuttoffLFOAmount];
         case JFSSynthParamCutoffLFORate:
@@ -222,8 +202,6 @@
             return [self distortionGain];
         case JFSSynthParamDistortionMix:
             return [self distortionMix];
-                case JFSSynthParamResonance:
-            return [self resonanceLevel];
         case JFSSynthParamFrequency:
             //TODO
             break;
@@ -240,10 +218,6 @@
 - (void)setValue:(Float32)value forParameter:(JFSSynthParam)parameter
 {
     switch (parameter) {
-        case JFSSynthParamCutoff:
-            [self setCutoffLevel:value];
-            [self setCutoffKnobLevel:value];
-            break;
         case JFSSynthParamCutoffLFOAmount:
             [self setCutoffLFOAmount:value];
             break;
@@ -268,9 +242,6 @@
         case JFSSynthParamDistortionMix:
             [self setDistortionMix:value];
             break;
-        case JFSSynthParamResonance:
-            [self setResonanceLevel:value];
-            break;
         case JFSSynthParamFrequency:
             //TODO
             break;
@@ -280,56 +251,6 @@
         default:
             break;
     }
-}
-
-// Global, Hz, 10->(SampleRate/2), 6900
-- (void)setCutoffLevel:(Float32)cutoffLevel
-{
-    AudioUnitSetParameter(self.lpFilter.audioUnit,
-                          kLowPassParam_CutoffFrequency,
-                          kAudioUnitScope_Global,
-                          0,
-                          cutoffLevel,
-                          0);
-    
-    self.filterEnvelopeGenerator.peak = (cutoffLevel - 10) / ([[self maximumValueForParameter:JFSSynthParamCutoff] floatValue] - 10);
-}
-
-// Global, dB, -20->40, 0
-- (void)setResonanceLevel:(Float32)resonanceLevel
-{
-    AudioUnitSetParameter(self.lpFilter.audioUnit,
-                          kLowPassParam_Resonance,
-                          kAudioUnitScope_Global,
-                          0,
-                          resonanceLevel,
-                          0);
-}
-
-- (Float32)cutoffLevel
-{
-    Float32 value;
-    
-    AudioUnitGetParameter(self.lpFilter.audioUnit,
-                          kLowPassParam_CutoffFrequency,
-                          kAudioUnitScope_Global,
-                          0,
-                          &value);
-    
-    return value;
-}
-
-- (Float32)resonanceLevel
-{
-    Float32 value;
-    
-    AudioUnitGetParameter(self.lpFilter.audioUnit,
-                          kLowPassParam_Resonance,
-                          kAudioUnitScope_Global,
-                          0,
-                          &value);
-    
-    return value;
 }
 
 // Global, EqPow Crossfade, 0->100, 50
@@ -511,12 +432,12 @@
                 filterModAmount *= weakSelf.cuttoffLFOAmount;
             }
             
-            Float32 cutoffLevel = ([weakSelf.filterEnvelopeGenerator updateState] * weakSelf.cutoffKnobLevel) + filterModAmount;
+            Float32 cutoffLevel = ([weakSelf.filterEnvelopeGenerator updateState] * weakSelf.lpFilter.cutoffKnobLevel) + filterModAmount;
                         
             cutoffLevel = MAX(MINIMUM_CUTOFF, cutoffLevel);
             cutoffLevel = MIN(MAXIMUM_CUTOFF, cutoffLevel);
             
-            AudioUnitSetParameter(weakSelf.lpFilter.audioUnit,
+            AudioUnitSetParameter(weakSelf.lpFilter.auFilter.audioUnit,
                                   kLowPassParam_CutoffFrequency,
                                   kAudioUnitScope_Global,
                                   0,

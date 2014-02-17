@@ -8,10 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, JFSSynthParam) {
-    JFSSynthParamCutoff,
-    JFSSynthParamResonance,
-    
+typedef NS_ENUM(NSInteger, JFSSynthParam) {    
     JFSSynthParamCutoffLFORate,
     JFSSynthParamCutoffLFOAmount,
         
@@ -42,7 +39,6 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
 @property (nonatomic, assign) Float32 velocityPeak;
 
 @property (nonatomic, assign) Float32 cutoffLFOFrequency;
-@property (nonatomic, assign) Float32 cutoffKnobLevel;
 @property (nonatomic, readonly) Float32 cuttoffLFOAmount;
 
 + (JFSSynthController *) sharedController;
