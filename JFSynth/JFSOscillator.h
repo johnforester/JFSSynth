@@ -15,6 +15,12 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
     JFSSawtooth,
 };
 
+typedef NS_ENUM(NSInteger, JFSOscillatorParam) {
+    JFSOscillatorParamSemitones,
+    JFSOscillatorParamFine,
+    JFSOscillatorParamVolume,
+};
+
 @interface JFSOscillator : NSObject
 
 @property (nonatomic, assign) JFSWaveType waveType;
@@ -30,5 +36,8 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
 - (void)updateSemitone:(int)semitones;
 - (void)updateFine:(Float32)fine;
 - (void)updateVolume:(Float32)volume;
+
+- (NSNumber *)minimumValueForParameter:(JFSOscillatorParam)parameter;
+- (NSNumber *)maximumValueForParameter:(JFSOscillatorParam)parameter;
 
 @end

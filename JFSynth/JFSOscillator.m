@@ -20,6 +20,9 @@
 @property (nonatomic, assign) Float32 fine;
 @property (nonatomic, assign) Float32 volume;
 
+@property (nonatomic, strong) NSDictionary *minimumValues;
+@property (nonatomic, strong) NSDictionary *maximumValues;
+
 @end
 
 @implementation JFSOscillator
@@ -31,6 +34,18 @@
     if (self) {
         _sampleRate = sampleRate;
         _volume = 0.7;
+        
+        _minimumValues = @{
+                           @(JFSOscillatorParamSemitones) : @(-24),
+                           @(JFSOscillatorParamFine) : @(0),
+                           @(JFSOscillatorParamVolume) : @(0),
+                           };
+        
+        _maximumValues = @{
+                           @(JFSOscillatorParamSemitones) : @(24),
+                           @(JFSOscillatorParamFine) : @(1),
+                           @(JFSOscillatorParamVolume) : @(1),
+                           };
     }
     
     return self;
@@ -106,6 +121,51 @@
 {
     _volume = MAX(0, volume);
     _volume = MIN(1.0, volume);
+}
+
+- (NSNumber *)minimumValueForParameter:(JFSOscillatorParam)parameter
+{
+    return self.minimumValues[@(parameter)];
+}
+
+- (NSNumber *)maximumValueForParameter:(JFSOscillatorParam)parameter
+{
+    return self.maximumValues[@(parameter)];
+}
+
+- (Float32)valueForParameter:(JFSOscillatorParam)parameter
+{
+    switch (parameter)
+    {
+        case JFSOscillatorParamFine:
+            return self.fine;
+        case JFSOscillatorParamSemitones:
+            return self.semitones;
+        case JFSOscillatorParamVolume:
+            return self.volume;
+        default:
+            break;
+    }
+    
+    return 0;
+}
+
+- (void)setValue:(Float32)value forParameter:(JFSOscillatorParam)parameter
+{
+    switch (parameter)
+    {
+        case JFSOscillatorParamFine:
+            [self updateFine:value];
+            break;
+        case JFSOscillatorParamSemitones:
+            [self updateSemitone:value];
+            break;
+        case JFSOscillatorParamVolume:
+            [self updateVolume:value];
+            break;
+        default:
+            break;
+    }
 }
 
 @end

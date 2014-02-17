@@ -22,12 +22,6 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
     
     JFSSynthParamFrequency,
     JFSSynthParamVelocity,
-    JFSSynthParamOscillator1Semitones,
-    JFSSynthParamOscillator1Fine,
-    JFSSynthParamOscillator2Semitones,
-    JFSSynthParamOscillator2Fine,
-    JFSSynthControllerOscillator1Volume,
-    JFSSynthControllerOscillator2Volume,
     
     JFSSynthParamDistortionGain,
     JFSSynthParamDistortionMix,

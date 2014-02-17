@@ -62,13 +62,7 @@
                            @(JFSSynthParamDelayFeedback) : @(-100),
                            @(JFSSynthParamDelayTime) : @(0),
                            @(JFSSynthParamDelayCutoff) : @(10),
-                           
-                           @(JFSSynthParamOscillator1Semitones) : @(-24),
-                           @(JFSSynthParamOscillator1Fine) : @(0),
-                           @(JFSSynthParamOscillator2Semitones) : @(-24),
-                           @(JFSSynthParamOscillator2Fine) : @(0),
-                           @(JFSSynthControllerOscillator1Volume) : @(0),
-                           @(JFSSynthControllerOscillator2Volume) : @(0),
+
                            
                            @(JFSSynthParamDistortionGain) : @(-80),
                            @(JFSSynthParamDistortionMix) : @(0),
@@ -84,13 +78,6 @@
                            @(JFSSynthParamDelayFeedback) : @(100),
                            @(JFSSynthParamDelayTime) : @(2),
                            @(JFSSynthParamDelayCutoff) : @(SAMPLE_RATE/2),
-                           
-                           @(JFSSynthParamOscillator1Semitones) : @(24),
-                           @(JFSSynthParamOscillator1Fine) : @(1),
-                           @(JFSSynthParamOscillator2Semitones) : @(24),
-                           @(JFSSynthParamOscillator2Fine) : @(1),
-                           @(JFSSynthControllerOscillator1Volume) : @(1),
-                           @(JFSSynthControllerOscillator2Volume) : @(1),
                            
                            @(JFSSynthParamDistortionGain) : @(20),
                            @(JFSSynthParamDistortionMix) : @(100)
@@ -235,15 +222,7 @@
             return [self distortionGain];
         case JFSSynthParamDistortionMix:
             return [self distortionMix];
-        case JFSSynthParamOscillator1Fine:
-            return [self.oscillators[0] fine];
-        case JFSSynthParamOscillator2Fine:
-            return [self.oscillators[1] fine];
-        case JFSSynthParamOscillator1Semitones:
-            return [self.oscillators[0] semitones];
-        case JFSSynthParamOscillator2Semitones:
-            return [self.oscillators[1] semitones];
-        case JFSSynthParamResonance:
+                case JFSSynthParamResonance:
             return [self resonanceLevel];
         case JFSSynthParamFrequency:
             //TODO
@@ -251,10 +230,6 @@
         case JFSSynthParamVelocity:
             return self.velocityPeak;
             break;
-        case JFSSynthControllerOscillator1Volume:
-            return [self.oscillators[0] volume];
-        case JFSSynthControllerOscillator2Volume:
-            return [self.oscillators[1] volume];
         default:
             break;
     }
@@ -293,18 +268,6 @@
         case JFSSynthParamDistortionMix:
             [self setDistortionMix:value];
             break;
-        case JFSSynthParamOscillator1Fine:
-            [self setFineForOscillatorAtIndex:0 value:value];
-            break;
-        case JFSSynthParamOscillator2Fine:
-            [self setFineForOscillatorAtIndex:1 value:value];
-            break;
-        case JFSSynthParamOscillator1Semitones:
-            [self setSemitonesForOscillatorAtIndex:0 value:roundf(value)];
-            break;
-        case JFSSynthParamOscillator2Semitones:
-            [self setSemitonesForOscillatorAtIndex:1 value:roundf(value)];
-            break;
         case JFSSynthParamResonance:
             [self setResonanceLevel:value];
             break;
@@ -313,12 +276,6 @@
             break;
         case JFSSynthParamVelocity:
             [self setVelocityPeak:value];
-            break;
-        case JFSSynthControllerOscillator1Volume:
-            [self setVolumeForOscillatorAtIndex:0 value:value];
-            break;
-        case JFSSynthControllerOscillator2Volume:
-            [self setVolumeForOscillatorAtIndex:1 value:value];
             break;
         default:
             break;
@@ -534,22 +491,6 @@
 - (void)setCutoffLFOAmount:(Float32)lfoAmount
 {
     _cuttoffLFOAmount = lfoAmount;
-}
-
-- (void)setVolumeForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)value
-{
-    if ([self.oscillators count] > oscillatorIdx) {
-        [self.oscillators[oscillatorIdx] updateVolume:value];
-    }
-}
-- (void)setSemitonesForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)semitones
-{
-    [self.oscillators[oscillatorIdx] updateSemitone:semitones];
-}
-
-- (void)setFineForOscillatorAtIndex:(int)oscillatorIdx value:(Float32)fine
-{
-    [self.oscillators[oscillatorIdx] updateFine:fine];
 }
 
 #pragma setup methods

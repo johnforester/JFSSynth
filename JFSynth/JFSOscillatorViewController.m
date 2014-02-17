@@ -28,16 +28,14 @@
     self.view.layer.borderColor = [UIColor redColor].CGColor;
     self.view.layer.borderWidth = 1.0;
     
-    JFSSynthController *synthController = [JFSSynthController sharedController];
+    self.semitoneSlider.minimumValue = [[self.oscillator minimumValueForParameter:JFSOscillatorParamSemitones] floatValue];
+    self.semitoneSlider.maximumValue = [[self.oscillator maximumValueForParameter:JFSOscillatorParamSemitones] floatValue];
     
-    self.semitoneSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamOscillator1Semitones] floatValue];
-    self.semitoneSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamOscillator1Semitones] floatValue];
+    self.fineSlider.minimumValue = [[self.oscillator minimumValueForParameter:JFSOscillatorParamFine] floatValue];
+    self.fineSlider.maximumValue = [[self.oscillator maximumValueForParameter:JFSOscillatorParamFine] floatValue];
     
-    self.fineSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamOscillator1Fine] floatValue];
-    self.fineSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamOscillator1Fine] floatValue];
-    
-    self.volumeSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthControllerOscillator1Volume] floatValue];
-    self.volumeSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthControllerOscillator1Volume] floatValue];
+    self.volumeSlider.minimumValue = [[self.oscillator minimumValueForParameter:JFSOscillatorParamVolume] floatValue];
+    self.volumeSlider.maximumValue = [[self.oscillator maximumValueForParameter:JFSOscillatorParamVolume] floatValue];
     
     self.semitoneSlider.displayType = JFSKnobDisplayTypeInteger;
     self.semitoneSlider.value = [self.oscillator semitones];
