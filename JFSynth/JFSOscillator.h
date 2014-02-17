@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JFSSynthComponent.h"
 
 typedef NS_ENUM(NSInteger, JFSWaveType) {
     JFSSquareWave,
@@ -15,13 +16,13 @@ typedef NS_ENUM(NSInteger, JFSWaveType) {
     JFSSawtooth,
 };
 
-typedef NS_ENUM(NSInteger, JFSOscillatorParam) {
+typedef NS_ENUM(JFSSynthParameter, JFSOscillatorParam) {
     JFSOscillatorParamSemitones,
     JFSOscillatorParamFine,
     JFSOscillatorParamVolume,
 };
 
-@interface JFSOscillator : NSObject
+@interface JFSOscillator : NSObject <JFSSynthComponent>
 
 @property (nonatomic, assign) JFSWaveType waveType;
 @property (nonatomic, readonly) double baseFrequency;
@@ -36,8 +37,5 @@ typedef NS_ENUM(NSInteger, JFSOscillatorParam) {
 - (void)updateSemitone:(int)semitones;
 - (void)updateFine:(Float32)fine;
 - (void)updateVolume:(Float32)volume;
-
-- (NSNumber *)minimumValueForParameter:(JFSOscillatorParam)parameter;
-- (NSNumber *)maximumValueForParameter:(JFSOscillatorParam)parameter;
 
 @end

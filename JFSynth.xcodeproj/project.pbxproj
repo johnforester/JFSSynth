@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		05754887C6F84FCD876A31B1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB310698CEA446691085808 /* libPods.a */; };
 		7A1A62D218B26F9100DEFF78 /* JFSOscillatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62D118B26F9100DEFF78 /* JFSOscillatorViewController.m */; };
+		7A1A62D618B2A5AC00DEFF78 /* JFSAUFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62D518B2A5AC00DEFF78 /* JFSAUFilter.m */; };
 		7A20C5D01824898500634B09 /* JFSEnvelopeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A20C5CF1824898500634B09 /* JFSEnvelopeView.m */; };
 		7A6C6873181D833E009F4A83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6872181D833E009F4A83 /* Foundation.framework */; };
 		7A6C6875181D833E009F4A83 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6874181D833E009F4A83 /* CoreGraphics.framework */; };
@@ -48,6 +49,9 @@
 		084B57BE5FC7457AB7CAA9D7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		7A1A62D018B26F9100DEFF78 /* JFSOscillatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSOscillatorViewController.h; sourceTree = "<group>"; };
 		7A1A62D118B26F9100DEFF78 /* JFSOscillatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSOscillatorViewController.m; sourceTree = "<group>"; };
+		7A1A62D318B2A42800DEFF78 /* JFSSynthComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JFSSynthComponent.h; sourceTree = "<group>"; };
+		7A1A62D418B2A5AC00DEFF78 /* JFSAUFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSAUFilter.h; sourceTree = "<group>"; };
+		7A1A62D518B2A5AC00DEFF78 /* JFSAUFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSAUFilter.m; sourceTree = "<group>"; };
 		7A20C5CE1824898500634B09 /* JFSEnvelopeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSEnvelopeView.h; sourceTree = "<group>"; };
 		7A20C5CF1824898500634B09 /* JFSEnvelopeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSEnvelopeView.m; sourceTree = "<group>"; };
 		7A6C686F181D833E009F4A83 /* JFSynth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JFSynth.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,6 +202,9 @@
 				7AD42CBF1835AB25009DBEBF /* JFSEnvelopeGenerator.m */,
 				7AD42CC11835C9BD009DBEBF /* JFSOscillator.h */,
 				7AD42CC21835C9BD009DBEBF /* JFSOscillator.m */,
+				7A1A62D318B2A42800DEFF78 /* JFSSynthComponent.h */,
+				7A1A62D418B2A5AC00DEFF78 /* JFSAUFilter.h */,
+				7A1A62D518B2A5AC00DEFF78 /* JFSAUFilter.m */,
 			);
 			name = Audio;
 			sourceTree = "<group>";
@@ -370,6 +377,7 @@
 				881ABA97183FEF9C0099FF79 /* JFSKnob.m in Sources */,
 				7A6C688C181D833E009F4A83 /* JFSViewController.m in Sources */,
 				88CDDD93183BC3BF0000FD5F /* JFSScrollingKeyboardView.m in Sources */,
+				7A1A62D618B2A5AC00DEFF78 /* JFSAUFilter.m in Sources */,
 				7AD42CC01835AB25009DBEBF /* JFSEnvelopeGenerator.m in Sources */,
 				7A1A62D218B26F9100DEFF78 /* JFSOscillatorViewController.m in Sources */,
 				88FACCBC18872A16007B44BF /* JFSDelayViewController.m in Sources */,

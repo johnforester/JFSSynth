@@ -123,12 +123,12 @@
     _volume = MIN(1.0, volume);
 }
 
-- (NSNumber *)minimumValueForParameter:(JFSOscillatorParam)parameter
+- (NSNumber *)minimumValueForParameter:(JFSSynthParameter)parameter
 {
     return self.minimumValues[@(parameter)];
 }
 
-- (NSNumber *)maximumValueForParameter:(JFSOscillatorParam)parameter
+- (NSNumber *)maximumValueForParameter:(JFSSynthParameter)parameter
 {
     return self.maximumValues[@(parameter)];
 }
