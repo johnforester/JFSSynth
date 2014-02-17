@@ -14,6 +14,7 @@
 #import "JFSEnvelopeViewController.h"
 #import "JFSDelayViewController.h"
 #import "JFSDistortionViewController.h"
+#import "JFSOscillatorViewController.h"
 
 @interface JFSViewController ()
 
@@ -26,12 +27,10 @@
 @property (weak, nonatomic) IBOutlet JFSKnob *cutoffLFOSlider;
 @property (weak, nonatomic) IBOutlet JFSKnob *lfoAmountSlider;
 
-@property (weak, nonatomic) IBOutlet JFSKnob *oscOneVolumeSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *oscTwoVolumeSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *oscOneSemitoneSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *oscTwoSemitoneSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *oscOneFineSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *oscTwoFineSlider;
+@property (strong, nonatomic) NSArray *oscillatorViewControllers;
+@property (strong, nonatomic) JFSOscillatorViewController *currentOscillatorViewController;
+
+@property (weak, nonatomic) IBOutlet UIView *oscillatorContainerView;
 
 @property (weak, nonatomic) IBOutlet UIView *envelopeContainerView;
 
@@ -60,6 +59,20 @@
     [super viewDidLoad];
     
     JFSSynthController *synthController = [JFSSynthController sharedController];
+    
+    NSMutableArray *tempOscViews = [[NSMutableArray alloc] init];
+    
+    [synthController.oscillators enumerateObjectsUsingBlock:^(JFSOscillator *oscillator, NSUInteger idx, BOOL *stop) {
+        JFSOscillatorViewController *viewController = (JFSOscillatorViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"OscillatorViewController"];
+        viewController.oscillator = oscillator;
+        [tempOscViews addObject:viewController];
+    }];
+    
+    if ([tempOscViews count] > 0) {
+        self.oscillatorViewControllers = [NSArray arrayWithArray:tempOscViews];
+        
+        [self displayOscillatorViewController:self.oscillatorViewControllers[0]];
+    }
     
     self.delayViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DelayViewController"];
     self.distortionViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DistortionViewController"];
@@ -92,33 +105,6 @@
     self.lfoAmountSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamCutoffLFOAmount] floatValue];
     self.lfoAmountSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamCutoffLFOAmount] floatValue];
     self.lfoAmountSlider.value = [synthController valueForParameter:JFSSynthParamCutoffLFOAmount];
-    
-    self.oscOneSemitoneSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamOscillator1Semitones] floatValue];
-    self.oscOneSemitoneSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamOscillator1Semitones] floatValue];
-    self.oscTwoSemitoneSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamOscillator2Semitones] floatValue];
-    self.oscTwoSemitoneSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamOscillator2Semitones] floatValue];
-    
-    self.oscOneFineSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamOscillator1Fine] floatValue];
-    self.oscOneFineSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamOscillator1Fine] floatValue];
-    self.oscTwoFineSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamOscillator2Fine] floatValue];
-    self.oscTwoFineSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamOscillator2Fine] floatValue];
-    
-    self.oscOneVolumeSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthControllerOscillator1Volume] floatValue];
-    self.oscOneVolumeSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthControllerOscillator1Volume] floatValue];
-    self.oscOneVolumeSlider.value = [synthController valueForParameter:JFSSynthControllerOscillator1Volume];
-    
-    self.oscTwoVolumeSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthControllerOscillator2Volume] floatValue];;
-    self.oscTwoVolumeSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthControllerOscillator2Volume] floatValue];;
-    self.oscTwoVolumeSlider.value = [synthController valueForParameter:JFSSynthControllerOscillator2Volume];
-    
-    self.oscOneSemitoneSlider.displayType = JFSKnobDisplayTypeInteger;
-    self.oscTwoSemitoneSlider.displayType = JFSKnobDisplayTypeInteger;
-    
-    self.oscOneSemitoneSlider.value = [synthController.oscillators[0] semitones];
-    self.oscTwoSemitoneSlider.value = [synthController.oscillators[1] semitones];
-    
-    self.oscOneFineSlider.value = [synthController.oscillators[0] fine];
-    self.oscTwoFineSlider.value = [synthController.oscillators[1] fine];
     
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(refreshViews) userInfo:nil repeats:YES];
     [self.refreshTimer fire];
@@ -158,12 +144,15 @@
 
 #pragma mark - IBAction
 
-- (IBAction)waveTypeControlChanged:(UISegmentedControl *)segmentedControl
+- (IBAction)lfoWaveTypeControlChanged:(UISegmentedControl *)segmentedControl
 {
-    if (segmentedControl.tag < [[[JFSSynthController sharedController] oscillators] count]) {
-        [[JFSSynthController sharedController].oscillators[segmentedControl.tag] setWaveType:segmentedControl.selectedSegmentIndex];
-    } else {
-        [[JFSSynthController sharedController].cutoffLFO setWaveType:segmentedControl.selectedSegmentIndex];
+    [[JFSSynthController sharedController].cutoffLFO setWaveType:segmentedControl.selectedSegmentIndex];
+}
+
+- (IBAction)oscillatorSegmentedControlChanged:(UISegmentedControl *)segmentedControl
+{
+    if ([self.oscillatorViewControllers count] > segmentedControl.selectedSegmentIndex) {
+        [self displayOscillatorViewController:self.oscillatorViewControllers[segmentedControl.selectedSegmentIndex]];
     }
 }
 
@@ -185,6 +174,27 @@
 - (IBAction)envelopeSwitchChanged:(UISegmentedControl *)sender
 {
     [self displayEnvelopeViewControllerWithIndex:sender.selectedSegmentIndex];
+}
+
+#pragma mark - view swapping
+
+- (void)displayOscillatorViewController:(JFSOscillatorViewController *)oscillatorViewController
+{
+    UIView *view = oscillatorViewController.view;
+    
+    [self.currentOscillatorViewController removeFromParentViewController];
+    [self.currentOscillatorViewController.view removeFromSuperview];
+    
+    [self addChildViewController:oscillatorViewController];
+    [self.oscillatorContainerView addSubview:view];
+    self.currentOscillatorViewController = oscillatorViewController;
+    
+    NSDictionary *views = NSDictionaryOfVariableBindings(view);
+
+    [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+    [self.oscillatorContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|" options:0 metrics:nil views:views]];
+    [self.oscillatorContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:views]];
 }
 
 - (void)displayEffectViewControllerWithIndex:(int)idx

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05754887C6F84FCD876A31B1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB310698CEA446691085808 /* libPods.a */; };
+		7A1A62D218B26F9100DEFF78 /* JFSOscillatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62D118B26F9100DEFF78 /* JFSOscillatorViewController.m */; };
 		7A20C5D01824898500634B09 /* JFSEnvelopeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A20C5CF1824898500634B09 /* JFSEnvelopeView.m */; };
 		7A6C6873181D833E009F4A83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6872181D833E009F4A83 /* Foundation.framework */; };
 		7A6C6875181D833E009F4A83 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6874181D833E009F4A83 /* CoreGraphics.framework */; };
@@ -15,7 +16,6 @@
 		7A6C687D181D833E009F4A83 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7A6C687B181D833E009F4A83 /* InfoPlist.strings */; };
 		7A6C687F181D833E009F4A83 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A6C687E181D833E009F4A83 /* main.m */; };
 		7A6C6883181D833E009F4A83 /* JFSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A6C6882181D833E009F4A83 /* JFSAppDelegate.m */; };
-		7A6C6886181D833E009F4A83 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A6C6884181D833E009F4A83 /* Main_iPhone.storyboard */; };
 		7A6C6889181D833E009F4A83 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A6C6887181D833E009F4A83 /* Main_iPad.storyboard */; };
 		7A6C688C181D833E009F4A83 /* JFSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A6C688B181D833E009F4A83 /* JFSViewController.m */; };
 		7A6C688E181D833E009F4A83 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A6C688D181D833E009F4A83 /* Images.xcassets */; };
@@ -46,6 +46,8 @@
 
 /* Begin PBXFileReference section */
 		084B57BE5FC7457AB7CAA9D7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		7A1A62D018B26F9100DEFF78 /* JFSOscillatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSOscillatorViewController.h; sourceTree = "<group>"; };
+		7A1A62D118B26F9100DEFF78 /* JFSOscillatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSOscillatorViewController.m; sourceTree = "<group>"; };
 		7A20C5CE1824898500634B09 /* JFSEnvelopeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSEnvelopeView.h; sourceTree = "<group>"; };
 		7A20C5CF1824898500634B09 /* JFSEnvelopeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSEnvelopeView.m; sourceTree = "<group>"; };
 		7A6C686F181D833E009F4A83 /* JFSynth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JFSynth.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,7 +60,6 @@
 		7A6C6880181D833E009F4A83 /* JFSynth-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JFSynth-Prefix.pch"; sourceTree = "<group>"; };
 		7A6C6881181D833E009F4A83 /* JFSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JFSAppDelegate.h; sourceTree = "<group>"; };
 		7A6C6882181D833E009F4A83 /* JFSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JFSAppDelegate.m; sourceTree = "<group>"; };
-		7A6C6885181D833E009F4A83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		7A6C6888181D833E009F4A83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		7A6C688A181D833E009F4A83 /* JFSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JFSViewController.h; sourceTree = "<group>"; };
 		7A6C688B181D833E009F4A83 /* JFSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JFSViewController.m; sourceTree = "<group>"; };
@@ -151,7 +152,6 @@
 				88892358182D942A0058734E /* Audio */,
 				7A6C6881181D833E009F4A83 /* JFSAppDelegate.h */,
 				7A6C6882181D833E009F4A83 /* JFSAppDelegate.m */,
-				7A6C6884181D833E009F4A83 /* Main_iPhone.storyboard */,
 				7A6C6887181D833E009F4A83 /* Main_iPad.storyboard */,
 				7A6C688D181D833E009F4A83 /* Images.xcassets */,
 				7A6C6879181D833E009F4A83 /* Supporting Files */,
@@ -226,6 +226,8 @@
 				88FACCB8188729F0007B44BF /* JFSDistortionViewController.m */,
 				88FACCBA18872A16007B44BF /* JFSDelayViewController.h */,
 				88FACCBB18872A16007B44BF /* JFSDelayViewController.m */,
+				7A1A62D018B26F9100DEFF78 /* JFSOscillatorViewController.h */,
+				7A1A62D118B26F9100DEFF78 /* JFSOscillatorViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -311,7 +313,6 @@
 			files = (
 				7A6C6889181D833E009F4A83 /* Main_iPad.storyboard in Resources */,
 				7A6C688E181D833E009F4A83 /* Images.xcassets in Resources */,
-				7A6C6886181D833E009F4A83 /* Main_iPhone.storyboard in Resources */,
 				7A6C687D181D833E009F4A83 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -370,6 +371,7 @@
 				7A6C688C181D833E009F4A83 /* JFSViewController.m in Sources */,
 				88CDDD93183BC3BF0000FD5F /* JFSScrollingKeyboardView.m in Sources */,
 				7AD42CC01835AB25009DBEBF /* JFSEnvelopeGenerator.m in Sources */,
+				7A1A62D218B26F9100DEFF78 /* JFSOscillatorViewController.m in Sources */,
 				88FACCBC18872A16007B44BF /* JFSDelayViewController.m in Sources */,
 				7A6C6883181D833E009F4A83 /* JFSAppDelegate.m in Sources */,
 				7A6C687F181D833E009F4A83 /* main.m in Sources */,
@@ -402,14 +404,6 @@
 				7A6C687C181D833E009F4A83 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		7A6C6884181D833E009F4A83 /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7A6C6885181D833E009F4A83 /* Base */,
-			);
-			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 		7A6C6887181D833E009F4A83 /* Main_iPad.storyboard */ = {
