@@ -7,18 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JFSSynthComponent.h"
 
-typedef NS_ENUM(NSInteger, JFSSynthParam) {
+typedef NS_ENUM(JFSSynthParameter, JFSSynthControllerParameter) {
     JFSSynthParamFrequency,
     JFSSynthParamVelocity,
-    
-    JFSSynthParamDistortionGain,
-    JFSSynthParamDistortionMix,
 };
 
-@class JFSEnvelopeGenerator, JFSOscillator, JFSLowPassFilter, JFSLFO, JFSDelay;
+@class JFSEnvelopeGenerator, JFSOscillator, JFSLowPassFilter, JFSLFO, JFSDelay, JFSDistortion;
 
-@interface JFSSynthController : NSObject
+@interface JFSSynthController : NSObject<JFSSynthComponent>
 
 @property (nonatomic, strong) JFSEnvelopeGenerator *ampEnvelopeGenerator;
 @property (nonatomic, strong) JFSEnvelopeGenerator *filterEnvelopeGenerator;
@@ -27,6 +25,7 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
 @property (nonatomic, readonly) JFSLowPassFilter *lpFilter;
 @property (nonatomic, readonly) JFSLFO *cutoffLFO;
 @property (nonatomic, readonly) JFSDelay *delay;
+@property (nonatomic, readonly) JFSDistortion *distortion;
 
 @property (nonatomic, assign) Float32 velocityPeak;
 
@@ -38,8 +37,8 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
 - (void)setBaseFrequency:(double)frequency;
 - (void)stopPlaying;
 
-- (void)setValue:(Float32)value forParameter:(JFSSynthParam)parameter;
-- (Float32)valueForParameter:(JFSSynthParam)parameter;
+- (void)setValue:(Float32)value forParameter:(JFSSynthParameter)parameter;
+- (Float32)valueForParameter:(JFSSynthParameter)parameter;
 
 - (Float32)outputLevel;
 
@@ -47,9 +46,6 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
 - (Float32)maximumEnvelopeTime;
 - (Float32)minimumVelocity;
 - (Float32)maximumVelocity;
-
-- (NSNumber *)minimumValueForParameter:(JFSSynthParam)parameter;
-- (NSNumber *)maximumValueForParameter:(JFSSynthParam)parameter;
 
 - (void)toggleDelay:(BOOL)on;
 - (void)toggleDistortion:(BOOL)on;

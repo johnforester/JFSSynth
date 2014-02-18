@@ -92,6 +92,7 @@
     self.delayViewController.delay = synthController.delay;
     
     self.distortionViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DistortionViewController"];
+    self.distortionViewController.distortion = synthController.distortion;
     
     [self displayEffectViewControllerWithIndex:0];
     

@@ -14,6 +14,7 @@
 		7A1A62DC18B2AE4C00DEFF78 /* JFSFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62DB18B2AE4C00DEFF78 /* JFSFilterViewController.m */; };
 		7A1A62DF18B2D0C000DEFF78 /* JFSLFO.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62DE18B2D0C000DEFF78 /* JFSLFO.m */; };
 		7A1A62E418B2E19300DEFF78 /* JFSDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62E318B2E19300DEFF78 /* JFSDelay.m */; };
+		7A1A62E718B3158700DEFF78 /* JFSDistortion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62E618B3158700DEFF78 /* JFSDistortion.m */; };
 		7A20C5D01824898500634B09 /* JFSEnvelopeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A20C5CF1824898500634B09 /* JFSEnvelopeView.m */; };
 		7A6C6873181D833E009F4A83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6872181D833E009F4A83 /* Foundation.framework */; };
 		7A6C6875181D833E009F4A83 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A6C6874181D833E009F4A83 /* CoreGraphics.framework */; };
@@ -64,6 +65,8 @@
 		7A1A62DE18B2D0C000DEFF78 /* JFSLFO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSLFO.m; sourceTree = "<group>"; };
 		7A1A62E218B2E19300DEFF78 /* JFSDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSDelay.h; sourceTree = "<group>"; };
 		7A1A62E318B2E19300DEFF78 /* JFSDelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSDelay.m; sourceTree = "<group>"; };
+		7A1A62E518B3158700DEFF78 /* JFSDistortion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSDistortion.h; sourceTree = "<group>"; };
+		7A1A62E618B3158700DEFF78 /* JFSDistortion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSDistortion.m; sourceTree = "<group>"; };
 		7A20C5CE1824898500634B09 /* JFSEnvelopeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSEnvelopeView.h; sourceTree = "<group>"; };
 		7A20C5CF1824898500634B09 /* JFSEnvelopeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSEnvelopeView.m; sourceTree = "<group>"; };
 		7A6C686F181D833E009F4A83 /* JFSynth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JFSynth.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +152,8 @@
 				7A1A62D818B2A66800DEFF78 /* JFSLowPassFilter.m */,
 				7A1A62E218B2E19300DEFF78 /* JFSDelay.h */,
 				7A1A62E318B2E19300DEFF78 /* JFSDelay.m */,
+				7A1A62E518B3158700DEFF78 /* JFSDistortion.h */,
+				7A1A62E618B3158700DEFF78 /* JFSDistortion.m */,
 			);
 			name = "FIlters and effects";
 			sourceTree = "<group>";
@@ -408,6 +413,7 @@
 			files = (
 				88FACCB9188729F0007B44BF /* JFSDistortionViewController.m in Sources */,
 				8887D905188078310059F842 /* JFSEnvelopeViewController.m in Sources */,
+				7A1A62E718B3158700DEFF78 /* JFSDistortion.m in Sources */,
 				7A6C68AD181D84DA009F4A83 /* JFSSynthController.m in Sources */,
 				7A20C5D01824898500634B09 /* JFSEnvelopeView.m in Sources */,
 				881ABA97183FEF9C0099FF79 /* JFSKnob.m in Sources */,

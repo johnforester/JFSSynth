@@ -13,6 +13,7 @@
 #import "JFSLowPassFilter.h"
 #import "JFSLFO.h"
 #import "JFSDelay.h"
+#import "JFSDistortion.h"
 
 #define MINIMUM_CUTOFF 1000.0f
 #define MAXIMUM_CUTOFF SAMPLE_RATE/2
@@ -26,12 +27,9 @@
 @property (nonatomic, strong) JFSLowPassFilter *lpFilter;
 @property (nonatomic, strong) JFSLFO *cutoffLFO;
 @property (nonatomic, strong) JFSDelay *delay;
-@property (nonatomic, strong) AEAudioUnitFilter *distortion;
+@property (nonatomic, strong) JFSDistortion *distortion;
 
 @property (nonatomic, strong) NSArray *oscillators;
-
-@property (nonatomic, strong) NSDictionary *minimumValues;
-@property (nonatomic, strong) NSDictionary *maximumValues;
 
 @end
 
@@ -54,17 +52,6 @@
     self = [super init];
     
     if (self) {
-        
-        _minimumValues = @{
-                           @(JFSSynthParamDistortionGain) : @(-80),
-                           @(JFSSynthParamDistortionMix) : @(0),
-                           };
-        
-        _maximumValues = @{
-                           @(JFSSynthParamDistortionGain) : @(20),
-                           @(JFSSynthParamDistortionMix) : @(100)
-                           };
-        
         _audioController = [[AEAudioController alloc]
                             initWithAudioDescription:[AEAudioController nonInterleavedFloatStereoAudioDescription]
                             inputEnabled:NO];
@@ -94,26 +81,9 @@
         
         _lpFilter = [[JFSLowPassFilter alloc] initWithAudioController:_audioController];
         _delay = [[JFSDelay alloc] initWithAudioController:_audioController];
+        _distortion = [[JFSDistortion alloc] initWithAudioController:_audioController];
         
         NSError *error = nil;
-        
-        AudioComponentDescription distortionComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
-                                                                                        kAudioUnitType_Effect,
-                                                                                        kAudioUnitSubType_Distortion);
-        
-        _distortion = [[AEAudioUnitFilter alloc] initWithComponentDescription:distortionComponent
-                                                              audioController:_audioController
-                                                                        error:&error];
-        
-        
-        if (error) {
-            NSLog(@"filter initialization error %@", [error localizedDescription]);
-        } else {
-            
-            [_audioController addFilter:_distortion];
-        }
-        
-        error = nil;
         
         if (![_audioController start:&error]) {
             NSLog(@"AudioController start error: %@", [error localizedDescription]);
@@ -135,9 +105,9 @@
 - (void)toggleDistortion:(BOOL)on
 {
     if (on) {
-        [self.audioController addFilter:self.distortion];
+        [self.audioController addFilter:self.distortion.auFilter];
     } else {
-        [self.audioController removeFilter:self.distortion];
+        [self.audioController removeFilter:self.distortion.auFilter];
     }
 }
 
@@ -152,13 +122,10 @@
 
 #pragma accessor methods
 
-- (Float32)valueForParameter:(JFSSynthParam)parameter
+- (Float32)valueForParameter:(JFSSynthParameter)parameter
 {
-    switch (parameter) {
-        case JFSSynthParamDistortionGain:
-            return [self distortionGain];
-        case JFSSynthParamDistortionMix:
-            return [self distortionMix];
+    switch (parameter)
+    {
         case JFSSynthParamFrequency:
             //TODO
             break;
@@ -172,15 +139,10 @@
     return 0;
 }
 
-- (void)setValue:(Float32)value forParameter:(JFSSynthParam)parameter
+- (void)setValue:(Float32)value forParameter:(JFSSynthParameter)parameter
 {
-    switch (parameter) {
-        case JFSSynthParamDistortionGain:
-            [self setDistortionGain:value];
-            break;
-        case JFSSynthParamDistortionMix:
-            [self setDistortionMix:value];
-            break;
+    switch (parameter)
+    {
         case JFSSynthParamFrequency:
             //TODO
             break;
@@ -190,52 +152,6 @@
         default:
             break;
     }
-}
-
-- (Float32)distortionMix
-{
-    Float32 value;
-    
-    AudioUnitGetParameter(self.distortion.audioUnit,
-                          kDistortionParam_FinalMix,
-                          kAudioUnitScope_Global,
-                          0,
-                          &value);
-    
-    return value;
-}
-
-- (void)setDistortionMix:(Float32)value
-{
-    AudioUnitSetParameter(self.distortion.audioUnit,
-                          kDistortionParam_FinalMix,
-                          kAudioUnitScope_Global,
-                          0,
-                          value,
-                          0);
-}
-
-- (Float32)distortionGain
-{
-    Float32 value;
-    
-    AudioUnitGetParameter(self.distortion.audioUnit,
-                          kDistortionParam_SoftClipGain,
-                          kAudioUnitScope_Global,
-                          0,
-                          &value);
-    
-    return value;
-}
-
-- (void)setDistortionGain:(Float32)value
-{
-    AudioUnitSetParameter(self.distortion.audioUnit,
-                          kDistortionParam_SoftClipGain,
-                          kAudioUnitScope_Global,
-                          0,
-                          value,
-                          0);
 }
 
 - (void)setBaseFrequency:(double)frequency
@@ -331,16 +247,6 @@
 - (Float32)maximumVelocity
 {
     return 127.0;
-}
-
-- (NSNumber *)minimumValueForParameter:(JFSSynthParam)parameter
-{
-    return self.minimumValues[@(parameter)];
-}
-
-- (NSNumber *)maximumValueForParameter:(JFSSynthParam)parameter
-{
-    return self.maximumValues[@(parameter)];
 }
 
 @end

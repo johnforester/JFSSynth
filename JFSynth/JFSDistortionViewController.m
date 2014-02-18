@@ -9,6 +9,7 @@
 #import "JFSDistortionViewController.h"
 #import "JFSKnob.h"
 #import "JFSSynthController.h"
+#import "JFSDistortion.h"
 
 @interface JFSDistortionViewController ()
 
@@ -26,21 +27,13 @@
     self.view.layer.borderColor = [UIColor redColor].CGColor;
     self.view.layer.borderWidth = 1.0;
     
-    JFSSynthController *synthController = [JFSSynthController sharedController];
-
-    self.distortionGainKnob.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDistortionGain] floatValue];
-    self.distortionGainKnob.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDistortionGain] floatValue];
-    self.distortionGainKnob.value = [synthController valueForParameter:JFSSynthParamDistortionGain];
+    self.distortionGainKnob.minimumValue = [[self.distortion minimumValueForParameter:JFSDistortionParamGain] floatValue];
+    self.distortionGainKnob.maximumValue = [[self.distortion maximumValueForParameter:JFSDistortionParamGain] floatValue];
+    self.distortionGainKnob.value = [self.distortion valueForParameter:JFSDistortionParamGain];
     
-    self.distortionMixKnob.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDistortionMix] floatValue];
-    self.distortionMixKnob.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDistortionMix] floatValue];
-    self.distortionMixKnob.value = [synthController valueForParameter:JFSSynthParamDistortionMix];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.distortionMixKnob.minimumValue = [[self.distortion minimumValueForParameter:JFSDistortionParamMix] floatValue];
+    self.distortionMixKnob.maximumValue = [[self.distortion maximumValueForParameter:JFSDistortionParamMix] floatValue];
+    self.distortionMixKnob.value = [self.distortion valueForParameter:JFSDistortionParamMix];
 }
 
 - (IBAction)switchChanged:(UISwitch *)sender
@@ -50,7 +43,7 @@
 
 - (IBAction)knobValueChanged:(JFSKnob *)knob
 {
-    [[JFSSynthController sharedController] setValue:knob.value forParameter:knob.tag];
+    [self.distortion setValue:knob.value forParameter:knob.tag];
 }
 
 

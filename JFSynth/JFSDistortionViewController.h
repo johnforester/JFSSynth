@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class JFSDistortion;
+
 @interface JFSDistortionViewController : UIViewController
+
+@property (nonatomic, strong) JFSDistortion *distortion;
 
 @end
