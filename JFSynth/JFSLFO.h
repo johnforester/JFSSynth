@@ -15,4 +15,7 @@ typedef NS_ENUM(JFSSynthParameter, JFSLFOParameter) {
 
 @interface JFSLFO : JFSOscillator
 
+@property (nonatomic, readonly) Float32 LFOAmount;
+@property (nonatomic, readonly) Float32 LFOFrequency;
+
 @end

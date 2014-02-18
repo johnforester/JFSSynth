@@ -9,6 +9,7 @@
 #import "JFSDelayViewController.h"
 #import "JFSKnob.h"
 #import "JFSSynthController.h"
+#import "JFSDelay.h"
 
 @interface JFSDelayViewController ()
 
@@ -28,29 +29,21 @@
     self.view.layer.borderColor = [UIColor redColor].CGColor;
     self.view.layer.borderWidth = 1.0;
     
-    JFSSynthController *synthController = [JFSSynthController sharedController];
+    self.delayDryWetSlider.minimumValue = [[self.delay minimumValueForParameter:JFSDelayParamDryWet] floatValue];
+    self.delayDryWetSlider.maximumValue = [[self.delay maximumValueForParameter:JFSDelayParamDryWet] floatValue];
+    self.delayDryWetSlider.value = [self.delay valueForParameter:JFSDelayParamDryWet];
     
-    self.delayDryWetSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayDryWet] floatValue];
-    self.delayDryWetSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDelayDryWet] floatValue];
-    self.delayDryWetSlider.value = [synthController valueForParameter:JFSSynthParamDelayDryWet];
+    self.delayFeedbackSlider.minimumValue = [[self.delay minimumValueForParameter:JFSDelayParamFeedback] floatValue];
+    self.delayFeedbackSlider.maximumValue = [[self.delay maximumValueForParameter:JFSDelayParamFeedback] floatValue];
+    self.delayFeedbackSlider.value = [self.delay valueForParameter:JFSDelayParamFeedback];
     
-    self.delayFeedbackSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayFeedback] floatValue];
-    self.delayFeedbackSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDelayFeedback] floatValue];
-    self.delayFeedbackSlider.value = [synthController valueForParameter:JFSSynthParamDelayFeedback];
+    self.delayCutoffSlider.minimumValue = [[self.delay minimumValueForParameter:JFSDelayParamCutoff] floatValue];
+    self.delayCutoffSlider.maximumValue = [[self.delay maximumValueForParameter:JFSDelayParamCutoff] floatValue];
+    self.delayCutoffSlider.value = [self.delay valueForParameter:JFSDelayParamCutoff];
     
-    self.delayCutoffSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayCutoff] floatValue];
-    self.delayCutoffSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDelayCutoff] floatValue];
-    self.delayCutoffSlider.value = [synthController valueForParameter:JFSSynthParamDelayCutoff];
-    
-    self.delayTimeSlider.minimumValue = [[synthController minimumValueForParameter:JFSSynthParamDelayTime] floatValue];
-    self.delayTimeSlider.maximumValue = [[synthController maximumValueForParameter:JFSSynthParamDelayTime] floatValue];
-    self.delayTimeSlider.value = [synthController valueForParameter:JFSSynthParamDelayTime];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.delayTimeSlider.minimumValue = [[self.delay minimumValueForParameter:JFSDelayParamTime] floatValue];
+    self.delayTimeSlider.maximumValue = [[self.delay maximumValueForParameter:JFSDelayParamTime] floatValue];
+    self.delayTimeSlider.value = [self.delay valueForParameter:JFSDelayParamTime];
 }
 
 - (IBAction)switchChanged:(UISwitch *)sender
@@ -60,7 +53,7 @@
 
 - (IBAction)knobValueChanged:(JFSKnob *)knob
 {
-    [[JFSSynthController sharedController] setValue:knob.value forParameter:knob.tag];
+    [self.delay setValue:knob.value forParameter:knob.tag];
 }
 
 @end

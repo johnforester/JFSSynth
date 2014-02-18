@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class JFSDelay;
+
 @interface JFSDelayViewController : UIViewController
+
+@property (nonatomic, strong) JFSDelay *delay;
 
 @end

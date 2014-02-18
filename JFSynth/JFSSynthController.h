@@ -8,15 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, JFSSynthParam) {    
-    JFSSynthParamCutoffLFORate,
-    JFSSynthParamCutoffLFOAmount,
-        
-    JFSSynthParamDelayDryWet,
-    JFSSynthParamDelayFeedback,
-    JFSSynthParamDelayTime,
-    JFSSynthParamDelayCutoff,
-    
+typedef NS_ENUM(NSInteger, JFSSynthParam) {
     JFSSynthParamFrequency,
     JFSSynthParamVelocity,
     
@@ -24,7 +16,7 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
     JFSSynthParamDistortionMix,
 };
 
-@class JFSEnvelopeGenerator, JFSOscillator, JFSLowPassFilter;
+@class JFSEnvelopeGenerator, JFSOscillator, JFSLowPassFilter, JFSLFO, JFSDelay;
 
 @interface JFSSynthController : NSObject
 
@@ -33,13 +25,11 @@ typedef NS_ENUM(NSInteger, JFSSynthParam) {
 
 @property (nonatomic, readonly) NSArray *oscillators;
 @property (nonatomic, readonly) JFSLowPassFilter *lpFilter;
-
-@property (nonatomic, strong) JFSOscillator *cutoffLFO;
+@property (nonatomic, readonly) JFSLFO *cutoffLFO;
+@property (nonatomic, readonly) JFSDelay *delay;
 
 @property (nonatomic, assign) Float32 velocityPeak;
 
-@property (nonatomic, assign) Float32 cutoffLFOFrequency;
-@property (nonatomic, readonly) Float32 cuttoffLFOAmount;
 
 + (JFSSynthController *) sharedController;
 

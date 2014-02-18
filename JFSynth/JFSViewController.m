@@ -88,6 +88,8 @@
     [self.filterContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[filterView]|" options:0 metrics:nil views:views]];
     
     self.delayViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DelayViewController"];
+    self.delayViewController.delay = synthController.delay;
+    
     self.distortionViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DistortionViewController"];
     
     [self displayEffectViewControllerWithIndex:0];
@@ -140,11 +142,6 @@
 }
 
 #pragma mark - IBAction
-
-- (IBAction)lfoWaveTypeControlChanged:(UISegmentedControl *)segmentedControl
-{
-    [[JFSSynthController sharedController].cutoffLFO setWaveType:segmentedControl.selectedSegmentIndex];
-}
 
 - (IBAction)oscillatorSegmentedControlChanged:(UISegmentedControl *)segmentedControl
 {

@@ -12,6 +12,7 @@
 #import "JFSOscillator.h"
 #import "JFSLowPassFilter.h"
 #import "JFSLFO.h"
+#import "JFSDelay.h"
 
 #define MINIMUM_CUTOFF 1000.0f
 #define MAXIMUM_CUTOFF SAMPLE_RATE/2
@@ -23,10 +24,10 @@
 @property (nonatomic, strong) AEAudioController *audioController;
 @property (nonatomic, strong) AEBlockChannel *oscillatorChannel;
 @property (nonatomic, strong) JFSLowPassFilter *lpFilter;
-@property (nonatomic, strong) AEAudioUnitFilter *delay;
+@property (nonatomic, strong) JFSLFO *cutoffLFO;
+@property (nonatomic, strong) JFSDelay *delay;
 @property (nonatomic, strong) AEAudioUnitFilter *distortion;
 
-@property (nonatomic, assign) Float32 cuttoffLFOAmount;
 @property (nonatomic, strong) NSArray *oscillators;
 
 @property (nonatomic, strong) NSDictionary *minimumValues;
@@ -55,22 +56,11 @@
     if (self) {
         
         _minimumValues = @{
-                           @(JFSSynthParamDelayDryWet) : @(0),
-                           @(JFSSynthParamDelayFeedback) : @(-100),
-                           @(JFSSynthParamDelayTime) : @(0),
-                           @(JFSSynthParamDelayCutoff) : @(10),
-
-                           
                            @(JFSSynthParamDistortionGain) : @(-80),
                            @(JFSSynthParamDistortionMix) : @(0),
                            };
         
         _maximumValues = @{
-                           @(JFSSynthParamDelayDryWet) : @(100),
-                           @(JFSSynthParamDelayFeedback) : @(100),
-                           @(JFSSynthParamDelayTime) : @(2),
-                           @(JFSSynthParamDelayCutoff) : @(SAMPLE_RATE/2),
-                           
                            @(JFSSynthParamDistortionGain) : @(20),
                            @(JFSSynthParamDistortionMix) : @(100)
                            };
@@ -100,28 +90,12 @@
         
         _cutoffLFO = [[JFSLFO alloc] initWithSampleRate:SAMPLE_RATE];
         [_cutoffLFO updateBaseFrequency:0.0f];
-        _cuttoffLFOAmount = 0.0f;
+        [_cutoffLFO setValue:0.0 forParameter:JFSLFOParameterAmount];
         
         _lpFilter = [[JFSLowPassFilter alloc] initWithAudioController:_audioController];
-       
-
-        AudioComponentDescription delayComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
-                                                                                   kAudioUnitType_Effect,
-                                                                                   kAudioUnitSubType_Delay);
+        _delay = [[JFSDelay alloc] initWithAudioController:_audioController];
         
         NSError *error = nil;
-        
-        _delay = [[AEAudioUnitFilter alloc] initWithComponentDescription:delayComponent
-                                                         audioController:_audioController
-                                                                   error:&error];
-        
-        if (error) {
-            NSLog(@"filter initialization error %@", [error localizedDescription]);
-        } else {
-            [_audioController addFilter:_delay];
-        }
-        
-        error = nil;
         
         AudioComponentDescription distortionComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
                                                                                         kAudioUnitType_Effect,
@@ -152,9 +126,9 @@
 - (void)toggleDelay:(BOOL)on
 {
     if (on) {
-        [self.audioController addFilter:self.delay];
+        [self.audioController addFilter:self.delay.auFilter];
     } else {
-        [self.audioController removeFilter:self.delay];
+        [self.audioController removeFilter:self.delay.auFilter];
     }
 }
 
@@ -181,18 +155,6 @@
 - (Float32)valueForParameter:(JFSSynthParam)parameter
 {
     switch (parameter) {
-        case JFSSynthParamCutoffLFOAmount:
-            return [self cuttoffLFOAmount];
-        case JFSSynthParamCutoffLFORate:
-            return [self cutoffLFOFrequency];
-        case JFSSynthParamDelayCutoff:
-            return [self delayCutoff];
-        case JFSSynthParamDelayDryWet:
-            return [self delayDryWet];
-        case JFSSynthParamDelayFeedback:
-            return [self delayFeedback];
-        case JFSSynthParamDelayTime:
-            return [self delayTime];
         case JFSSynthParamDistortionGain:
             return [self distortionGain];
         case JFSSynthParamDistortionMix:
@@ -213,24 +175,6 @@
 - (void)setValue:(Float32)value forParameter:(JFSSynthParam)parameter
 {
     switch (parameter) {
-        case JFSSynthParamCutoffLFOAmount:
-            [self setCutoffLFOAmount:value];
-            break;
-        case JFSSynthParamCutoffLFORate:
-            [self setCutoffLFOFrequency:value];
-            break;
-        case JFSSynthParamDelayCutoff:
-            [self setDelayCutoff:value];
-            break;
-        case JFSSynthParamDelayDryWet:
-            [self setDelayWetDry:value];
-            break;
-        case JFSSynthParamDelayFeedback:
-            [self setDelayFeedback:value];
-            break;
-        case JFSSynthParamDelayTime:
-            [self setDelayTime:value];
-            break;
         case JFSSynthParamDistortionGain:
             [self setDistortionGain:value];
             break;
@@ -246,102 +190,6 @@
         default:
             break;
     }
-}
-
-// Global, EqPow Crossfade, 0->100, 50
-- (void)setDelayWetDry:(Float32)level
-{
-    AudioUnitSetParameter(self.delay.audioUnit,
-                          kDelayParam_WetDryMix,
-                          kAudioUnitScope_Global,
-                          0,
-                          level,
-                          0);
-}
-
-- (Float32)delayDryWet
-{
-    Float32 value;
-    
-    AudioUnitGetParameter(self.delay.audioUnit,
-                          kDelayParam_WetDryMix,
-                          kAudioUnitScope_Global,
-                          0,
-                          &value);
-    
-    return value;
-}
-
-// Global, Secs, 0->2, 1
-- (void)setDelayTime:(Float32)level
-{
-    AudioUnitSetParameter(self.delay.audioUnit,
-                          kDelayParam_DelayTime,
-                          kAudioUnitScope_Global,
-                          0,
-                          level,
-                          0);
-}
-
-- (Float32)delayTime
-{
-    Float32 value;
-    
-    AudioUnitGetParameter(self.delay.audioUnit,
-                          kDelayParam_DelayTime,
-                          kAudioUnitScope_Global,
-                          0,
-                          &value);
-    
-    return value;
-}
-
-// Global, Percent, -100->100, 50
-- (void)setDelayFeedback:(Float32)level
-{
-    AudioUnitSetParameter(self.delay.audioUnit,
-                          kDelayParam_Feedback,
-                          kAudioUnitScope_Global,
-                          0,
-                          level,
-                          0);
-}
-
-- (Float32)delayFeedback
-{
-    Float32 value;
-    
-    AudioUnitGetParameter(self.delay.audioUnit,
-                          kDelayParam_Feedback,
-                          kAudioUnitScope_Global,
-                          0,
-                          &value);
-    
-    return value;
-}
-
-// Global, Hz, 10->(SampleRate/2), 15000
-- (void)setDelayCutoff:(Float32)level
-{
-    AudioUnitSetParameter(self.delay.audioUnit,
-                          kDelayParam_LopassCutoff,
-                          kAudioUnitScope_Global,
-                          0,
-                          level,
-                          0);
-}
-
-- (Float32)delayCutoff
-{
-    Float32 value;
-    
-    AudioUnitGetParameter(self.delay.audioUnit,
-                          kDelayParam_LopassCutoff,
-                          kAudioUnitScope_Global,
-                          0,
-                          &value);
-    
-    return value;
 }
 
 - (Float32)distortionMix
@@ -390,13 +238,6 @@
                           0);
 }
 
-- (void)setCutoffLFOFrequency:(Float32)cutoffLFOFrequency
-{
-    _cutoffLFOFrequency = cutoffLFOFrequency;
-    
-    [self.cutoffLFO updateBaseFrequency:cutoffLFOFrequency];
-}
-
 - (void)setBaseFrequency:(double)frequency
 {
     [self.oscillators enumerateObjectsUsingBlock:^(JFSOscillator *oscillator, NSUInteger idx, BOOL *stop) {
@@ -404,10 +245,6 @@
     }];
 }
 
-- (void)setCutoffLFOAmount:(Float32)lfoAmount
-{
-    _cuttoffLFOAmount = lfoAmount;
-}
 
 #pragma setup methods
 
@@ -424,11 +261,11 @@
                 
                 filterModAmount = ((Float32)[weakSelf.cutoffLFO updateOscillator] / INT16_MAX) * (MINIMUM_CUTOFF + MAXIMUM_CUTOFF) + MINIMUM_CUTOFF;
                 
-                filterModAmount *= weakSelf.cuttoffLFOAmount;
+                filterModAmount *= weakSelf.cutoffLFO.LFOAmount;
             }
             
             Float32 cutoffLevel = ([weakSelf.filterEnvelopeGenerator updateState] * weakSelf.lpFilter.cutoffKnobLevel) + filterModAmount;
-                        
+            
             cutoffLevel = MAX(MINIMUM_CUTOFF, cutoffLevel);
             cutoffLevel = MIN(MAXIMUM_CUTOFF, cutoffLevel);
             
