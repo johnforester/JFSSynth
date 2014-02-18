@@ -61,7 +61,6 @@
 {
     switch (parameter)
     {
-            
         case JFSLFOParameterAmount:
             [self setLFOAmount:value];
             break;

@@ -75,6 +75,7 @@
     
     self.filterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FilterViewController"];
     self.filterViewController.filter = synthController.lpFilter;
+    self.filterViewController.lfo = synthController.cutoffLFO;
     
     [self.filterContainerView addSubview:self.filterViewController.view];
     [self addChildViewController:self.filterViewController];

@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class JFSLowPassFilter, JFSOscillator;
+@class JFSLowPassFilter, JFSLFO;
 
 @interface JFSFilterViewController : UIViewController
 
 @property (nonatomic, strong) JFSLowPassFilter *filter;
-@property (nonatomic, strong) JFSOscillator *lfo;
+@property (nonatomic, strong) JFSLFO *lfo;
 
 @end
