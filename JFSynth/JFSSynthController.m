@@ -20,7 +20,7 @@
 #define SAMPLE_RATE 44100.0
 #define OSC_MIX 0.5 //TODO add control for this
 
-@interface JFSSynthController ()
+@interface JFSSynthController ()<JFSSynthComponent>
 
 @property (nonatomic, strong) AEAudioController *audioController;
 @property (nonatomic, strong) AEBlockChannel *oscillatorChannel;
@@ -120,7 +120,41 @@
     return peakLevel;
 }
 
-#pragma accessor methods
+#pragma mark - JFSSynthComponent
+
+- (NSNumber *)minimumValueForParameter:(JFSSynthParameter)parameter;
+{
+    switch (parameter)
+    {
+        case JFSSynthParamFrequency:
+            //TODO
+            break;
+        case JFSSynthParamVelocity:
+            return @([self minimumVelocity]);
+            break;
+        default:
+            break;
+    }
+    
+    return @(0);
+}
+
+- (NSNumber *)maximumValueForParameter:(JFSSynthParameter)parameter
+{
+    switch (parameter)
+    {
+        case JFSSynthParamFrequency:
+            //TODO
+            break;
+        case JFSSynthParamVelocity:
+            return @([self maximumVelocity]);
+            break;
+        default:
+            break;
+    }
+    
+    return @(0);
+}
 
 - (Float32)valueForParameter:(JFSSynthParameter)parameter
 {
@@ -153,6 +187,8 @@
             break;
     }
 }
+
+#pragma accessor methods
 
 - (void)setBaseFrequency:(double)frequency
 {

@@ -102,8 +102,8 @@
                           cutoffLevel,
                           0);
     
-#warning connect to envelope
-    //    self.filterEnvelopeGenerator.peak = (cutoffLevel - 10) / ([[self maximumValueForParameter:JFSSynthParamCutoff] floatValue] - 10);
+//TODO connect to envelope
+//    self.filterEnvelopeGenerator.peak = (cutoffLevel - 10) / ([[self maximumValueForParameter:JFSSynthParamCutoff] floatValue] - 10);
 }
 
 - (Float32)resonanceLevel

@@ -16,7 +16,7 @@ typedef NS_ENUM(JFSSynthParameter, JFSSynthControllerParameter) {
 
 @class JFSEnvelopeGenerator, JFSOscillator, JFSLowPassFilter, JFSLFO, JFSDelay, JFSDistortion;
 
-@interface JFSSynthController : NSObject<JFSSynthComponent>
+@interface JFSSynthController : NSObject
 
 @property (nonatomic, strong) JFSEnvelopeGenerator *ampEnvelopeGenerator;
 @property (nonatomic, strong) JFSEnvelopeGenerator *filterEnvelopeGenerator;
@@ -36,9 +36,6 @@ typedef NS_ENUM(JFSSynthParameter, JFSSynthControllerParameter) {
 
 - (void)setBaseFrequency:(double)frequency;
 - (void)stopPlaying;
-
-- (void)setValue:(Float32)value forParameter:(JFSSynthParameter)parameter;
-- (Float32)valueForParameter:(JFSSynthParameter)parameter;
 
 - (Float32)outputLevel;
 
