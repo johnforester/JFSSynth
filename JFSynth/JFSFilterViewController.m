@@ -13,10 +13,10 @@
 
 @interface JFSFilterViewController ()
 
-@property (weak, nonatomic) IBOutlet JFSKnob *cutoffSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *cutoffKnob;
 @property (weak, nonatomic) IBOutlet JFSKnob *resonanceSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *cutoffLFOSlider;
-@property (weak, nonatomic) IBOutlet JFSKnob *lfoAmountSlider;
+@property (weak, nonatomic) IBOutlet JFSKnob *cutoffLFOKnob;
+@property (weak, nonatomic) IBOutlet JFSKnob *lfoAmountKnob;
 
 @end
 
@@ -29,26 +29,26 @@
     self.view.layer.borderColor = [UIColor redColor].CGColor;
     self.view.layer.borderWidth = 1.0;
 
-    self.cutoffSlider.minimumValue = [[self.filter minimumValueForParameter:JFSLowPassFilterParamCutoff] floatValue];
-    self.cutoffSlider.maximumValue = [[self.filter maximumValueForParameter:JFSLowPassFilterParamCutoff] floatValue];
-    self.cutoffSlider.value = [self.filter valueForParameter:JFSLowPassFilterParamCutoff];
+    self.cutoffKnob.minimumValue = [[self.filter minimumValueForParameter:JFSLowPassFilterParamCutoff] floatValue];
+    self.cutoffKnob.maximumValue = [[self.filter maximumValueForParameter:JFSLowPassFilterParamCutoff] floatValue];
+    self.cutoffKnob.value = [self.filter valueForParameter:JFSLowPassFilterParamCutoff];
     
     self.resonanceSlider.minimumValue = [[self.filter minimumValueForParameter:JFSLowPassFilterParamResonance] floatValue];
     self.resonanceSlider.maximumValue = [[self.filter maximumValueForParameter:JFSLowPassFilterParamResonance] floatValue];
     self.resonanceSlider.value = [self.filter valueForParameter:JFSLowPassFilterParamResonance];
     
-    self.cutoffLFOSlider.minimumValue = [[self.lfo minimumValueForParameter:JFSLFOParameterRate] floatValue];
-    self.cutoffLFOSlider.maximumValue = [[self.lfo maximumValueForParameter:JFSLFOParameterRate] floatValue];
-    self.cutoffLFOSlider.value = [self.lfo valueForParameter:JFSLFOParameterRate];
+    self.cutoffLFOKnob.minimumValue = [[self.lfo minimumValueForParameter:JFSLFOParameterRate] floatValue];
+    self.cutoffLFOKnob.maximumValue = [[self.lfo maximumValueForParameter:JFSLFOParameterRate] floatValue];
+    self.cutoffLFOKnob.value = [self.lfo valueForParameter:JFSLFOParameterRate];
     
-    self.lfoAmountSlider.minimumValue = [[self.lfo minimumValueForParameter:JFSLFOParameterAmount] floatValue];
-    self.lfoAmountSlider.maximumValue = [[self.lfo maximumValueForParameter:JFSLFOParameterAmount] floatValue];
-    self.lfoAmountSlider.value = [self.lfo valueForParameter:JFSLFOParameterAmount];
+    self.lfoAmountKnob.minimumValue = [[self.lfo minimumValueForParameter:JFSLFOParameterAmount] floatValue];
+    self.lfoAmountKnob.maximumValue = [[self.lfo maximumValueForParameter:JFSLFOParameterAmount] floatValue];
+    self.lfoAmountKnob.value = [self.lfo valueForParameter:JFSLFOParameterAmount];
 }
 
 - (IBAction)knobValueChanged:(JFSKnob *)knob
 {
-    if (knob == self.cutoffSlider || knob == self.resonanceSlider) {
+    if (knob == self.cutoffKnob || knob == self.resonanceSlider) {
         [self.filter setValue:knob.value forParameter:knob.tag];
     } else {
         [self.lfo setValue:knob.value forParameter:knob.tag];

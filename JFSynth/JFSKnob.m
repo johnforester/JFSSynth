@@ -54,11 +54,12 @@
     _valueLayer.fillColor = [UIColor redColor].CGColor;
     _valueLayer.strokeColor = [UIColor blackColor].CGColor;
     _valueLayer.lineWidth = 1.0;
+
     
     _currentAngle = MAX_ANGLE;
     
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))
-                                                        radius:self.frame.size.width/2
+                                                        radius:self.bounds.size.width/2
                                                     startAngle:MIN_ANGLE
                                                       endAngle:MAX_ANGLE
                                                      clockwise:YES];
@@ -72,7 +73,7 @@
     [self.layer addSublayer:_valueLayer];
     
     path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))
-                                          radius:self.frame.size.width/4
+                                          radius:self.bounds.size.width/4
                                       startAngle:0.0
                                         endAngle:2 * M_PI
                                        clockwise:YES];
@@ -93,7 +94,7 @@
 - (void)updateKnobWithAngle:(CGFloat)angle
 {
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))
-                                                        radius:self.frame.size.width/2
+                                                        radius:self.bounds.size.width/2
                                                     startAngle:MIN_ANGLE
                                                       endAngle:angle
                                                      clockwise:YES];
