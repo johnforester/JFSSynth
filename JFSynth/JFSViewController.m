@@ -15,8 +15,10 @@
 #import "JFSDistortionViewController.h"
 #import "JFSOscillatorViewController.h"
 #import "JFSFilterViewController.h"
+#import "JFSEnvelopeView.h"
+#import "JFSScrollingKeyboardView.h"
 
-@interface JFSViewController ()
+@interface JFSViewController ()<JFSKeyboardViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *levelLabel;
 
@@ -41,17 +43,19 @@
 
 @property (strong, nonatomic) JFSEnvelopeViewController *ampEnvelopeViewController;
 @property (strong, nonatomic) JFSEnvelopeViewController *filterEnvelopeViewController;
-@property (nonatomic, strong) UIViewController *currentEnvelopeViewController;
+@property (strong, nonatomic) UIViewController *currentEnvelopeViewController;
 
-@property (nonatomic, strong) NSTimer *refreshTimer;
+@property (strong, nonatomic) NSTimer *refreshTimer;
 
-@property (nonatomic, strong) JFSDelayViewController *delayViewController;
-@property (nonatomic, strong) JFSDistortionViewController *distortionViewController;
-@property (nonatomic, strong) UIViewController *currentEffectViewController;
+@property (strong, nonatomic) JFSDelayViewController *delayViewController;
+@property (strong, nonatomic) JFSDistortionViewController *distortionViewController;
+@property (strong, nonatomic) UIViewController *currentEffectViewController;
 
 @end
 
 @implementation JFSViewController
+
+#pragma mark - UIViewController
 
 - (void)viewDidLoad
 {
