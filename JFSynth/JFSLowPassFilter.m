@@ -7,7 +7,7 @@
 //
 
 #import "JFSLowPassFilter.h"
-#import "TheAmazingAudioEngine.h"
+#import <TheAmazingAudioEngine/AEAudioUnitFilter.h>
 
 #define MINIMUM_CUTOFF 1000.0f
 #define MAXIMUM_CUTOFF SAMPLE_RATE/2
@@ -38,21 +38,13 @@
         AudioComponentDescription lpFilterComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
                                                                                       kAudioUnitType_Effect,
                                                                                       kAudioUnitSubType_LowPassFilter);
-        
-        NSError *error = nil;
-        
-        self.auFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:lpFilterComponent
-                                                                audioController:audioController
-                                                                          error:&error];
-        
-        
-        if (error) {
-            NSLog(@"filter initialization error %@", [error localizedDescription]);
-        } else {
-            [self setCutoffLevel:10000];
-            [self setCutoffKnobLevel:10000];
-            [audioController addFilter:self.auFilter];
-        }
+
+        [self setCutoffLevel:10000];
+        [self setCutoffKnobLevel:10000];
+
+        self.auFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:lpFilterComponent];
+        [self.auFilter setupWithAudioController:audioController];
+        [audioController addFilter:self.auFilter];
     }
     
     return self;
