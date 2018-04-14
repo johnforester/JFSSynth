@@ -7,7 +7,7 @@
 //
 
 #import "JFSDistortion.h"
-#import "TheAmazingAudioEngine.h"
+#import <TheAmazingAudioEngine/AEAudioUnitFilter.h>
 
 @interface JFSDistortion ()
 
@@ -31,24 +31,13 @@
                            @(JFSDistortionParamMix) : @(100)
                            };
         
-        NSError *error = nil;
-        
         AudioComponentDescription distortionComponent = AEAudioComponentDescriptionMake(kAudioUnitManufacturer_Apple,
                                                                                         kAudioUnitType_Effect,
                                                                                         kAudioUnitSubType_Distortion);
-        
-        self.auFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:distortionComponent
-                                                              audioController:audioController
-                                                                        error:&error];
-        
-        
-        if (error) {
-            NSLog(@"filter initialization error %@", [error localizedDescription]);
-        } else {
-            
-            [audioController addFilter:self.auFilter];
-        }
-        
+
+        self.auFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:distortionComponent];
+        [self.auFilter setupWithAudioController:audioController];
+        [audioController addFilter:self.auFilter];
     }
     
     return self;

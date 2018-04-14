@@ -7,7 +7,7 @@
 //
 
 #import "JFSDelay.h"
-#import "TheAmazingAudioEngine.h"
+#import <TheAmazingAudioEngine/AEAudioUnitFilter.h>
 
 #define SAMPLE_RATE 44100.0
 
@@ -41,17 +41,9 @@
                                                                                    kAudioUnitType_Effect,
                                                                                    kAudioUnitSubType_Delay);
         
-        NSError *error = nil;
-        
-        self.auFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:delayComponent
-                                                                audioController:audioController
-                                                                          error:&error];
-        
-        if (error) {
-            NSLog(@"filter initialization error %@", [error localizedDescription]);
-        } else {
-            [audioController addFilter:self.auFilter];
-        }
+        self.auFilter = [[AEAudioUnitFilter alloc] initWithComponentDescription:delayComponent];
+        [self.auFilter setupWithAudioController:audioController];
+        [audioController addFilter:self.auFilter];
     }
     
     return self;

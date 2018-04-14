@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		05754887C6F84FCD876A31B1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB310698CEA446691085808 /* libPods.a */; };
+		1BD10EDB05EEB0ECE60D52A1 /* libPods-JFSynthTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AFC23E689F1AF17AA9A9282 /* libPods-JFSynthTests.a */; };
 		7A1A62D218B26F9100DEFF78 /* JFSOscillatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62D118B26F9100DEFF78 /* JFSOscillatorViewController.m */; };
 		7A1A62D618B2A5AC00DEFF78 /* JFSAUFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62D518B2A5AC00DEFF78 /* JFSAUFilter.m */; };
 		7A1A62D918B2A66800DEFF78 /* JFSLowPassFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A62D818B2A66800DEFF78 /* JFSLowPassFilter.m */; };
@@ -38,6 +38,7 @@
 		88CDDD93183BC3BF0000FD5F /* JFSScrollingKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CDDD92183BC3BF0000FD5F /* JFSScrollingKeyboardView.m */; };
 		88FACCB9188729F0007B44BF /* JFSDistortionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FACCB8188729F0007B44BF /* JFSDistortionViewController.m */; };
 		88FACCBC18872A16007B44BF /* JFSDelayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FACCBB18872A16007B44BF /* JFSDelayViewController.m */; };
+		EAE4B92F1C6AA213C1A9B3FA /* libPods-JFSynth.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41EBDE5C83E1E3F7F0EC23F5 /* libPods-JFSynth.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,7 +52,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		084B57BE5FC7457AB7CAA9D7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		0845C988CB96D28748DFCA55 /* Pods-JFSynthTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JFSynthTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-JFSynthTests/Pods-JFSynthTests.release.xcconfig"; sourceTree = "<group>"; };
+		0AFC23E689F1AF17AA9A9282 /* libPods-JFSynthTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JFSynthTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		35CDEE1CA66CACD72E0B362F /* Pods-JFSynth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JFSynth.release.xcconfig"; path = "Pods/Target Support Files/Pods-JFSynth/Pods-JFSynth.release.xcconfig"; sourceTree = "<group>"; };
+		41EBDE5C83E1E3F7F0EC23F5 /* libPods-JFSynth.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JFSynth.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A1A62D018B26F9100DEFF78 /* JFSOscillatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSOscillatorViewController.h; sourceTree = "<group>"; };
 		7A1A62D118B26F9100DEFF78 /* JFSOscillatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSOscillatorViewController.m; sourceTree = "<group>"; };
 		7A1A62D318B2A42800DEFF78 /* JFSSynthComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JFSSynthComponent.h; sourceTree = "<group>"; };
@@ -104,6 +108,9 @@
 		88FACCB8188729F0007B44BF /* JFSDistortionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSDistortionViewController.m; sourceTree = "<group>"; };
 		88FACCBA18872A16007B44BF /* JFSDelayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFSDelayViewController.h; sourceTree = "<group>"; };
 		88FACCBB18872A16007B44BF /* JFSDelayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSDelayViewController.m; sourceTree = "<group>"; };
+		95AB562CC697C808EA945C17 /* Pods-JFSynth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JFSynth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JFSynth/Pods-JFSynth.debug.xcconfig"; sourceTree = "<group>"; };
+		A8906C2FF506663F8403359F /* Pods-JFSynthTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JFSynthTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JFSynthTests/Pods-JFSynthTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C9415FEC207FAF1500C5BBC2 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		DEB310698CEA446691085808 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -115,7 +122,7 @@
 				7A6C6875181D833E009F4A83 /* CoreGraphics.framework in Frameworks */,
 				7A6C6877181D833E009F4A83 /* UIKit.framework in Frameworks */,
 				7A6C6873181D833E009F4A83 /* Foundation.framework in Frameworks */,
-				05754887C6F84FCD876A31B1 /* libPods.a in Frameworks */,
+				EAE4B92F1C6AA213C1A9B3FA /* libPods-JFSynth.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +133,7 @@
 				7A6C6895181D833F009F4A83 /* XCTest.framework in Frameworks */,
 				7A6C6897181D833F009F4A83 /* UIKit.framework in Frameworks */,
 				7A6C6896181D833F009F4A83 /* Foundation.framework in Frameworks */,
+				1BD10EDB05EEB0ECE60D52A1 /* libPods-JFSynthTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,10 +169,11 @@
 		7A6C6866181D833E009F4A83 = {
 			isa = PBXGroup;
 			children = (
-				7A6C6878181D833E009F4A83 /* JFSynth */,
 				7A6C6871181D833E009F4A83 /* Frameworks */,
+				7A6C6878181D833E009F4A83 /* JFSynth */,
+				C9415FEC207FAF1500C5BBC2 /* Podfile */,
+				FAFEE2D18960CE42F3E9F604 /* Pods */,
 				7A6C6870181D833E009F4A83 /* Products */,
-				084B57BE5FC7457AB7CAA9D7 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -185,6 +194,8 @@
 				7A6C6876181D833E009F4A83 /* UIKit.framework */,
 				7A6C6894181D833F009F4A83 /* XCTest.framework */,
 				DEB310698CEA446691085808 /* libPods.a */,
+				41EBDE5C83E1E3F7F0EC23F5 /* libPods-JFSynth.a */,
+				0AFC23E689F1AF17AA9A9282 /* libPods-JFSynthTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -192,15 +203,15 @@
 		7A6C6878181D833E009F4A83 /* JFSynth */ = {
 			isa = PBXGroup;
 			children = (
-				8889235A182D94410058734E /* ViewControllers */,
-				88892359182D94340058734E /* Views */,
-				88892358182D942A0058734E /* Audio */,
 				7A6C6881181D833E009F4A83 /* JFSAppDelegate.h */,
 				7A6C6882181D833E009F4A83 /* JFSAppDelegate.m */,
-				7A6C6887181D833E009F4A83 /* Main_iPad.storyboard */,
 				7A6C688D181D833E009F4A83 /* Images.xcassets */,
-				7A6C6879181D833E009F4A83 /* Supporting Files */,
+				88892358182D942A0058734E /* Audio */,
 				7A6C689A181D833F009F4A83 /* JFSynthTests */,
+				7A6C6887181D833E009F4A83 /* Main_iPad.storyboard */,
+				7A6C6879181D833E009F4A83 /* Supporting Files */,
+				8889235A182D94410058734E /* ViewControllers */,
+				88892359182D94340058734E /* Views */,
 			);
 			path = JFSynth;
 			sourceTree = "<group>";
@@ -280,6 +291,17 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
+		FAFEE2D18960CE42F3E9F604 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				95AB562CC697C808EA945C17 /* Pods-JFSynth.debug.xcconfig */,
+				35CDEE1CA66CACD72E0B362F /* Pods-JFSynth.release.xcconfig */,
+				A8906C2FF506663F8403359F /* Pods-JFSynthTests.debug.xcconfig */,
+				0845C988CB96D28748DFCA55 /* Pods-JFSynthTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -287,11 +309,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7A6C68A4181D833F009F4A83 /* Build configuration list for PBXNativeTarget "JFSynth" */;
 			buildPhases = (
+				F9E463331AA9108383017053 /* [CP] Check Pods Manifest.lock */,
 				857E87B2F39F41D4B420946D /* Check Pods Manifest.lock */,
 				7A6C686B181D833E009F4A83 /* Sources */,
 				7A6C686C181D833E009F4A83 /* Frameworks */,
 				7A6C686D181D833E009F4A83 /* Resources */,
-				D1DC0F596420452FA90BA076 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -306,6 +328,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7A6C68A7181D833F009F4A83 /* Build configuration list for PBXNativeTarget "JFSynthTests" */;
 			buildPhases = (
+				2DB5F6EF11A35C6F15904607 /* [CP] Check Pods Manifest.lock */,
 				7A6C688F181D833F009F4A83 /* Sources */,
 				7A6C6890181D833F009F4A83 /* Frameworks */,
 				7A6C6891181D833F009F4A83 /* Resources */,
@@ -327,7 +350,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = JFS;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "John Forester";
 				TargetAttributes = {
 					7A6C6892181D833F009F4A83 = {
@@ -376,6 +399,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2DB5F6EF11A35C6F15904607 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JFSynthTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		857E87B2F39F41D4B420946D /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -390,19 +431,23 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sanbox is not in sync with the Podfile.lock. Run 'pod install'.\nEOM\n    exit 1\nfi\n";
 		};
-		D1DC0F596420452FA90BA076 /* Copy Pods Resources */ = {
+		F9E463331AA9108383017053 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JFSynth-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -483,23 +528,36 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -512,7 +570,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -523,30 +581,42 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -555,13 +625,15 @@
 		};
 		7A6C68A5181D833F009F4A83 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 084B57BE5FC7457AB7CAA9D7 /* Pods.xcconfig */;
+			baseConfigurationReference = 95AB562CC697C808EA945C17 /* Pods-JFSynth.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JFSynth/JFSynth-Prefix.pch";
 				INFOPLIST_FILE = "JFSynth/JFSynth-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.forester.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
@@ -570,13 +642,15 @@
 		};
 		7A6C68A6181D833F009F4A83 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 084B57BE5FC7457AB7CAA9D7 /* Pods.xcconfig */;
+			baseConfigurationReference = 35CDEE1CA66CACD72E0B362F /* Pods-JFSynth.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JFSynth/JFSynth-Prefix.pch";
 				INFOPLIST_FILE = "JFSynth/JFSynth-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.forester.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
@@ -585,8 +659,8 @@
 		};
 		7A6C68A8181D833F009F4A83 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A8906C2FF506663F8403359F /* Pods-JFSynthTests.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JFSynth.app/JFSynth";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -600,6 +674,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "JFSynthTests/JFSynthTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.forester.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -608,8 +683,8 @@
 		};
 		7A6C68A9181D833F009F4A83 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0845C988CB96D28748DFCA55 /* Pods-JFSynthTests.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JFSynth.app/JFSynth";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -619,6 +694,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JFSynth/JFSynth-Prefix.pch";
 				INFOPLIST_FILE = "JFSynthTests/JFSynthTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.forester.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
