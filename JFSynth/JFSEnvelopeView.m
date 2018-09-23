@@ -143,9 +143,9 @@
             [self.envelopeContainer.layer insertSublayer:dotLayer above:self.borderLayer];
         }];
     }
-    
+
     [self.touchPointLayers enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, CAShapeLayer *touchPointLayer, BOOL *stop) {
-        [self moveTouchPointAtIndex:[key integerValue] toPoint:_points[[key integerValue]]];
+        [self moveTouchPointAtIndex:[key integerValue] toPoint:self->_points[[key integerValue]]];
     }];
     
     self.envelopeLayer.path = [self pathForCurrentStagePoints].CGPath;

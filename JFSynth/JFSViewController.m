@@ -192,7 +192,7 @@
     [self.oscillatorContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:views]];
 }
 
-- (void)displayEffectViewControllerWithIndex:(int)idx
+- (void)displayEffectViewControllerWithIndex:(NSInteger)idx
 {
     UIViewController *nextEffectVC;
     
@@ -228,7 +228,7 @@
     }
 }
 
-- (void)displayEnvelopeViewControllerWithIndex:(int)idx
+- (void)displayEnvelopeViewControllerWithIndex:(NSInteger)idx
 {
     UIViewController *nextEnvelopeVC;
     

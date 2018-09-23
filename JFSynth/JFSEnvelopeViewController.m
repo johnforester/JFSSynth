@@ -48,7 +48,7 @@
         [self.view updateConstraintsIfNeeded];
         
         self.envelopeView.delegate = self;
-        self.envelopeView.dataSource = self;        
+        self.envelopeView.dataSource = self;
     }
 }
 
