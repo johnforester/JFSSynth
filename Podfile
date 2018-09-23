@@ -12,6 +12,7 @@ target 'JFSynthTests' do
     shared_pods
 end
 
+# https://github.com/CocoaPods/CocoaPods/issues/8069
 post_install do |installer|
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
