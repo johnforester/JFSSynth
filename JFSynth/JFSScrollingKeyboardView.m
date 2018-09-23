@@ -11,8 +11,8 @@
 #define KEYBOARD_HEIGHT 180
 #define MINI_KEYBOARD_HEIGHT 40
 
-typedef void(^KeyPressBlock)();
-typedef void(^KeyReleaseBlock)();
+typedef void(^KeyPressBlock)(void);
+typedef void(^KeyReleaseBlock)(void);
 
 @interface JFSKeyView : UIView
 

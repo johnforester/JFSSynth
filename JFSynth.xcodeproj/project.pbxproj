@@ -110,7 +110,7 @@
 		88FACCBB18872A16007B44BF /* JFSDelayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFSDelayViewController.m; sourceTree = "<group>"; };
 		95AB562CC697C808EA945C17 /* Pods-JFSynth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JFSynth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JFSynth/Pods-JFSynth.debug.xcconfig"; sourceTree = "<group>"; };
 		A8906C2FF506663F8403359F /* Pods-JFSynthTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JFSynthTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JFSynthTests/Pods-JFSynthTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C9415FEC207FAF1500C5BBC2 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		C9415FEC207FAF1500C5BBC2 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DEB310698CEA446691085808 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -353,7 +353,11 @@
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "John Forester";
 				TargetAttributes = {
+					7A6C686E181D833E009F4A83 = {
+						ProvisioningStyle = Manual;
+					};
 					7A6C6892181D833F009F4A83 = {
+						ProvisioningStyle = Manual;
 						TestTargetID = 7A6C686E181D833E009F4A83;
 					};
 				};
@@ -629,12 +633,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JFSynth/JFSynth-Prefix.pch";
 				INFOPLIST_FILE = "JFSynth/JFSynth-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.forester.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -646,12 +653,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JFSynth/JFSynth-Prefix.pch";
 				INFOPLIST_FILE = "JFSynth/JFSynth-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.forester.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -662,6 +672,8 @@
 			baseConfigurationReference = A8906C2FF506663F8403359F /* Pods-JFSynthTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JFSynth.app/JFSynth";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -676,6 +688,7 @@
 				INFOPLIST_FILE = "JFSynthTests/JFSynthTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.forester.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -686,6 +699,8 @@
 			baseConfigurationReference = 0845C988CB96D28748DFCA55 /* Pods-JFSynthTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JFSynth.app/JFSynth";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -696,6 +711,7 @@
 				INFOPLIST_FILE = "JFSynthTests/JFSynthTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.forester.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
